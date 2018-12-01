@@ -1,0 +1,50 @@
+[tool.poetry]
+name = "dotenv-linter"
+version = "0.1.0"
+description = "Linting dotenv files like a charm!"
+authors = [
+  "sobolevn <mail@sobolevn.me>"
+]
+license = "MIT"
+
+readme = "README.md"
+
+repository = "https://github.com/wemake-services/dotenv-linter"
+# homepage = "https://dotenv-linter.readthedocs.io"
+
+keywords = [
+  "dotenv",
+  "linter",
+  "wemake.services",
+  "code quality"
+]
+
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: Software Development :: Quality Assurance",
+]
+
+[tool.poetry.dependencies]
+python = "^3.6 || ^3.7"
+
+[tool.poetry.dev-dependencies]
+pytest = "^4.0"
+pytest-cov = "^2.6"
+pytest-randomly = "^1.2"
+pytest-flake8 = "^1.0"
+wemake-python-styleguide = "^0.5"
+mypy = "^0.641"
+sphinx = "^1.8"
+sphinx-autodoc-typehints = "^1.5"
+doc8 = "^0.8.0"
+m2r = "^0.2.1"
+sphinx-readable-theme = "^1.3"
+tomlkit = "^0.5"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

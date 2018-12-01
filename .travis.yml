@@ -1,0 +1,31 @@
+language: python
+
+matrix:
+  fast_finish: true
+  include:
+    - python: 3.6
+    - python: 3.7
+      dist: xenial
+      sudo: true
+
+
+before_install:
+  - curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
+  - source "$HOME/.poetry/env"
+
+install:
+  - poetry install
+
+script:
+  - poetry run mypy dotenv_linter
+  - poetry run pytest
+  - poetry run doc8 -q docs
+
+after_success:
+  - pip install coveralls
+  - coveralls
+
+notifications:
+  email:
+    on_success: never
+    on_failure: change
