@@ -1,0 +1,73 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    WHITESPACE
+
+Grammar
+
+Rule 0     S' -> expression
+Rule 1     expression -> NAME EQUAL VALUE
+Rule 2     expression -> COMMENT
+Rule 3     empty -> <empty>
+
+Terminals, with rules where they appear
+
+COMMENT              : 2
+EQUAL                : 1
+NAME                 : 1
+VALUE                : 1
+WHITESPACE           : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+empty                : 
+expression           : 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . expression
+    (1) expression -> . NAME EQUAL VALUE
+    (2) expression -> . COMMENT
+
+    NAME            shift and go to state 2
+    COMMENT         shift and go to state 3
+
+    expression                     shift and go to state 1
+
+state 1
+
+    (0) S' -> expression .
+
+
+
+state 2
+
+    (1) expression -> NAME . EQUAL VALUE
+
+    EQUAL           shift and go to state 4
+
+
+state 3
+
+    (2) expression -> COMMENT .
+
+    $end            reduce using rule 2 (expression -> COMMENT .)
+
+
+state 4
+
+    (1) expression -> NAME EQUAL . VALUE
+
+    VALUE           shift and go to state 5
+
+
+state 5
+
+    (1) expression -> NAME EQUAL VALUE .
+
+    $end            reduce using rule 1 (expression -> NAME EQUAL VALUE .)
+

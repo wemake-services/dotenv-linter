@@ -32,6 +32,7 @@ classifiers = [
 python = "^3.6 || ^3.7"
 ply = "^3.11"
 click = "^7.0"
+dataclasses = "^0.6.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^4.0"

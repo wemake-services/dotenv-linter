@@ -2,88 +2,94 @@
 
 from ply import lex
 
-# List of token names.   This is always required
-tokens = (
-    'COMMENT',
-    'NAME',
-    'EQUAL',
-    'VALUE',
-)
-
-states = (
-    ('comment', 'exclusive'),
-    ('def', 'exclusive'),
-    ('value', 'exclusive'),
-)
-
-def t_begin_comment(t):
-    r'\#'
-    t.lexer.push_state('comment')
+from dotenv_linter.exceptions import ParsingError
 
 
-def t_begin_def(t):
-    r'\w'
-    t.lexer._def_start = t.value
-    t.lexer.push_state('def')
+def _get_offset(token: lex.LexToken) -> int:
+    offset = getattr(token.lexer, 'col_offset', 0)
+    token.lexer.col_offset = 0
+    return offset
 
 
-def t_def_NAME(t):
-    r'\w+'
-    t.value = t.lexer._def_start + t.value
-    t.lexer._def_start = ''
-    return t
+class DotenvLexer(object):
+    tokens = (
+        'WHITESPACE',
+        'COMMENT',
+        'NAME',
+        'EQUAL',
+        'VALUE',
+    )
 
+    states = (
+        ('value', 'exclusive'),
+    )
 
-def t_def_EQUAL(t):
-    r'='
-    t.lexer.push_state('value')
-    return t
+    def __init__(self, **kwargs) -> None:
+        self.lexer = lex.lex(module=self, **kwargs)
 
+    @lex.TOKEN(r'[ \t\v\f\u00A0]')
+    def t_WHITESPACE(self, token: lex.LexToken) -> None:
+        try:
+            token.lexer.col_offset += 1
+        except AttributeError:
+            token.lexer.col_offset = 1
 
-def t_value_VALUE(t):
-    r'.+'
-    t.lexer.pop_state()
-    return t
+    @lex.TOKEN(r'\w+')
+    def t_NAME(self, token: lex.LexToken) -> lex.LexToken:
+        token.col_offset = _get_offset(token)
+        return token
 
+    @lex.TOKEN(r'\#.+')
+    def t_COMMENT(self, token: lex.LexToken) -> lex.LexToken:
+        token.col_offset = _get_offset(token)
+        return token
 
-def t_comment_COMMENT(t):
-    r'.+'
-    t.value = '#' + t.value
-    t.lexer.pop_state()
-    return t
+    @lex.TOKEN(r'=')
+    def t_EQUAL(self, token: lex.LexToken) -> lex.LexToken:
+        token.col_offset = _get_offset(token)
+        token.lexer.push_state('value')
+        return token
 
-# Define a rule so we can track line numbers
-def t_ANY_newline(t):
-    r'\n+'
-    t.lexer.lineno += len(t.value)
-    t.lexer.begin('INITIAL')
+    @lex.TOKEN(r'.+')
+    def t_value_VALUE(self, token: lex.LexToken) -> lex.LexToken:
+        token.col_offset = _get_offset(token)
+        token.lexer.pop_state()
+        return token
 
-# A string containing ignored characters (spaces and tabs)
-# t_ANY_ignore  = ' \t'
+    @lex.TOKEN(r'[\n\r\u2028\u2029]')
+    def t_ANY_newline(self, token: lex.LexToken) -> None:
+        """
+        Defines a rule so we can track line numbers.
 
-# Error handling rule
-def t_ANY_error(t):
-    print("Illegal character '%s'" % t.value[0])
-    t.lexer.skip(1)
+        These tokens are skipped.
+        """
+        token.lexer.lineno += len(token.value)
+        token.lexer.begin('INITIAL')
 
-# Build the lexer
-lexer = lex.lex()
+    def t_ANY_error(self, token: lex.LexToken) -> None:
+        """
+        Error handling rule.
+
+        Raises an exception that file can not be parsed.
+        """
+        raise ParsingError(token.value[0])
 
 
 data = '''
-# Comment line
+ # Comment line
 KEY=1#=a
-
+NAME = 1 2 3
 OTHER=
 last
 '''
 
+lexer = DotenvLexer()
 # Give the lexer some input
-lexer.input(data)
+lexer.lexer.input(data)
 
 # Tokenize
 while True:
-    tok = lexer.token()
+    tok = lexer.lexer.token()
     if not tok:
         break      # No more input
-    print(tok)
+    print(tok, tok.col_offset)
