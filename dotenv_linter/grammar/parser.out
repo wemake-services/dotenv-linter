@@ -7,15 +7,17 @@ Unused terminals:
 Grammar
 
 Rule 0     S' -> expression
-Rule 1     expression -> NAME EQUAL VALUE
-Rule 2     expression -> COMMENT
+Rule 1     expression -> NAME
+Rule 2     expression -> NAME EQUAL
+Rule 3     expression -> NAME EQUAL VALUE
+Rule 4     expression -> COMMENT
 
 Terminals, with rules where they appear
 
-COMMENT              : 2
-EQUAL                : 1
-NAME                 : 1
-VALUE                : 1
+COMMENT              : 4
+EQUAL                : 2 3
+NAME                 : 1 2 3
+VALUE                : 3
 WHITESPACE           : 
 error                : 
 
@@ -28,8 +30,10 @@ Parsing method: LALR
 state 0
 
     (0) S' -> . expression
-    (1) expression -> . NAME EQUAL VALUE
-    (2) expression -> . COMMENT
+    (1) expression -> . NAME
+    (2) expression -> . NAME EQUAL
+    (3) expression -> . NAME EQUAL VALUE
+    (4) expression -> . COMMENT
 
     NAME            shift and go to state 2
     COMMENT         shift and go to state 3
@@ -44,28 +48,33 @@ state 1
 
 state 2
 
-    (1) expression -> NAME . EQUAL VALUE
+    (1) expression -> NAME .
+    (2) expression -> NAME . EQUAL
+    (3) expression -> NAME . EQUAL VALUE
 
+    $end            reduce using rule 1 (expression -> NAME .)
     EQUAL           shift and go to state 4
 
 
 state 3
 
-    (2) expression -> COMMENT .
+    (4) expression -> COMMENT .
 
-    $end            reduce using rule 2 (expression -> COMMENT .)
+    $end            reduce using rule 4 (expression -> COMMENT .)
 
 
 state 4
 
-    (1) expression -> NAME EQUAL . VALUE
+    (2) expression -> NAME EQUAL .
+    (3) expression -> NAME EQUAL . VALUE
 
+    $end            reduce using rule 2 (expression -> NAME EQUAL .)
     VALUE           shift and go to state 5
 
 
 state 5
 
-    (1) expression -> NAME EQUAL VALUE .
+    (3) expression -> NAME EQUAL VALUE .
 
-    $end            reduce using rule 1 (expression -> NAME EQUAL VALUE .)
+    $end            reduce using rule 3 (expression -> NAME EQUAL VALUE .)
 

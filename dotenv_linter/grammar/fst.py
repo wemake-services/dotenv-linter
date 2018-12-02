@@ -66,7 +66,7 @@ class Value(Node):
 
 @dataclass
 class Statement(Node):
-    """Base class for all affecting statements.""""
+    """Base class for all affecting statements."""
 
 
 @dataclass

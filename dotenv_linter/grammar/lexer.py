@@ -36,7 +36,24 @@ class DotenvLexer(object):
 
     def __init__(self, **kwargs) -> None:
         """Creates inner lexer."""
-        self.lexer = lex.lex(module=self, **kwargs)
+        self._lexer = lex.lex(module=self, **kwargs)
+        self._text = ''
+        self.reset()
+
+    def reset(self) -> 'DotenvLexer':
+        self._text = ''
+        self._lexer.lineno = 1
+        self._lexer.begin('INITIAL')
+        return self
+
+    def input(self, text: str) -> 'DotenvLexer':
+        self.reset()
+        self._text = text
+        self._lexer.input(text)
+        return self
+
+    def token(self) -> lex.LexToken:
+        return self._lexer.token()
 
     @lex.TOKEN(r'[ \t\v\f\u00A0]')
     def t_WHITESPACE(self, token: lex.LexToken) -> None:
@@ -92,17 +109,17 @@ if __name__ == '__main__':
     # Comment line
     KEY=1#=a
     NAME = 1 2 3
-    OTHER=
-    last
+    D=
+    D=
     '''
 
     lexer = DotenvLexer()
     # Give the lexer some input
-    lexer.lexer.input(data)
+    lexer.input(data)
 
     # Tokenize
     while True:
-        tok = lexer.lexer.token()
+        tok = lexer.token()
         if not tok:
             break      # No more input
         print(tok, tok.col_offset)

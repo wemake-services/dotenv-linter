@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'COMMENT EQUAL NAME VALUE WHITESPACEexpression : NAME EQUAL VALUEexpression : COMMENT'
+_lr_signature = 'expressionCOMMENT EQUAL NAME VALUE WHITESPACE\n        expression : NAME\n                   | NAME EQUAL\n                   | NAME EQUAL VALUE\n        expression : COMMENT'
     
-_lr_action_items = {'NAME':([0,],[2,]),'COMMENT':([0,],[3,]),'$end':([1,3,5,],[0,-2,-1,]),'EQUAL':([2,],[4,]),'VALUE':([4,],[5,]),}
+_lr_action_items = {'NAME':([0,],[2,]),'COMMENT':([0,],[3,]),'$end':([1,2,3,4,5,],[0,-1,-4,-2,-3,]),'EQUAL':([2,],[4,]),'VALUE':([4,],[5,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -27,6 +27,8 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> expression","S'",1,None,None,None),
-  ('expression -> NAME EQUAL VALUE','expression',3,'p_expression_equals','parser.py',47),
-  ('expression -> COMMENT','expression',1,'p_expression_comment','parser.py',71),
+  ('expression -> NAME','expression',1,'p_expression_full','parser.py',141),
+  ('expression -> NAME EQUAL','expression',2,'p_expression_full','parser.py',142),
+  ('expression -> NAME EQUAL VALUE','expression',3,'p_expression_full','parser.py',143),
+  ('expression -> COMMENT','expression',1,'p_expression_comment','parser.py',148),
 ]
