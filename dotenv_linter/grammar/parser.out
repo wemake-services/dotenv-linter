@@ -1,0 +1,146 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    WHITESPACE
+
+Grammar
+
+Rule 0     S' -> body
+Rule 1     body -> <empty>
+Rule 2     body -> body line
+Rule 3     line -> assign
+Rule 4     line -> name
+Rule 5     line -> comment
+Rule 6     assign -> NAME EQUAL
+Rule 7     assign -> NAME EQUAL VALUE
+Rule 8     name -> NAME
+Rule 9     comment -> COMMENT
+
+Terminals, with rules where they appear
+
+COMMENT              : 9
+EQUAL                : 6 7
+NAME                 : 6 7 8
+VALUE                : 7
+WHITESPACE           : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+assign               : 3
+body                 : 2 0
+comment              : 5
+line                 : 2
+name                 : 4
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . body
+    (1) body -> .
+    (2) body -> . body line
+
+    NAME            reduce using rule 1 (body -> .)
+    COMMENT         reduce using rule 1 (body -> .)
+    $end            reduce using rule 1 (body -> .)
+
+    body                           shift and go to state 1
+
+state 1
+
+    (0) S' -> body .
+    (2) body -> body . line
+    (3) line -> . assign
+    (4) line -> . name
+    (5) line -> . comment
+    (6) assign -> . NAME EQUAL
+    (7) assign -> . NAME EQUAL VALUE
+    (8) name -> . NAME
+    (9) comment -> . COMMENT
+
+    NAME            shift and go to state 6
+    COMMENT         shift and go to state 7
+
+    line                           shift and go to state 2
+    assign                         shift and go to state 3
+    name                           shift and go to state 4
+    comment                        shift and go to state 5
+
+state 2
+
+    (2) body -> body line .
+
+    NAME            reduce using rule 2 (body -> body line .)
+    COMMENT         reduce using rule 2 (body -> body line .)
+    $end            reduce using rule 2 (body -> body line .)
+
+
+state 3
+
+    (3) line -> assign .
+
+    NAME            reduce using rule 3 (line -> assign .)
+    COMMENT         reduce using rule 3 (line -> assign .)
+    $end            reduce using rule 3 (line -> assign .)
+
+
+state 4
+
+    (4) line -> name .
+
+    NAME            reduce using rule 4 (line -> name .)
+    COMMENT         reduce using rule 4 (line -> name .)
+    $end            reduce using rule 4 (line -> name .)
+
+
+state 5
+
+    (5) line -> comment .
+
+    NAME            reduce using rule 5 (line -> comment .)
+    COMMENT         reduce using rule 5 (line -> comment .)
+    $end            reduce using rule 5 (line -> comment .)
+
+
+state 6
+
+    (6) assign -> NAME . EQUAL
+    (7) assign -> NAME . EQUAL VALUE
+    (8) name -> NAME .
+
+    EQUAL           shift and go to state 8
+    NAME            reduce using rule 8 (name -> NAME .)
+    COMMENT         reduce using rule 8 (name -> NAME .)
+    $end            reduce using rule 8 (name -> NAME .)
+
+
+state 7
+
+    (9) comment -> COMMENT .
+
+    NAME            reduce using rule 9 (comment -> COMMENT .)
+    COMMENT         reduce using rule 9 (comment -> COMMENT .)
+    $end            reduce using rule 9 (comment -> COMMENT .)
+
+
+state 8
+
+    (6) assign -> NAME EQUAL .
+    (7) assign -> NAME EQUAL . VALUE
+
+    NAME            reduce using rule 6 (assign -> NAME EQUAL .)
+    COMMENT         reduce using rule 6 (assign -> NAME EQUAL .)
+    $end            reduce using rule 6 (assign -> NAME EQUAL .)
+    VALUE           shift and go to state 9
+
+
+state 9
+
+    (7) assign -> NAME EQUAL VALUE .
+
+    NAME            reduce using rule 7 (assign -> NAME EQUAL VALUE .)
+    COMMENT         reduce using rule 7 (assign -> NAME EQUAL VALUE .)
+    $end            reduce using rule 7 (assign -> NAME EQUAL VALUE .)
+

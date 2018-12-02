@@ -5,9 +5,9 @@ Full BNF grammar for this language can be specified as:
 
 .. code:: text
 
-    expression : NAME EQUAL VALUE
+    expression : NAME
                | NAME EQUAL
-               | NAME
+               | NAME EQUAL VALUE
                | COMMENT
                | expression
 
@@ -15,11 +15,12 @@ This module generates ``parser.out`` and ``parsetab.py`` when first invoked.
 Do not touch these files, unless you know what you are doing.
 
 See also:
+    https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form
     https://www.dabeaz.com/ply/ply.html#ply_nn11
 
 """
 
-from typing import NoReturn, Optional
+from typing import NoReturn, Union
 
 from ply import lex, yacc
 
@@ -31,88 +32,9 @@ from dotenv_linter.grammar.lexer import DotenvLexer
 def _get_token(
     parsed: yacc.YaccProduction,
     index: int,
-) -> Optional[lex.LexToken]:
+):  # TODO: Optional Union[lex.LexToken, yacc.YaccSymbol]
     """YaccProduction has a broken __getitem__ method definition."""
-    try:
-        return getattr(parsed, 'slice')[index]
-    except IndexError:
-        return None
-
-
-def _calc_value_offset(
-    name_token: lex.LexToken,
-    assign_token: lex.LexToken,
-) -> int:
-    name_length = name_token.col_offset + len(name_token.value)
-    return name_length + len(assign_token.value)
-
-
-class _AssignParse(object):
-    def __init__(self, parsed: yacc.YaccProduction) -> None:
-        self._parsed = parsed
-
-    def parse_assign(self) -> None:
-        name_token = _get_token(self._parsed, 1)
-        assign_token = _get_token(self._parsed, 2)
-        value_token = _get_token(self._parsed, 3)
-
-        if value_token is not None and assign_token is not None:
-            parsed = self._parse_assign(name_token, assign_token, value_token)
-        elif assign_token is not None:
-            parsed = self._parse_empty_assign(name_token, assign_token)
-        else:
-            parsed = self._parse_only_name(name_token)
-        print(vars(self._parsed))
-        self._parsed[0] = parsed
-
-    def _parse_only_name(self, name_token: lex.LexToken) -> Name:
-        return Name(
-            lineno=name_token.lineno,
-            col_offset=name_token.col_offset,
-            raw_text=name_token.value,
-        )
-
-    def _parse_empty_assign(
-        self,
-        name_token: lex.LexToken,
-        assign_token: lex.LexToken,
-    ) -> Assign:
-        left = Name(
-            lineno=name_token.lineno,
-            col_offset=name_token.col_offset,
-            raw_text=name_token.value,
-        )
-        return Assign(
-            left=left,
-            right=None,
-            lineno=name_token.lineno,
-            col_offset=name_token.col_offset,
-            raw_text=assign_token.value,
-        )
-
-    def _parse_assign(
-        self,
-        name_token: lex.LexToken,
-        assign_token: lex.LexToken,
-        value_token: lex.LexToken,
-    ) -> Assign:
-        left = Name(
-            lineno=name_token.lineno,
-            col_offset=name_token.col_offset,
-            raw_text=name_token.value,
-        )
-        right = Value(
-            lineno=value_token.lineno,
-            col_offset=_calc_value_offset(name_token, assign_token),
-            raw_text=value_token.value,
-        )
-        return Assign(
-            left=left,
-            right=right,
-            lineno=name_token.lineno,
-            col_offset=name_token.col_offset,
-            raw_text=assign_token.value,
-        )
+    return getattr(parsed, 'slice')[index]
 
 
 class DotenvParser(object):
@@ -123,51 +45,66 @@ class DotenvParser(object):
     collected by ``ply.yacc`` module. Do not change them.
     """
 
-    start = 'expression'
+    # start = 'expression'
 
     def __init__(self, **kwarg) -> None:
         """Creates inner parser instance."""
         self.lexer = DotenvLexer()
         self.tokens = self.lexer.tokens
-        self.parser = yacc.yacc(module=self, debug=True, **kwarg)
+        self.parser = yacc.yacc(module=self, **kwarg)
 
     def parse(self, to_parse: str, **kwargs) -> Module:
         """Parses input string to FST."""
-        # TODO: use `Module` to wrap this result
-        return self.parser.parse(input=to_parse, debug=True, lexer=self.lexer, **kwargs)
-
-    def p_expression_full(self, parsed: yacc.YaccProduction) -> None:
-        """
-        expression : NAME
-                   | NAME EQUAL
-                   | NAME EQUAL VALUE
-        """
-        _AssignParse(parsed).parse_assign()
-
-    def p_expression_comment(self, parsed: yacc.YaccProduction) -> None:
-        """expression : COMMENT"""
-        token = _get_token(parsed, 1)
-        parsed[0] = Comment(
-            lineno=token.lineno,
-            col_offset=token.col_offset,
-            raw_text=token.value,
+        return self.parser.parse(
+            input=to_parse, lexer=self.lexer, **kwargs,
         )
+
+    def p_body(self, p):
+        """
+        body :
+             | body line
+        """
+        print('body', getattr(p, 'slice'))
+
+    def p_line(self, parsed):
+        """
+        line : assign
+             | name
+             | comment
+        """
+        print('line', getattr(parsed, 'slice'))
+
+    def p_assign(self, parsed):
+        """
+        assign : NAME EQUAL
+               | NAME EQUAL VALUE
+        """
+        print('assign', getattr(parsed, 'slice'))
+
+    def p_name(self, parsed):
+        """name : NAME"""
+        print('name', getattr(parsed, 'slice'))
+
+    def p_comment(self, parsed):
+        """comment : COMMENT"""
+        print('com', getattr(parsed, 'slice'))
 
     def p_error(self, parsed: yacc.YaccProduction) -> NoReturn:
         """Raising errors on syntax errors."""
-        raise ParsingError(parsed.value)
+        print('error', parsed)
+        raise ParsingError(parsed)
 
 
 if __name__ == '__main__':
     # TODO: remove
     parser = DotenvParser()
 
-    while True:
-        try:
-            s = input('calc > ')
-        except EOFError:
-            break
-        if not s:
-            continue
-        result = parser.parse(s)
-        print(result)
+    data = '''
+# test
+first
+val =
+# end
+sec = 3
+'''
+    result = parser.parse(data)
+    print(result)

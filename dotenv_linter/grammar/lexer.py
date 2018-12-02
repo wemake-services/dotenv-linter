@@ -41,6 +41,7 @@ class DotenvLexer(object):
         self.reset()
 
     def reset(self) -> 'DotenvLexer':
+        """"""
         self._text = ''
         self._lexer.lineno = 1
         self._lexer.begin('INITIAL')
@@ -62,7 +63,7 @@ class DotenvLexer(object):
         except AttributeError:
             token.lexer.col_offset = 1
 
-    @lex.TOKEN(r'\w+')
+    @lex.TOKEN(r'[\w-]+')
     def t_NAME(self, token: lex.LexToken) -> lex.LexToken:
         token.col_offset = _get_offset(token)
         return token
