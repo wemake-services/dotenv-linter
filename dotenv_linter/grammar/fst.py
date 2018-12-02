@@ -14,53 +14,71 @@ it does not loose any relevant details such as:
 - whitespaces
 - line breaks
 
+See also:
+    https://en.wikipedia.org/wiki/Abstract_syntax_tree
+
 """
 
 from dataclasses import dataclass, field
-from typing import Union, List
+from typing import Union, List, Optional
 
 
-def normalize_text(text: str) -> str:
+def _normalize_text(text: str) -> str:
     """Removes trailing and leading spaces and quotes."""
     return text.strip().strip('\'"')
 
-# TODO: doc class hieracy
+# TODO: document classes hieracy in module docstring
 
 @dataclass
 class Node(object):
+    """
+    Base class for all other nodes.
+
+    Defines base fields that all other nodes have.
+    """
+
     lineno: int
     col_offset: int
     raw_text: str
 
     def __post_init__(self) -> None:
-        self.text = normalize_text(self.raw_text)
+        self.text = _normalize_text(self.raw_text)
 
 
 @dataclass
 class Comment(Node):
-    pass
+    """
+    Represent a single line comment message.
+
+    Is not derived from Statement, since it has no effect by design.
+    """
 
 
 @dataclass
 class Name(Node):
-    pass
+    """Represents an inline name which is used as a key for future values."""
 
 
 @dataclass
 class Value(Node):
-    pass
+    """Represents an inline value which is used together with key."""
 
 
 @dataclass
 class Statement(Node):
-    pass
+    """Base class for all affecting statements.""""
+
 
 @dataclass
 class Assign(Statement):
+    """Represents key-value pair separated by ``=``."""
+
     left: Name
-    right: Value
+    right: Optional[Value] = None
 
 
 @dataclass
 class Module(Node):
+    """Wrapper node that represents a single file with or without contents."""
+
     body: List[Union[Comment, Statement]] = field(default=list)

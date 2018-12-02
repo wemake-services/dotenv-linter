@@ -25,7 +25,8 @@ from dotenv_linter.grammar.fst import Assign, Comment, Name, Value
 from dotenv_linter.grammar.lexer import DotenvLexer
 
 
-def _get_token(parsed, index: int) -> lex.LexToken:
+def _get_token(parsed: yacc.YaccProduction, index: int) -> lex.LexToken:
+    """YaccProduction has a broken __getitem__ method definition."""
     return getattr(parsed, 'slice')[index]
 
 
@@ -53,6 +54,7 @@ class DotenvParser(object):
 
     def parse(self, to_parse: str, **kwargs) -> yacc.YaccProduction:
         """Parses input string to FST."""
+        # TODO: use `Module` to wrap this result
         return self.parser.parse(to_parse, lexer=self.lexer.lexer, **kwargs)
 
     def p_expression_equals(self, parsed: yacc.YaccProduction) -> None:
@@ -66,6 +68,8 @@ class DotenvParser(object):
             col_offset=name_token.col_offset,
             raw_text=name_token.value,
         )
+        # TODO: handle when value is not provided: KEY=
+        # TODO: handle when `EQUALS` is not provided: KEY
         right = Value(
             lineno=value_token.lineno,
             col_offset=_calc_value_offset(name_token, assign_token),
