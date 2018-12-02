@@ -1,5 +1,13 @@
 # -*- coding: utf-8 -*-
 
+"""
+Lexer definition.
+
+See also:
+    https://www.dabeaz.com/ply/ply.html#ply_nn3
+
+"""
+
 from ply import lex
 
 from dotenv_linter.exceptions import ParsingError
@@ -12,6 +20,8 @@ def _get_offset(token: lex.LexToken) -> int:
 
 
 class DotenvLexer(object):
+    """Custom lexer wrapper, grouping methods and attrs together."""
+
     tokens = (
         'WHITESPACE',
         'COMMENT',
@@ -25,6 +35,7 @@ class DotenvLexer(object):
     )
 
     def __init__(self, **kwargs) -> None:
+        """Creates inner lexer."""
         self.lexer = lex.lex(module=self, **kwargs)
 
     @lex.TOKEN(r'[ \t\v\f\u00A0]')
@@ -75,21 +86,23 @@ class DotenvLexer(object):
         raise ParsingError(token.value[0])
 
 
-data = '''
- # Comment line
-KEY=1#=a
-NAME = 1 2 3
-OTHER=
-last
-'''
+if __name__ == '__main__':
+    # TODO: remove
+    data = '''
+    # Comment line
+    KEY=1#=a
+    NAME = 1 2 3
+    OTHER=
+    last
+    '''
 
-lexer = DotenvLexer()
-# Give the lexer some input
-lexer.lexer.input(data)
+    lexer = DotenvLexer()
+    # Give the lexer some input
+    lexer.lexer.input(data)
 
-# Tokenize
-while True:
-    tok = lexer.lexer.token()
-    if not tok:
-        break      # No more input
-    print(tok, tok.col_offset)
+    # Tokenize
+    while True:
+        tok = lexer.lexer.token()
+        if not tok:
+            break      # No more input
+        print(tok, tok.col_offset)

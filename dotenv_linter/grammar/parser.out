@@ -9,7 +9,6 @@ Grammar
 Rule 0     S' -> expression
 Rule 1     expression -> NAME EQUAL VALUE
 Rule 2     expression -> COMMENT
-Rule 3     empty -> <empty>
 
 Terminals, with rules where they appear
 
@@ -22,7 +21,6 @@ error                :
 
 Nonterminals, with rules where they appear
 
-empty                : 
 expression           : 0
 
 Parsing method: LALR
