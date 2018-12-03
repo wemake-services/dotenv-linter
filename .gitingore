@@ -197,3 +197,4 @@ fabric.properties
 
 #### custom ####
 parser.out
+.mypy_cache
