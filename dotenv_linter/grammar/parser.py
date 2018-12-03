@@ -5,11 +5,18 @@ Full BNF grammar for this language can be specified as:
 
 .. code:: text
 
-    expression : NAME
-               | NAME EQUAL
-               | NAME EQUAL VALUE
-               | COMMENT
-               | expression
+    body :
+         | body line
+
+    line : assign
+         | name
+         | comment
+
+    assign : NAME EQUAL
+           | NAME EQUAL VALUE
+
+    name : NAME
+    comment : COMMENT
 
 This module generates ``parser.out`` and ``parsetab.py`` when first invoked.
 Do not touch these files, unless you know what you are doing.
@@ -63,7 +70,7 @@ class DotenvParser(object):
             lineno=0, col_offset=0, raw_text=to_parse, body=self._body_items,
         )
 
-    def p_body(self, parsed):
+    def p_body(self, parsed: yacc.YaccProduction) -> None:
         """
         body :
              | body line
@@ -72,7 +79,7 @@ class DotenvParser(object):
             parsed[0] = parsed[2]
             self._body_items.append(parsed[0])
 
-    def p_line(self, parsed):
+    def p_line(self, parsed: yacc.YaccProduction) -> None:
         """
         line : assign
              | name
@@ -80,7 +87,7 @@ class DotenvParser(object):
         """
         parsed[0] = parsed[1]
 
-    def p_assign(self, parsed):
+    def p_assign(self, parsed: yacc.YaccProduction) -> None:
         """
         assign : NAME EQUAL
                | NAME EQUAL VALUE
@@ -92,11 +99,11 @@ class DotenvParser(object):
             value=value_token,
         )
 
-    def p_name(self, parsed):
+    def p_name(self, parsed: yacc.YaccProduction) -> None:
         """name : NAME"""
         parsed[0] = Name.from_token(_get_token(parsed, 1))
 
-    def p_comment(self, parsed):
+    def p_comment(self, parsed: yacc.YaccProduction) -> None:
         """comment : COMMENT"""
         parsed[0] = Comment.from_token(_get_token(parsed, 1))
 
