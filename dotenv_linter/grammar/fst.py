@@ -20,12 +20,12 @@ See also:
 """
 
 from dataclasses import dataclass, field
-from typing import Union, List, Optional
+from typing import List, Optional, Union
 
 from ply import yacc
 
-from dotenv_linter.types import ProducedToken
 from dotenv_linter.logics.text import normalize_text
+from dotenv_linter.types import ProducedToken
 
 
 # TODO: document classes hieracy in module docstring

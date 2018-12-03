@@ -27,12 +27,19 @@ See also:
 
 """
 
-from typing import NoReturn, Union, Optional
+from typing import NoReturn, Optional, Union
 
 from ply import lex, yacc
 
 from dotenv_linter.exceptions import ParsingError
-from dotenv_linter.grammar.fst import Assign, Comment, Name, Module, Value
+from dotenv_linter.grammar.fst import (
+    Assign,
+    Comment,
+    Module,
+    Name,
+    Node,
+    Value,
+)
 from dotenv_linter.grammar.lexer import DotenvLexer
 from dotenv_linter.types import ProducedToken
 
@@ -58,14 +65,11 @@ class DotenvParser(object):
         self._lexer = DotenvLexer()
         self.tokens = self._lexer.tokens  # API requirement
         self._parser = yacc.yacc(module=self, **kwarg)
-        self._body_items = []
+        self._body_items: List[Node] = []
 
     def parse(self, to_parse: str, **kwargs) -> Module:
         """Parses input string to FST."""
-        self._parser.parse(
-            input=to_parse, lexer=self._lexer, **kwargs,
-        )
-
+        self._parser.parse(input=to_parse, lexer=self._lexer, **kwargs)
         return Module(
             lineno=0, col_offset=0, raw_text=to_parse, body=self._body_items,
         )
@@ -75,9 +79,9 @@ class DotenvParser(object):
         body :
              | body line
         """
-        if len(parsed) == 3:
+        if len(parsed) == 3 and parsed[2] is not None:
+            self._body_items.append(parsed[2])
             parsed[0] = parsed[2]
-            self._body_items.append(parsed[0])
 
     def p_line(self, parsed: yacc.YaccProduction) -> None:
         """
@@ -108,7 +112,7 @@ class DotenvParser(object):
         parsed[0] = Comment.from_token(_get_token(parsed, 1))
 
     def p_error(self, parsed: yacc.YaccProduction) -> NoReturn:
-        """Raising errors on syntax errors."""
+        """Raising exceptions on syntax errors."""
         raise ParsingError(parsed)
 
 
