@@ -29,6 +29,7 @@ from dotenv_linter.types import ProducedToken
 
 
 # TODO: document classes hieracy in module docstring
+# TODO: use slots, make frozen
 
 @dataclass
 class Node(object):
