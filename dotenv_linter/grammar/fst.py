@@ -20,18 +20,17 @@ See also:
 """
 
 from dataclasses import dataclass, field
-from typing import List, Optional, Union
+from typing import List, Optional, Union, TypeVar, Type
 
-from ply import yacc
+from ply import lex
 
 from dotenv_linter.logics.text import normalize_text
-from dotenv_linter.types import ProducedToken
+
+TNode = TypeVar('TNode', bound='Node')
+TAssign = TypeVar('TAssign', bound='Assign')
 
 
-# TODO: document classes hieracy in module docstring
-# TODO: use slots, make frozen
-
-@dataclass
+@dataclass(frozen=True)
 class Node(object):
     """
     Base class for all other nodes.
@@ -39,21 +38,27 @@ class Node(object):
     Defines base fields that all other nodes have.
     """
 
+    __slots__ = {'lineno', 'col_offset', 'raw_text', 'text'}
+
     lineno: int
     col_offset: int
     raw_text: str
 
     def __post_init__(self) -> None:
         """Used to tweak instance internals after initialization."""
-        self.text = normalize_text(self.raw_text)
+        object.__setattr__(self, 'text', normalize_text(self.raw_text))
 
     @classmethod
-    def from_token(cls, token: ProducedToken):
+    def from_token(cls: Type[TNode], token: lex.LexToken) -> TNode:
         """Creates instance from parser's token."""
-        raise NotImplementedError()
+        return cls(
+            lineno=token.lineno,
+            col_offset=token.col_offset,
+            raw_text=token.value,
+        )
 
 
-@dataclass
+@dataclass(frozen=True)
 class Comment(Node):
     """
     Represent a single line comment message.
@@ -61,63 +66,38 @@ class Comment(Node):
     Is not derived from Statement, since it has no effect by design.
     """
 
-    @classmethod
-    def from_token(cls, token: ProducedToken) -> 'Comment':
-        """Creates instance from parser's token."""
-        return Comment(
-            lineno=token.lineno,
-            col_offset=token.col_offset,
-            raw_text=token.value,
-        )
 
-
-@dataclass
+@dataclass(frozen=True)
 class Name(Node):
     """Represents an inline name which is used as a key for future values."""
 
-    @classmethod
-    def from_token(cls, token: ProducedToken) -> 'Name':
-        """Creates instance from parser's token."""
-        return cls(
-            lineno=token.lineno,
-            col_offset=token.col_offset,
-            raw_text=token.value,
-        )
 
-
-@dataclass
+@dataclass(frozen=True)
 class Value(Node):
     """Represents an inline value which is used together with key."""
 
-    @classmethod
-    def from_token(cls, token: ProducedToken) -> 'Value':
-        """Creates instance from parser's token."""
-        return cls(
-            lineno=token.lineno,
-            col_offset=token.col_offset,
-            raw_text=token.value,
-        )
 
-
-@dataclass
+@dataclass(frozen=True)
 class Statement(Node):
     """Base class for all affecting statements."""
 
 
-@dataclass
+@dataclass(frozen=True)
 class Assign(Statement):
     """Represents key-value pair separated by ``=``."""
 
+    __slots__ = {'lineno', 'col_offset', 'raw_text', 'text', 'left', 'right'}
+
     left: Name
-    right: Optional[Value] = None
+    right: Optional[Value]
 
     @classmethod
     def from_token(
-        cls,
-        token: ProducedToken,
-        equal: ProducedToken = None,
-        value: ProducedToken = None,
-    ) -> 'Assign':
+        cls: Type[TAssign],
+        token: lex.LexToken,
+        equal: lex.LexToken = None,
+        value: lex.LexToken = None,
+    ) -> TAssign:
         """Creates instance from parser's token."""
         if equal is None:
             raise ValueError('Empty EQUAL node is not allowed')
@@ -132,8 +112,10 @@ class Assign(Statement):
         )
 
 
-@dataclass
+@dataclass(frozen=True)
 class Module(Node):
     """Wrapper node that represents a single file with or without contents."""
 
-    body: List[Union[Comment, Statement]] = field(default=list)
+    __slots__ = {'lineno', 'col_offset', 'raw_text', 'text', 'body'}
+
+    body: List[Union[Comment, Statement]]
