@@ -22,10 +22,11 @@ See also:
 from dataclasses import dataclass, field
 from typing import Union, List, Optional
 
+from ply import yacc
 
-def _normalize_text(text: str) -> str:
-    """Removes trailing and leading spaces and quotes."""
-    return text.strip().strip('\'"')
+from dotenv_linter.types import ProducedToken
+from dotenv_linter.logics.text import normalize_text
+
 
 # TODO: document classes hieracy in module docstring
 
@@ -42,7 +43,13 @@ class Node(object):
     raw_text: str
 
     def __post_init__(self) -> None:
-        self.text = _normalize_text(self.raw_text)
+        """Used to tweak instance internals after initialization."""
+        self.text = normalize_text(self.raw_text)
+
+    @classmethod
+    def from_token(cls, token: ProducedToken):
+        """Creates instance from parser's token."""
+        raise NotImplementedError()
 
 
 @dataclass
@@ -53,15 +60,42 @@ class Comment(Node):
     Is not derived from Statement, since it has no effect by design.
     """
 
+    @classmethod
+    def from_token(cls, token: ProducedToken) -> 'Comment':
+        """Creates instance from parser's token."""
+        return Comment(
+            lineno=token.lineno,
+            col_offset=token.col_offset,
+            raw_text=token.value,
+        )
+
 
 @dataclass
 class Name(Node):
     """Represents an inline name which is used as a key for future values."""
 
+    @classmethod
+    def from_token(cls, token: ProducedToken) -> 'Name':
+        """Creates instance from parser's token."""
+        return cls(
+            lineno=token.lineno,
+            col_offset=token.col_offset,
+            raw_text=token.value,
+        )
+
 
 @dataclass
 class Value(Node):
     """Represents an inline value which is used together with key."""
+
+    @classmethod
+    def from_token(cls, token: ProducedToken) -> 'Value':
+        """Creates instance from parser's token."""
+        return cls(
+            lineno=token.lineno,
+            col_offset=token.col_offset,
+            raw_text=token.value,
+        )
 
 
 @dataclass
@@ -75,6 +109,26 @@ class Assign(Statement):
 
     left: Name
     right: Optional[Value] = None
+
+    @classmethod
+    def from_token(
+        cls,
+        token: ProducedToken,
+        equal: ProducedToken = None,
+        value: ProducedToken = None,
+    ) -> 'Assign':
+        """Creates instance from parser's token."""
+        if equal is None:
+            raise ValueError('Empty EQUAL node is not allowed')
+
+        value_item = Value.from_token(value) if value is not None else None
+        return cls(
+            left=Name.from_token(token),
+            right=value_item,
+            lineno=token.lineno,
+            col_offset=token.col_offset,
+            raw_text=equal.value,
+        )
 
 
 @dataclass

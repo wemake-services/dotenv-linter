@@ -20,19 +20,20 @@ See also:
 
 """
 
-from typing import NoReturn, Union
+from typing import NoReturn, Union, Optional
 
 from ply import lex, yacc
 
 from dotenv_linter.exceptions import ParsingError
 from dotenv_linter.grammar.fst import Assign, Comment, Name, Module, Value
 from dotenv_linter.grammar.lexer import DotenvLexer
+from dotenv_linter.types import ProducedToken
 
 
 def _get_token(
     parsed: yacc.YaccProduction,
     index: int,
-):  # TODO: Optional Union[lex.LexToken, yacc.YaccSymbol]
+) -> ProducedToken:
     """YaccProduction has a broken __getitem__ method definition."""
     return getattr(parsed, 'slice')[index]
 
@@ -45,26 +46,31 @@ class DotenvParser(object):
     collected by ``ply.yacc`` module. Do not change them.
     """
 
-    # start = 'expression'
-
     def __init__(self, **kwarg) -> None:
         """Creates inner parser instance."""
-        self.lexer = DotenvLexer()
-        self.tokens = self.lexer.tokens
-        self.parser = yacc.yacc(module=self, **kwarg)
+        self._lexer = DotenvLexer()
+        self.tokens = self._lexer.tokens  # API requirement
+        self._parser = yacc.yacc(module=self, **kwarg)
+        self._body_items = []
 
     def parse(self, to_parse: str, **kwargs) -> Module:
         """Parses input string to FST."""
-        return self.parser.parse(
-            input=to_parse, lexer=self.lexer, **kwargs,
+        self._parser.parse(
+            input=to_parse, lexer=self._lexer, **kwargs,
         )
 
-    def p_body(self, p):
+        return Module(
+            lineno=0, col_offset=0, raw_text=to_parse, body=self._body_items,
+        )
+
+    def p_body(self, parsed):
         """
         body :
              | body line
         """
-        print('body', getattr(p, 'slice'))
+        if len(parsed) == 3:
+            parsed[0] = parsed[2]
+            self._body_items.append(parsed[0])
 
     def p_line(self, parsed):
         """
@@ -72,26 +78,30 @@ class DotenvParser(object):
              | name
              | comment
         """
-        print('line', getattr(parsed, 'slice'))
+        parsed[0] = parsed[1]
 
     def p_assign(self, parsed):
         """
         assign : NAME EQUAL
                | NAME EQUAL VALUE
         """
-        print('assign', getattr(parsed, 'slice'))
+        value_token = _get_token(parsed, 3) if len(parsed) == 4 else None
+        parsed[0] = Assign.from_token(
+            token=_get_token(parsed, 1),
+            equal=_get_token(parsed, 2),
+            value=value_token,
+        )
 
     def p_name(self, parsed):
         """name : NAME"""
-        print('name', getattr(parsed, 'slice'))
+        parsed[0] = Name.from_token(_get_token(parsed, 1))
 
     def p_comment(self, parsed):
         """comment : COMMENT"""
-        print('com', getattr(parsed, 'slice'))
+        parsed[0] = Comment.from_token(_get_token(parsed, 1))
 
     def p_error(self, parsed: yacc.YaccProduction) -> NoReturn:
         """Raising errors on syntax errors."""
-        print('error', parsed)
         raise ParsingError(parsed)
 
 
