@@ -48,6 +48,9 @@ m2r = "^0.2.1"
 sphinx-readable-theme = "^1.3"
 tomlkit = "^0.5"
 
+[tool.poetry.scripts]
+dotenv-linter = "dotenv_linter.cli:main"
+
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"

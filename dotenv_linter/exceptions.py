@@ -2,4 +2,4 @@
 
 
 class ParsingError(Exception):
-    """Used when dotenv file has incorrect grammar and count not be parsed."""
+    """Used when dotenv file has incorrect grammar and cannot be parsed."""

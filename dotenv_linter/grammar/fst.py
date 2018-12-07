@@ -20,7 +20,7 @@ See also:
 """
 
 from dataclasses import dataclass, field
-from typing import List, Optional, Union, TypeVar, Type
+from typing import List, Optional, Type, TypeVar, Union
 
 from ply import lex
 

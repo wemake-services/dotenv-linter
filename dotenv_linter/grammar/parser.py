@@ -27,7 +27,7 @@ See also:
 
 """
 
-from typing import NoReturn, Optional, Union, List
+from typing import List, NoReturn, Optional, Union
 
 from ply import lex, yacc
 
@@ -38,8 +38,8 @@ from dotenv_linter.grammar.fst import (
     Module,
     Name,
     Node,
-    Value,
     Statement,
+    Value,
 )
 from dotenv_linter.grammar.lexer import DotenvLexer
 
@@ -114,19 +114,3 @@ class DotenvParser(object):
     def p_error(self, parsed: yacc.YaccProduction) -> NoReturn:
         """Raising exceptions on syntax errors."""
         raise ParsingError(parsed)
-
-
-if __name__ == '__main__':
-    # TODO: remove
-    parser = DotenvParser()
-
-    data = '''
-# test
-first
-val=
-# end
-sec = 3
-last=4
-'''
-    result = parser.parse(data)
-    print(result)
