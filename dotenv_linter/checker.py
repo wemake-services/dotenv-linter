@@ -6,7 +6,7 @@ from typing import Iterator, NoReturn, Optional, Tuple
 
 from dotenv_linter.grammar.fst import Module
 from dotenv_linter.grammar.parser import DotenvParser, ParsingError
-from dotenv_linter.visitors.base import BaseFSTVisitor
+from dotenv_linter.visitors.fst.names import NameVisitor
 
 
 class _ExitCodes(Enum):
@@ -20,7 +20,7 @@ class _FSTChecker(object):
     """"""
 
     _visitors_pipeline = (
-        BaseFSTVisitor,
+        NameVisitor,
     )
 
     def __init__(self, filenames: Tuple[str, ...]) -> None:
@@ -31,7 +31,6 @@ class _FSTChecker(object):
     def run(self) -> None:
         for filename, file_contents in self._prepare_file_contents():
             fst = self._prepare_fst(filename, file_contents)
-            print(fst)
             if fst is None:
                 continue
 
@@ -43,7 +42,7 @@ class _FSTChecker(object):
         if self._status == _ExitCodes.initial:
             self._status = _ExitCodes.success
 
-    def _prepare_file_contents(self) -> Iterator[str]:
+    def _prepare_file_contents(self) -> Iterator[Tuple[str, str]]:
         """Returns iterator with each file contents."""
         for filename in self._filenames:
             with open(filename, encoding='utf8') as file_object:
@@ -58,8 +57,10 @@ class _FSTChecker(object):
         try:
             return self._parser.parse(file_contents)
         except ParsingError:
+            pass
             # TODO: insert correct violation class
-            self._report_violations([])
+            # self._report_violations([])
+        return None
 
     def _report_violations(self, filename: str, violations) -> None:
         """Reports all violations that happened inside a visitor."""
@@ -67,8 +68,10 @@ class _FSTChecker(object):
             self._status = _ExitCodes.linting_error
 
         for violation in violations:  # TODO: we can create `Report` class
-            sys.stderr.write('{0}: {1}'.format(filename, violation.as_line()))
-        sys.stderr.flush()
+            print(
+                '{0}:{1}'.format(filename, violation.as_line()),
+                file=sys.stderr,
+            )
 
 
 class DotenvFileChecker(object):
@@ -97,6 +100,5 @@ class DotenvFileChecker(object):
                 output = sys.stdout
             else:
                 output = sys.stderr
-            output.write(message)
-            output.flush()
+            print(message, file=output)
         sys.exit(int(self._fst_checker._status.value))

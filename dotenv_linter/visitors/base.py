@@ -1,26 +1,28 @@
 # -*- coding: utf-8 -*-
 
-from ast import iter_fields
 from dataclasses import fields
-from typing import List, Tuple, Union
+from typing import Any, List, Tuple, Union, Iterator
 
 from typing_extensions import final
 
 from dotenv_linter.grammar.fst import Module, Node
+from dotenv_linter.violations.base import BaseViolation
+
+FieldInfo = Tuple[str, Union[List[Any], Any]]
 
 
-def iter_fields(node: Node) -> Tuple[str, Union[List[Node], Node]]:
+def iter_fields(node: Node) -> Iterator[FieldInfo]:
     """Iterates over all fields inside a ``fst`` node."""
     for field in fields(node):
-        yield field, getattr(node, field.name)
+        yield field.name, getattr(node, field.name)
 
 
 class BaseVisitor(object):
     def __init__(self, fst: Module) -> None:
         self._fst = fst
-        self.violations = []  # TODO: type
+        self.violations: List[BaseViolation] = []
 
-    def add_violation(self, violation) -> None:  # TODO: type
+    def add_violation(self, violation: BaseViolation) -> None:
         """Adds new violations to the visitor."""
         self.violations.append(violation)
 
