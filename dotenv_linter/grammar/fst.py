@@ -38,11 +38,12 @@ class Node(object):
     Defines base fields that all other nodes have.
     """
 
-    __slots__ = {'lineno', 'col_offset', 'raw_text', 'text'}
+    __slots__ = {'lineno', 'col_offset', 'raw_text'}
 
     lineno: int
     col_offset: int
     raw_text: str
+    text: str = field(init=False)
 
     def __post_init__(self) -> None:
         """Used to tweak instance internals after initialization."""

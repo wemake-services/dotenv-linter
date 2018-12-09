@@ -22,7 +22,12 @@ from dotenv_linter.checker import DotenvFileChecker
 
 
 @click.command()
-@click.argument('files', nargs=-1, required=True, type=click.Path(exists=True))
+@click.argument(
+    'files',
+    nargs=-1,
+    required=True,
+    type=click.Path(exists=True, dir_okay=False),
+)
 def main(files: Tuple[str, ...]) -> NoReturn:
     """Runs linting process for the given files."""
     checker = DotenvFileChecker(files)

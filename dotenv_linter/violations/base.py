@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from typing import Tuple
+
 from typing_extensions import final
 
 from dotenv_linter.grammar.fst import Node
@@ -12,23 +13,29 @@ class BaseViolation(object):
     code: int
     error_template: str
 
-    def __init__(self, node) -> None:
+    @final
+    def __init__(self, node, text: str) -> None:
         """Creates instance of any violation."""
         self._node = node
+        self._text = text
 
+    @final
     def as_line(self) -> str:
         """Coverts violation to a single line information."""
-        location = '{0}:{1}'.format(*self._location())
+        location = '{0}:{1}'.format(*self.location())
         return '{0} {1}: {2}'.format(
-            location, self._formated_code(), self.error_template,
+            location,
+            self._formated_code(),
+            self.error_template.format(self._text),
         )
 
+    def location(self) -> Tuple[int, int]:
+        """Returns in-file location of a violation."""
+        raise NotImplementedError('Should be redefined in a subclass')
+
+    @final
     def _formated_code(self) -> str:
         return str(self.code).zfill(3)
-
-    def _location(self) -> Tuple[int, int]:
-        """"Returns in-file location of a violation."""
-        raise NotImplementedError('Should be redefined in a subclass')
 
 
 class BaseFSTViolation(BaseViolation):
@@ -36,5 +43,7 @@ class BaseFSTViolation(BaseViolation):
 
     _node: Node
 
-    def _location(self) -> Tuple[int, int]:
+    @final
+    def location(self) -> Tuple[int, int]:
+        """Returns in-file location of a violation."""
         return self._node.lineno, self._node.col_offset

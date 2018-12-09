@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 
 from dataclasses import fields
-from typing import Any, List, Tuple, Union, Iterator
+from typing import Any, Iterable, Iterator, List, Tuple, Union
 
 from typing_extensions import final
 
 from dotenv_linter.grammar.fst import Module, Node
 from dotenv_linter.violations.base import BaseViolation
 
-FieldInfo = Tuple[str, Union[List[Any], Any]]
+#: Defines field internals of a dataclass, could be `Any`, that's why ignored
+FieldInfo = Tuple[str, Union[List[Any], Any]]  # type: ignore
 
 
 def iter_fields(node: Node) -> Iterator[FieldInfo]:
@@ -20,11 +21,15 @@ def iter_fields(node: Node) -> Iterator[FieldInfo]:
 class BaseVisitor(object):
     def __init__(self, fst: Module) -> None:
         self._fst = fst
-        self.violations: List[BaseViolation] = []
+        self._violations: List[BaseViolation] = []
 
-    def add_violation(self, violation: BaseViolation) -> None:
+    @property
+    def violations(self) -> Iterable[BaseViolation]:
+        return iter(self._violations)
+
+    def _add_violation(self, violation: BaseViolation) -> None:
         """Adds new violations to the visitor."""
-        self.violations.append(violation)
+        self._violations.append(violation)
 
     def _post_visit(self) -> None:
         """

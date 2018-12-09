@@ -30,6 +30,7 @@ See also:
 from typing import List, NoReturn, Optional, Union
 
 from ply import lex, yacc
+from typing_extensions import final
 
 from dotenv_linter.exceptions import ParsingError
 from dotenv_linter.grammar.fst import (
@@ -52,6 +53,7 @@ def _get_token(
     return getattr(parsed, 'slice')[index]
 
 
+@final
 class DotenvParser(object):
     """
     Custom parser wrapper, grouping methods and attrs together.

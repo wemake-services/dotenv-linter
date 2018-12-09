@@ -9,17 +9,20 @@ See also:
 """
 
 from ply import lex
+from typing_extensions import final
 
 from dotenv_linter.exceptions import ParsingError
 
 
 def _get_offset(token: lex.LexToken) -> int:
     """Returns and resets offset for the current lexer."""
-    offset = getattr(token.lexer, 'col_offset', 0)
-    token.lexer.col_offset = 0
+    offset = getattr(token.lexer, 'col_offset', 1)  # TODO: fix offsets
+    token.lexer.col_offset = 1
     return offset
 
 
+
+@final
 class DotenvLexer(object):
     """Custom lexer wrapper, grouping methods and attrs together."""
 
@@ -34,6 +37,8 @@ class DotenvLexer(object):
     states = (
         ('value', 'exclusive'),
     )
+
+    re_whitespaces = r'[ \t\v\f\u00A0]'
 
     def __init__(self, **kwargs) -> None:
         """Creates inner lexer."""
@@ -70,37 +75,29 @@ class DotenvLexer(object):
         """
         return self._lexer.token()
 
-    @lex.TOKEN(r'[ \t\v\f\u00A0]')
-    def t_WHITESPACE(self, token: lex.LexToken) -> None:
-        """Parsing whitespace tokens, they are ignored."""
-        try:
-            token.lexer.col_offset += 1
-        except AttributeError:
-            token.lexer.col_offset = 1
-
-    @lex.TOKEN(r'[\w-]+')
+    @lex.TOKEN(re_whitespaces + r'*[\w-]+')
     def t_NAME(self, token: lex.LexToken) -> lex.LexToken:
         """Parsing NAME tokens."""
-        token.col_offset = _get_offset(token)
+        token.col_offset = _get_offset(token) # TODO: decorator
         return token
 
-    @lex.TOKEN(r'\#.+')
+    @lex.TOKEN(re_whitespaces + r'*\#.+')
     def t_COMMENT(self, token: lex.LexToken) -> lex.LexToken:
         """Parsing COMMENT tokens."""
-        token.col_offset = _get_offset(token)
+        token.col_offset = _get_offset(token)  # TODO: decorator
         return token
 
-    @lex.TOKEN(r'=')
+    @lex.TOKEN(re_whitespaces + r'*=')
     def t_EQUAL(self, token: lex.LexToken) -> lex.LexToken:
         """Parsing EQUAL tokens."""
-        token.col_offset = _get_offset(token)
+        token.col_offset = _get_offset(token)  # TODO: decorator
         token.lexer.push_state('value')
         return token
 
     @lex.TOKEN(r'.+')
     def t_value_VALUE(self, token: lex.LexToken) -> lex.LexToken:
         """Parsing VALUE tokens."""
-        token.col_offset = _get_offset(token)
+        token.col_offset = _get_offset(token)  # TODO: decorator
         token.lexer.pop_state()
         return token
 

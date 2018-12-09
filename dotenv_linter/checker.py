@@ -4,11 +4,15 @@ import sys
 from enum import Enum
 from typing import Iterator, NoReturn, Optional, Tuple
 
+from typing_extensions import final
+
 from dotenv_linter.grammar.fst import Module
 from dotenv_linter.grammar.parser import DotenvParser, ParsingError
-from dotenv_linter.visitors.fst.names import NameVisitor
+from dotenv_linter.logics.report import Report
+from dotenv_linter.visitors.fst import assigns, names
 
 
+@final
 class _ExitCodes(Enum):
     initial = -1
     success = 0
@@ -16,11 +20,14 @@ class _ExitCodes(Enum):
     system_error = 137
 
 
+@final
 class _FSTChecker(object):
     """"""
 
     _visitors_pipeline = (
-        NameVisitor,
+        assigns.AssignVisitor,
+        names.NameVisitor,
+        names.NameInModuleVisitor,
     )
 
     def __init__(self, filenames: Tuple[str, ...]) -> None:
@@ -34,13 +41,8 @@ class _FSTChecker(object):
             if fst is None:
                 continue
 
-            for visitor_class in self._visitors_pipeline:
-                visitor = visitor_class(fst)
-                visitor.run()
-                self._report_violations(filename, visitor.violations)
-
-        if self._status == _ExitCodes.initial:
-            self._status = _ExitCodes.success
+            self._lint_file(filename, fst)
+        self._check_global_status()
 
     def _prepare_file_contents(self) -> Iterator[Tuple[str, str]]:
         """Returns iterator with each file contents."""
@@ -62,18 +64,27 @@ class _FSTChecker(object):
             # self._report_violations([])
         return None
 
-    def _report_violations(self, filename: str, violations) -> None:
-        """Reports all violations that happened inside a visitor."""
-        if self._status == _ExitCodes.initial:
+    def _lint_file(self, filename: str, fst: Module) -> None:
+        report = Report(filename)
+        for visitor_class in self._visitors_pipeline:
+            visitor = visitor_class(fst)
+            visitor.run()
+            report.collect_from(visitor)
+        report.report()
+        self._check_report_status(report)
+
+    def _check_report_status(self, report: Report) -> None:
+        """Checks report status and sets the global status."""
+        if report.has_violations:
             self._status = _ExitCodes.linting_error
 
-        for violation in violations:  # TODO: we can create `Report` class
-            print(
-                '{0}:{1}'.format(filename, violation.as_line()),
-                file=sys.stderr,
-            )
+    def _check_global_status(self) -> None:
+        """Checks the final status when all checks has been executed."""
+        if self._status == _ExitCodes.initial:
+            self._status = _ExitCodes.success
 
 
+@final
 class DotenvFileChecker(object):
     """
     Main class of the application.
