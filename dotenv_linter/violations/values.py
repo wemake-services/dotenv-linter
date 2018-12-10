@@ -56,5 +56,5 @@ class QuotedValueViolation(BaseFSTViolation):
 
     """
 
-    code = 300
+    code = 301
     error_template = 'Found quoted value'

@@ -9,7 +9,7 @@ from typing_extensions import final
 from dotenv_linter.grammar.fst import Module
 from dotenv_linter.grammar.parser import DotenvParser, ParsingError
 from dotenv_linter.logics.report import Report
-from dotenv_linter.visitors.fst import assigns, names
+from dotenv_linter.visitors.fst import assigns, comments, names, values
 
 
 @final
@@ -26,8 +26,10 @@ class _FSTChecker(object):
 
     _visitors_pipeline = (
         assigns.AssignVisitor,
+        comments.CommentVisitor,
         names.NameVisitor,
         names.NameInModuleVisitor,
+        values.ValueVisitor,
     )
 
     def __init__(self, filenames: Tuple[str, ...]) -> None:
