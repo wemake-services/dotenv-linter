@@ -13,7 +13,6 @@ class BaseViolation(object):
     code: int
     error_template: str
 
-    @final
     def __init__(self, node, text: str) -> None:
         """Creates instance of any violation."""
         self._node = node
@@ -47,3 +46,17 @@ class BaseFSTViolation(BaseViolation):
     def location(self) -> Tuple[int, int]:
         """Returns in-file location of a violation."""
         return self._node.lineno, self._node.col_offset
+
+
+class BaseFileViolation(BaseViolation):
+    """Base class for all violations that operate on whole files."""
+
+    def __init__(self, node=None, text=None) -> None:
+        """Creates instance of file-based violation."""
+        self._node = node
+        self._text = text
+
+    @final
+    def location(self) -> Tuple[int, int]:
+        """Returns in-file location of a violation."""
+        return 0, 0

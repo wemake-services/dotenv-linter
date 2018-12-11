@@ -19,13 +19,17 @@ def iter_fields(node: Node) -> Iterator[FieldInfo]:
 
 
 class BaseVisitor(object):
+    """Base visitor class for all possible cases."""
+
     def __init__(self, fst: Module) -> None:
+        """Creates default visitor instance."""
         self._fst = fst
         self._violations: List[BaseViolation] = []
 
     @property
     def violations(self) -> Iterable[BaseViolation]:
-        return iter(self._violations)
+        """Utility getter not to expose violations directly."""
+        return self._violations
 
     def _add_violation(self, violation: BaseViolation) -> None:
         """Adds new violations to the visitor."""
@@ -60,7 +64,7 @@ class BaseFSTVisitor(BaseVisitor):
             if isinstance(node_value, list):
                 for sub_node in node_value:
                     if isinstance(sub_node, Node):
-                        self.visit(sub_node)
+                        self.visit(sub_node)  # noqa: Z220
             elif isinstance(node_value, Node):
                 self.visit(node_value)
 

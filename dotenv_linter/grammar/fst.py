@@ -95,21 +95,25 @@ class Assign(Statement):
     @classmethod
     def from_token(
         cls: Type[TAssign],
-        token: lex.LexToken,
-        equal: lex.LexToken = None,
-        value: lex.LexToken = None,
+        name_token: lex.LexToken,
+        equal_token: lex.LexToken = None,
+        value_token: lex.LexToken = None,
     ) -> TAssign:
         """Creates instance from parser's token."""
-        if equal is None:
+        if equal_token is None:
             raise ValueError('Empty EQUAL node is not allowed')
 
-        value_item = Value.from_token(value) if value is not None else None
+        if value_token is None:
+            value_item = None
+        else:
+            value_item = Value.from_token(value_token)
+
         return cls(
-            left=Name.from_token(token),
+            left=Name.from_token(name_token),
             right=value_item,
-            lineno=token.lineno,
-            col_offset=token.col_offset,
-            raw_text=equal.value,
+            lineno=name_token.lineno,
+            col_offset=name_token.col_offset,
+            raw_text=equal_token.value,
         )
 
 

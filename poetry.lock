@@ -91,6 +91,7 @@ version = "4.5.2"
 [[package]]
 category = "main"
 description = "A backport of the dataclasses module for Python 3.6"
+marker = "python_version < \"3.7\""
 name = "dataclasses"
 optional = false
 python-versions = "*"
@@ -293,6 +294,18 @@ flake8 = ">=3.0"
 
 [[package]]
 category = "dev"
+description = "Ignore individual error codes per file with flake8"
+name = "flake8-per-file-ignores"
+optional = false
+python-versions = "*"
+version = "0.6"
+
+[package.dependencies]
+flake8 = ">=3"
+pathmatch = "*"
+
+[[package]]
+category = "dev"
 description = "Polyfill package for Flake8 plugins"
 name = "flake8-polyfill"
 optional = false
@@ -483,6 +496,18 @@ version = "18.0"
 [package.dependencies]
 pyparsing = ">=2.0.2"
 six = "*"
+
+[[package]]
+category = "dev"
+description = "Path matching utilities"
+name = "pathmatch"
+optional = false
+python-versions = "*"
+version = "0.2.1"
+
+[package.dependencies]
+six = ">=1.10.0"
+typing = ">=3.5.2"
 
 [[package]]
 category = "dev"
@@ -834,7 +859,7 @@ pep8-naming = ">=0.7,<0.8"
 typing_extensions = ">=3.6,<4.0"
 
 [metadata]
-content-hash = "1969ca7e2fe5c75430a06a5613599483d371d22b6b96fc0b715a1cd8f8f77456"
+content-hash = "09eaf25bed96a28ee91b680f63bce344733a453bcccc019e6749ed0f8f05f056"
 python-versions = "^3.6 || ^3.7"
 
 [metadata.hashes]
@@ -866,6 +891,7 @@ flake8-eradicate = ["750e51d4180a253df468a0ebe6ab115a3cf766035269dbbd78589a1d1de
 flake8-isort = ["3c107c405dd6e3dbdcccb2f84549d76d58a07120cd997a0560fab8b84c305f2a", "76d7dd6aec2762c608b442abebb0aaedb72fc75f9a075241a89e4784d8a39900"]
 flake8-logging-format = ["464b68b602fb034335b91a21b8968560f29f10e0e0f2618f2a8e2bb0ea01232f"]
 flake8-pep3101 = ["493821d6bdd083794eb0691ebe5b68e5c520b622b269d60e54308fb97440e21a", "b661ab718df42b87743dde266ef5de4f9e900b56c67dbccd45d24cf527545553"]
+flake8-per-file-ignores = ["3c4b1d770fa509aaad997ca147bd3533b730c3f6c48290b69a4265072c465522", "4ee4f24cbea5e18e1fefdfccb043e819caf483d16d08e39cb6df5d18b0407275"]
 flake8-polyfill = ["12be6a34ee3ab795b19ca73505e7b55826d5f6ad7230d31b18e106400169b9e9", "e44b087597f6da52ec6393a709e7108b2905317d0c0b744cdca6208e670d8eda"]
 flake8-print = ["5010e6c138b63b62400da4b06afa33becc5e08bd1fcce9af3752445cf3342f54"]
 flake8-quotes = ["fd9127ad8bbcf3b546fa7871a5266fd8623ce765ebe3d5aa5eabb80c01212b26"]
@@ -885,6 +911,7 @@ more-itertools = ["c187a73da93e7a8acc0001572aebc7e3c69daf7bf6881a2cea10650bd4420
 mypy = ["8e071ec32cc226e948a34bbb3d196eb0fd96f3ac69b6843a5aff9bd4efa14455", "fb90c804b84cfd8133d3ddfbd630252694d11ccc1eb0166a1b2efb5da37ecab2"]
 mypy-extensions = ["37e0e956f41369209a3d5f34580150bcacfabaa57b33a15c0b25f4b5725e0812", "b16cabe759f55e3409a7d231ebd2841378fb0c27a5d1994719e340e4f429ac3e"]
 packaging = ["0886227f54515e592aaa2e5a553332c73962917f2831f1b0f9b9f4380a4b9807", "f95a1e147590f204328170981833854229bb2912ac3d5f89e2a8ccd2834800c9"]
+pathmatch = ["b35db907d0532c66132e5bc8aaa20dbfae916441987c8f0abd53ac538376d9a7"]
 pbr = ["f59d71442f9ece3dffc17bc36575768e1ee9967756e6b6535f0ee1f0054c3d68", "f6d5b23f226a2ba58e14e49aa3b1bfaf814d0199144b95d78458212444de1387"]
 pep8-naming = ["360308d2c5d2fff8031c1b284820fbdb27a63274c0c1a8ce884d631836da4bdd", "624258e0dd06ef32a9daf3c36cc925ff7314da7233209c5b01f7e5cdd3c34826"]
 pluggy = ["447ba94990e8014ee25ec853339faf7b0fc8050cdc3289d4d71f7f410fb90095", "bde19360a8ec4dfd8a20dcb811780a30998101f078fc7ded6162f0076f50508f"]

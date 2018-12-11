@@ -21,6 +21,7 @@ class NameInModuleVisitor(BaseFSTVisitor):
     """Finds wrong names in dotenv modules."""
 
     def __init__(self, *args, **kwargs) -> None:
+        """Creates a list of all names in a file."""
         super().__init__(*args, **kwargs)
         self._names: List[Name] = []
 

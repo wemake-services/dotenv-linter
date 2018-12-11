@@ -8,6 +8,8 @@ See also:
 
 """
 
+from typing import ClassVar, Tuple
+
 from ply import lex
 from typing_extensions import final
 
@@ -21,12 +23,11 @@ def _get_offset(token: lex.LexToken) -> int:
     return offset
 
 
-
-@final
+@final  # noqa: Z214
 class DotenvLexer(object):
     """Custom lexer wrapper, grouping methods and attrs together."""
 
-    tokens = (
+    tokens: ClassVar[Tuple[str, ...]] = (
         'WHITESPACE',
         'COMMENT',
         'NAME',
@@ -34,11 +35,12 @@ class DotenvLexer(object):
         'VALUE',
     )
 
-    states = (
-        ('value', 'exclusive'),
+    states: ClassVar[Tuple[Tuple[str, str], ...]] = (
+        ('name', 'exclusive'),  # we have found Name definition
+        ('value', 'exclusive'),  # we have found Equal definition
     )
 
-    re_whitespaces = r'[ \t\v\f\u00A0]'
+    re_whitespaces: ClassVar[str] = r'[ \t\v\f\u00A0]'
 
     def __init__(self, **kwargs) -> None:
         """Creates inner lexer."""
@@ -56,7 +58,7 @@ class DotenvLexer(object):
         self._lexer.begin('INITIAL')
         return self
 
-    def input(self, text: str) -> 'DotenvLexer':
+    def input(self, text: str) -> 'DotenvLexer':  # noqa: A003
         """
         Passes input to the lexer.
 
@@ -76,33 +78,34 @@ class DotenvLexer(object):
         return self._lexer.token()
 
     @lex.TOKEN(re_whitespaces + r'*[\w-]+')
-    def t_NAME(self, token: lex.LexToken) -> lex.LexToken:
+    def t_NAME(self, token: lex.LexToken) -> lex.LexToken:  # noqa: N802
         """Parsing NAME tokens."""
-        token.col_offset = _get_offset(token) # TODO: decorator
+        token.col_offset = _get_offset(token)  # TODO: decorator
+        token.lexer.push_state('name')
         return token
 
     @lex.TOKEN(re_whitespaces + r'*\#.+')
-    def t_COMMENT(self, token: lex.LexToken) -> lex.LexToken:
+    def t_COMMENT(self, token: lex.LexToken) -> lex.LexToken:  # noqa: N802
         """Parsing COMMENT tokens."""
         token.col_offset = _get_offset(token)  # TODO: decorator
         return token
 
     @lex.TOKEN(re_whitespaces + r'*=')
-    def t_EQUAL(self, token: lex.LexToken) -> lex.LexToken:
+    def t_name_EQUAL(self, token: lex.LexToken) -> lex.LexToken:  # noqa: N802
         """Parsing EQUAL tokens."""
         token.col_offset = _get_offset(token)  # TODO: decorator
         token.lexer.push_state('value')
         return token
 
     @lex.TOKEN(r'.+')
-    def t_value_VALUE(self, token: lex.LexToken) -> lex.LexToken:
+    def t_value_VALUE(self, token: lex.LexToken) -> lex.LexToken:  # noqa: N802
         """Parsing VALUE tokens."""
         token.col_offset = _get_offset(token)  # TODO: decorator
         token.lexer.pop_state()
         return token
 
     @lex.TOKEN(r'[\n\r\u2028\u2029]')
-    def t_ANY_newline(self, token: lex.LexToken) -> None:
+    def t_ANY_newline(self, token: lex.LexToken) -> None:  # noqa: N802
         """
         Defines a rule so we can track line numbers.
 
@@ -111,7 +114,7 @@ class DotenvLexer(object):
         token.lexer.lineno += len(token.value)
         token.lexer.begin('INITIAL')
 
-    def t_ANY_error(self, token: lex.LexToken) -> None:
+    def t_ANY_error(self, token: lex.LexToken) -> None:  # noqa: N802
         """
         Error handling rule.
 

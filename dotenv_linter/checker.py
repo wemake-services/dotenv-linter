@@ -9,6 +9,7 @@ from typing_extensions import final
 from dotenv_linter.grammar.fst import Module
 from dotenv_linter.grammar.parser import DotenvParser, ParsingError
 from dotenv_linter.logics.report import Report
+from dotenv_linter.violations.parsing import ParsingViolation
 from dotenv_linter.visitors.fst import assigns, comments, names, values
 
 
@@ -22,7 +23,7 @@ class _ExitCodes(Enum):
 
 @final
 class _FSTChecker(object):
-    """"""
+    """Internal checker instance to actually run all the checks."""
 
     _visitors_pipeline = (
         assigns.AssignVisitor,
@@ -33,16 +34,15 @@ class _FSTChecker(object):
     )
 
     def __init__(self, filenames: Tuple[str, ...]) -> None:
+        """Creates new instance."""
         self._filenames = filenames
-        self._status = _ExitCodes.initial
         self._parser = DotenvParser()
+        self.status = _ExitCodes.initial
 
     def run(self) -> None:
+        """Executes all checks for each given filename."""
         for filename, file_contents in self._prepare_file_contents():
             fst = self._prepare_fst(filename, file_contents)
-            if fst is None:
-                continue
-
             self._lint_file(filename, fst)
         self._check_global_status()
 
@@ -57,33 +57,34 @@ class _FSTChecker(object):
         filename: str,
         file_contents: str,
     ) -> Optional[Module]:
-        """Builds ``fst`` tree for a given """
         try:
             return self._parser.parse(file_contents)
         except ParsingError:
-            pass
-            # TODO: insert correct violation class
-            # self._report_violations([])
-        return None
+            return None
 
     def _lint_file(self, filename: str, fst: Module) -> None:
         report = Report(filename)
-        for visitor_class in self._visitors_pipeline:
-            visitor = visitor_class(fst)
-            visitor.run()
-            report.collect_from(visitor)
+
+        if fst is None:
+            report.collect_one(ParsingViolation())
+        else:
+            for visitor_class in self._visitors_pipeline:
+                visitor = visitor_class(fst)
+                visitor.run()
+                report.collect_from(visitor)
+
         report.report()
         self._check_report_status(report)
 
     def _check_report_status(self, report: Report) -> None:
         """Checks report status and sets the global status."""
         if report.has_violations:
-            self._status = _ExitCodes.linting_error
+            self.status = _ExitCodes.linting_error
 
     def _check_global_status(self) -> None:
         """Checks the final status when all checks has been executed."""
-        if self._status == _ExitCodes.initial:
-            self._status = _ExitCodes.success
+        if self.status == _ExitCodes.initial:
+            self.status = _ExitCodes.success
 
 
 @final
@@ -94,7 +95,8 @@ class DotenvFileChecker(object):
     It does all the communication.
     """
 
-    def __init__(self, filenames: Tuple[str, ...], options = None):
+    # TODO: create options
+    def __init__(self, filenames: Tuple[str, ...], options=None):
         """Creates new instance."""
         self._fst_checker = _FSTChecker(filenames)
 
@@ -104,14 +106,14 @@ class DotenvFileChecker(object):
 
     def finish(self, message: Optional[str]) -> NoReturn:
         """Returns the status code and text messages."""
-        if self._fst_checker._status == _ExitCodes.initial:
+        if self._fst_checker.status == _ExitCodes.initial:
             # This means, that linting process did not change status:
-            self._fst_checker._status = _ExitCodes.system_error
+            self._fst_checker.status = _ExitCodes.system_error
 
         if message:
-            if self._fst_checker._status == _ExitCodes.success:
+            if self._fst_checker.status == _ExitCodes.success:
                 output = sys.stdout
             else:
                 output = sys.stderr
-            print(message, file=output)
-        sys.exit(int(self._fst_checker._status.value))
+            print(message, file=output)  # noqa: T001
+        sys.exit(int(self._fst_checker.status.value))

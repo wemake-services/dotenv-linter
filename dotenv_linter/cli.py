@@ -13,7 +13,6 @@ See also:
 
 """
 
-import sys
 from typing import NoReturn, Tuple
 
 import click

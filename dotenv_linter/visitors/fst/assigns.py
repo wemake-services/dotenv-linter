@@ -2,7 +2,7 @@
 
 from typing_extensions import final
 
-from dotenv_linter.grammar.fst import Assign, Name
+from dotenv_linter.grammar.fst import Assign
 from dotenv_linter.violations.assigns import SpacedAssignViolation
 from dotenv_linter.visitors.base import BaseFSTVisitor
 

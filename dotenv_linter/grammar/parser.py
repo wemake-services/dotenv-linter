@@ -33,15 +33,7 @@ from ply import lex, yacc
 from typing_extensions import final
 
 from dotenv_linter.exceptions import ParsingError
-from dotenv_linter.grammar.fst import (
-    Assign,
-    Comment,
-    Module,
-    Name,
-    Node,
-    Statement,
-    Value,
-)
+from dotenv_linter.grammar.fst import Assign, Comment, Module, Name, Statement
 from dotenv_linter.grammar.lexer import DotenvLexer
 
 
@@ -53,7 +45,7 @@ def _get_token(
     return getattr(parsed, 'slice')[index]
 
 
-@final
+@final  # noqa: Z214
 class DotenvParser(object):
     """
     Custom parser wrapper, grouping methods and attrs together.
@@ -62,10 +54,11 @@ class DotenvParser(object):
     collected by ``ply.yacc`` module. Do not change them.
     """
 
+    tokens = DotenvLexer.tokens
+
     def __init__(self, **kwarg) -> None:
         """Creates inner parser instance."""
         self._lexer = DotenvLexer()
-        self.tokens = self._lexer.tokens  # API requirement
         self._body_items: List[Union[Comment, Statement]] = []
         self._parser = yacc.yacc(module=self, **kwarg)  # should be last
 
@@ -100,9 +93,9 @@ class DotenvParser(object):
         """
         value_token = _get_token(parsed, 3) if len(parsed) == 4 else None
         parsed[0] = Assign.from_token(
-            token=_get_token(parsed, 1),
-            equal=_get_token(parsed, 2),
-            value=value_token,
+            name_token=_get_token(parsed, 1),
+            equal_token=_get_token(parsed, 2),
+            value_token=value_token,
         )
 
     def p_name(self, parsed: yacc.YaccProduction) -> None:
