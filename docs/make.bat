@@ -9,7 +9,7 @@ if "%SPHINXBUILD%" == "" (
 )
 set SOURCEDIR=.
 set BUILDDIR=_build
-set SPHINXPROJ=wemake-python-styleguide
+set SPHINXPROJ=dotenv-linter
 
 if "%1" == "" goto help
 

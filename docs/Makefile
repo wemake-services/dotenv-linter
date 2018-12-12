@@ -4,7 +4,7 @@
 # You can set these variables from the command line.
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
-SPHINXPROJ    = wemake-python-styleguide
+SPHINXPROJ    = dotenv-linter
 SOURCEDIR     = .
 BUILDDIR      = _build
 
