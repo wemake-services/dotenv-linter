@@ -48,7 +48,7 @@ class _FSTChecker(object):
 
     def _prepare_file_contents(self) -> Iterator[Tuple[str, str]]:
         """Returns iterator with each file contents."""
-        for filename in self._filenames:
+        for filename in self._filenames:  # TODO: move this logic from here
             with open(filename, encoding='utf8') as file_object:
                 yield filename, file_object.read()
 
@@ -62,9 +62,10 @@ class _FSTChecker(object):
         except ParsingError:
             return None
 
-    def _lint_file(self, filename: str, fst: Module) -> None:
+    def _lint_file(self, filename: str, fst: Optional[Module]) -> None:
         report = Report(filename)
 
+        # TODO: this looks not that pretty. A refactor maybe?
         if fst is None:
             report.collect_one(ParsingViolation())
         else:
@@ -115,5 +116,6 @@ class DotenvFileChecker(object):
                 output = sys.stdout
             else:
                 output = sys.stderr
+            # TODO: I don't like it here, we need to move this logic somewhere
             print(message, file=output)  # noqa: T001
         sys.exit(int(self._fst_checker.status.value))

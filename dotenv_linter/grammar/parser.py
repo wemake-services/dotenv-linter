@@ -65,9 +65,7 @@ class DotenvParser(object):
     def parse(self, to_parse: str, **kwargs) -> Module:
         """Parses input string to FST."""
         self._parser.parse(input=to_parse, lexer=self._lexer, **kwargs)
-        return Module(
-            lineno=0, col_offset=0, raw_text=to_parse, body=self._body_items,
-        )
+        return Module(lineno=0, raw_text=to_parse, body=self._body_items)
 
     def p_body(self, parsed: yacc.YaccProduction) -> None:
         """

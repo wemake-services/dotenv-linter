@@ -53,13 +53,23 @@ class BaseFSTVisitor(BaseVisitor):
     """
 
     def visit(self, node: Node) -> None:
-        """Visit a ``fst`` node."""
+        """
+        Visit a ``fst`` node.
+
+        This code is copy-pasted from ``ast`` module, so it should stay
+        as it is now. No need to refactor it.
+        """
         method = 'visit_' + node.__class__.__qualname__.lower()
         visitor = getattr(self, method, self.generic_visit)
         return visitor(node)
 
     def generic_visit(self, node: Node) -> None:
-        """Called if no explicit visitor function exists for a node."""
+        """
+        Called if no explicit visitor function exists for a node.
+
+        This code is copy-pasted from ``ast`` module, so it should stay
+        as it is now. No need to refactor it.
+        """
         for _field, node_value in iter_fields(node):
             if isinstance(node_value, list):
                 for sub_node in node_value:

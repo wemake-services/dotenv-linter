@@ -1,0 +1,14 @@
+# This file is used to setup env
+# to generate documentation.
+
+sphinx==1.8.2
+sphinx_autodoc_typehints==1.5.2
+recommonmark==0.4.0
+m2r==0.2.1
+tomlkit==0.5.3
+
+# Dependencies of our linter:
+typing-extensions==3.6.6
+click==7.0.0
+dataclasses==0.6.0
+ply==3.11

@@ -5,6 +5,12 @@ Rules about writing correct dotenv values.
 
 By convention we do not print values to the output.
 Since they might contain private values.
+
+.. currentmodule:: dotenv_linter.violations.values
+
+.. autoclass:: SpacedValueViolation
+.. autoclass:: QuotedValueViolation
+
 """
 
 from typing_extensions import final

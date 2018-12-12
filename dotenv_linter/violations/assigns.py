@@ -1,5 +1,14 @@
 # -*- coding: utf-8 -*-
 
+"""
+Rules that define how assigns should be made.
+
+.. currentmodule:: dotenv_linter.violations.assigns
+
+.. autoclass:: SpacedAssignViolation
+
+"""
+
 from typing_extensions import final
 
 from dotenv_linter.violations.base import BaseFSTViolation

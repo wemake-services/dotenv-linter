@@ -11,9 +11,25 @@
 
 Simple linter for `.env` files.
 
+While `.env` files are very simple it is required to keep them consistent.
+This tool offers a wide range of consistency rules and best practices.
+
+And it integrates perfectly for any workflow.
+
 
 ## Installation
 
 ```bash
 pip install dotenv-linter
 ```
+
+
+## Usage
+
+```bash
+dotenv-linter file1 file2 fileN
+```
+
+## License
+
+MIT.

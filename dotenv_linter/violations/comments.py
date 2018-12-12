@@ -1,5 +1,14 @@
 # -*- coding: utf-8 -*-
 
+"""
+Rules that define how comments should be written.
+
+.. currentmodule:: dotenv_linter.violations.comments
+
+.. autoclass:: SpacedCommentViolation
+
+"""
+
 from typing_extensions import final
 
 from dotenv_linter.violations.base import BaseFSTViolation

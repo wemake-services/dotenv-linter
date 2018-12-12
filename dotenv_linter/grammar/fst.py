@@ -38,10 +38,9 @@ class Node(object):
     Defines base fields that all other nodes have.
     """
 
-    __slots__ = {'lineno', 'col_offset', 'raw_text'}
+    __slots__ = {'lineno', 'raw_text'}
 
     lineno: int
-    col_offset: int
     raw_text: str
     text: str = field(init=False)
 
@@ -54,7 +53,6 @@ class Node(object):
         """Creates instance from parser's token."""
         return cls(
             lineno=token.lineno,
-            col_offset=token.col_offset,
             raw_text=token.value,
         )
 
@@ -112,7 +110,6 @@ class Assign(Statement):
             left=Name.from_token(name_token),
             right=value_item,
             lineno=name_token.lineno,
-            col_offset=name_token.col_offset,
             raw_text=equal_token.value,
         )
 
@@ -121,6 +118,6 @@ class Assign(Statement):
 class Module(Node):
     """Wrapper node that represents a single file with or without contents."""
 
-    __slots__ = {'lineno', 'col_offset', 'raw_text', 'text', 'body'}
+    __slots__ = {'lineno', 'raw_text', 'text', 'body'}
 
     body: List[Union[Comment, Statement]]

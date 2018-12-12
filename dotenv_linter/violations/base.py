@@ -21,14 +21,13 @@ class BaseViolation(object):
     @final
     def as_line(self) -> str:
         """Coverts violation to a single line information."""
-        location = '{0}:{1}'.format(*self.location())
-        return '{0} {1}: {2}'.format(
-            location,
+        return '{0} {1} {2}'.format(
+            self.location(),
             self._formated_code(),
             self.error_template.format(self._text),
         )
 
-    def location(self) -> Tuple[int, int]:
+    def location(self) -> int:
         """Returns in-file location of a violation."""
         raise NotImplementedError('Should be redefined in a subclass')
 
@@ -43,9 +42,9 @@ class BaseFSTViolation(BaseViolation):
     _node: Node
 
     @final
-    def location(self) -> Tuple[int, int]:
+    def location(self) -> int:
         """Returns in-file location of a violation."""
-        return self._node.lineno, self._node.col_offset
+        return self._node.lineno
 
 
 class BaseFileViolation(BaseViolation):
@@ -57,6 +56,6 @@ class BaseFileViolation(BaseViolation):
         self._text = text
 
     @final
-    def location(self) -> Tuple[int, int]:
+    def location(self) -> int:
         """Returns in-file location of a violation."""
-        return 0, 0
+        return 0

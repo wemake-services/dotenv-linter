@@ -16,13 +16,6 @@ from typing_extensions import final
 from dotenv_linter.exceptions import ParsingError
 
 
-def _get_offset(token: lex.LexToken) -> int:
-    """Returns and resets offset for the current lexer."""
-    offset = getattr(token.lexer, 'col_offset', 1)  # TODO: fix offsets
-    token.lexer.col_offset = 1
-    return offset
-
-
 @final  # noqa: Z214
 class DotenvLexer(object):
     """Custom lexer wrapper, grouping methods and attrs together."""
@@ -80,27 +73,23 @@ class DotenvLexer(object):
     @lex.TOKEN(re_whitespaces + r'*[\w-]+')
     def t_NAME(self, token: lex.LexToken) -> lex.LexToken:  # noqa: N802
         """Parsing NAME tokens."""
-        token.col_offset = _get_offset(token)  # TODO: decorator
         token.lexer.push_state('name')
         return token
 
     @lex.TOKEN(re_whitespaces + r'*\#.+')
     def t_COMMENT(self, token: lex.LexToken) -> lex.LexToken:  # noqa: N802
         """Parsing COMMENT tokens."""
-        token.col_offset = _get_offset(token)  # TODO: decorator
         return token
 
     @lex.TOKEN(re_whitespaces + r'*=')
     def t_name_EQUAL(self, token: lex.LexToken) -> lex.LexToken:  # noqa: N802
         """Parsing EQUAL tokens."""
-        token.col_offset = _get_offset(token)  # TODO: decorator
         token.lexer.push_state('value')
         return token
 
     @lex.TOKEN(r'.+')
     def t_value_VALUE(self, token: lex.LexToken) -> lex.LexToken:  # noqa: N802
         """Parsing VALUE tokens."""
-        token.col_offset = _get_offset(token)  # TODO: decorator
         token.lexer.pop_state()
         return token
 

@@ -801,7 +801,7 @@ python-versions = "*"
 version = "1.1.0"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Type Hints for Python"
 name = "typing"
 optional = false
@@ -809,7 +809,7 @@ python-versions = "*"
 version = "3.6.6"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Backported and Experimental Type Hints for Python 3.5+"
 name = "typing-extensions"
 optional = false
@@ -859,7 +859,7 @@ pep8-naming = ">=0.7,<0.8"
 typing_extensions = ">=3.6,<4.0"
 
 [metadata]
-content-hash = "09eaf25bed96a28ee91b680f63bce344733a453bcccc019e6749ed0f8f05f056"
+content-hash = "be166fc6195c3382f406db7c870b80455892122046d7b9c667ebfae52660b584"
 python-versions = "^3.6 || ^3.7"
 
 [metadata.hashes]

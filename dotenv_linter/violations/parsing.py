@@ -1,5 +1,14 @@
 # -*- coding: utf-8 -*-
 
+"""
+Different error that might happen during file parsing phase.
+
+.. currentmodule:: dotenv_linter.violations.parsing
+
+.. autoclass:: ParsingViolation
+
+"""
+
 from typing_extensions import final
 
 from dotenv_linter.violations.base import BaseFileViolation

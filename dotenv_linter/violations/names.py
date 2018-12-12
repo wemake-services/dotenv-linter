@@ -1,5 +1,17 @@
 # -*- coding: utf-8 -*-
 
+"""
+Rules that define how names should be defined.
+
+.. currentmodule:: dotenv_linter.violations.names
+
+.. autoclass:: SpacedNameViolation
+.. autoclass:: IncorrectNameViolation
+.. autoclass:: DuplicateNameViolation
+.. autoclass:: RawNameViolation
+
+"""
+
 from typing_extensions import final
 
 from dotenv_linter.violations.base import BaseFSTViolation
