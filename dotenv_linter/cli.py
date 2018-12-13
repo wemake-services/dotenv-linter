@@ -2,16 +2,21 @@
 # -*- coding: utf-8 -*-
 
 """
-Here we define all basic CLI command that we provide as a public API.
+Usage
+=====
 
-We use ``click`` as a utility package to help us with CLI definition.
-It is a powerfull tool to do this one specific task.
+Command reference
+-----------------
 
-See also:
-    https://click.palletsprojects.com/en/7.x/setuptools/#setuptools-integration
-    https://click.palletsprojects.com/en/7.x/arguments/
+.. click:: dotenv_linter.cli:main
+  :prog: dotenv-linter
+  :show-nested:
 
 """
+
+# See also:
+# https://click.palletsprojects.com/en/7.x/setuptools/#setuptools-integration
+# https://click.palletsprojects.com/en/7.x/arguments/
 
 from typing import NoReturn, Tuple
 
@@ -30,7 +35,6 @@ from dotenv_linter.checker import DotenvFileChecker
 def main(files: Tuple[str, ...]) -> NoReturn:
     """Runs linting process for the given files."""
     checker = DotenvFileChecker(files)
-
     error_message = None
     try:
         checker.run()

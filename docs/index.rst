@@ -1,8 +1,9 @@
 .. mdinclude:: ../README.md
 
+.. include:: pages/cli.rst
+
 .. toctree::
   :maxdepth: 2
-  :caption: Violations:
   :hidden:
 
   pages/violations/index.rst

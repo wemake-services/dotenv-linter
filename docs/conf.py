@@ -62,6 +62,9 @@ extensions = [
 
     # Used to insert typehints into the final docs:
     'sphinx_autodoc_typehints',
+
+    # Used to document `click` commands:
+    'sphinx_click.ext',
 ]
 
 autoclass_content = 'class'
