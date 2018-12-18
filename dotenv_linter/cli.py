@@ -6,7 +6,7 @@
 # https://click.palletsprojects.com/en/7.x/arguments/
 
 import sys
-from typing import NoReturn, Tuple
+from typing import Tuple
 
 import click
 from click_default_group import DefaultGroup
