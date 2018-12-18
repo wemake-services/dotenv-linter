@@ -481,7 +481,7 @@ description = "Optional static typing for Python"
 name = "mypy"
 optional = false
 python-versions = "*"
-version = "0.641"
+version = "0.650"
 
 [package.dependencies]
 mypy-extensions = ">=0.4.0,<0.5.0"
@@ -873,7 +873,7 @@ pep8-naming = ">=0.7,<0.8"
 typing_extensions = ">=3.6,<4.0"
 
 [metadata]
-content-hash = "63758949780b9dfcee23764dd404aa8ca92fb3138b64192677609f90f980ed3f"
+content-hash = "357e12e31fb67ec06a178ab1987d12fcc51d0c1f993614a1333ab3436b321917"
 python-versions = "^3.6 || ^3.7"
 
 [metadata.hashes]
@@ -923,7 +923,7 @@ markupsafe = ["048ef924c1623740e70204aa7143ec592504045ae4429b59c30054cb31e3c432"
 mccabe = ["ab8a6258860da4b6677da4bd2fe5dc2c659cff31b3ee4f7f5d64e79735b80d42", "dd8d182285a0fe56bace7f45b5e7d1a6ebcbf524e8f3bd87eb0f125271b8831f"]
 mistune = ["59a3429db53c50b5c6bcc8a07f8848cb00d7dc8bdb431a4ab41920d201d4756e", "88a1051873018da288eee8538d476dffe1262495144b33ecb586c4ab266bb8d4"]
 more-itertools = ["c187a73da93e7a8acc0001572aebc7e3c69daf7bf6881a2cea10650bd4420092", "c476b5d3a34e12d40130bc2f935028b5f636df8f372dc2c1c01dc19681b2039e", "fcbfeaea0be121980e15bc97b3817b5202ca73d0eae185b4550cbfce2a3ebb3d"]
-mypy = ["8e071ec32cc226e948a34bbb3d196eb0fd96f3ac69b6843a5aff9bd4efa14455", "fb90c804b84cfd8133d3ddfbd630252694d11ccc1eb0166a1b2efb5da37ecab2"]
+mypy = ["12d965c9c4e8a625673aec493162cf390e66de12ef176b1f4821ac00d55f3ab3", "38d5b5f835a81817dcc0af8d155bce4e9aefa03794fe32ed154d6612e83feafa"]
 mypy-extensions = ["37e0e956f41369209a3d5f34580150bcacfabaa57b33a15c0b25f4b5725e0812", "b16cabe759f55e3409a7d231ebd2841378fb0c27a5d1994719e340e4f429ac3e"]
 packaging = ["0886227f54515e592aaa2e5a553332c73962917f2831f1b0f9b9f4380a4b9807", "f95a1e147590f204328170981833854229bb2912ac3d5f89e2a8ccd2834800c9"]
 pathmatch = ["b35db907d0532c66132e5bc8aaa20dbfae916441987c8f0abd53ac538376d9a7"]
