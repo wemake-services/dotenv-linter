@@ -5,6 +5,11 @@ We follow Semantic Versions.
 
 ## WIP
 
+...
+
+
+## Version 0.1.1
+
 ### Bugfixes
 
 - Fixes how homepage in defined in `pyproject.toml`
