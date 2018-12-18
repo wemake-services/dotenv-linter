@@ -1,8 +1,5 @@
 Usage
-=====
-
-Command reference
------------------
+-----
 
 .. click:: dotenv_linter.cli:cli
   :prog: dotenv-linter
