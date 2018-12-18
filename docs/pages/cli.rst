@@ -1,3 +1,9 @@
+Usage
+=====
 
-.. automodule:: dotenv_linter.cli
-   :no-members:
+Command reference
+-----------------
+
+.. click:: dotenv_linter.cli:cli
+  :prog: dotenv-linter
+  :show-nested:

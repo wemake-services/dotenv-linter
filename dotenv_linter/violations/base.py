@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from typing import Tuple
-
 from typing_extensions import final
 
 from dotenv_linter.grammar.fst import Node

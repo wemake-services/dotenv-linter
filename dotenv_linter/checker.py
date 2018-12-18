@@ -104,18 +104,15 @@ class DotenvFileChecker(object):
     def run(self) -> None:
         """Executes the linting process."""
         self._fst_checker.run()
-
-    def finish(self, message: Optional[str]) -> NoReturn:
-        """Returns the status code and text messages."""
         if self._fst_checker.status == _ExitCodes.initial:
             # This means, that linting process did not change status:
             self._fst_checker.status = _ExitCodes.system_error
+        self._exit()
 
-        if message:
-            if self._fst_checker.status == _ExitCodes.success:
-                output = sys.stdout
-            else:
-                output = sys.stderr
-            # TODO: I don't like it here, we need to move this logic somewhere
-            print(message, file=output)  # noqa: T001
+    def fail(self) -> NoReturn:
+        """Exits the program with fail status code."""
+        self._fst_checker.status = _ExitCodes.system_error
+        self._exit()
+
+    def _exit(self) -> NoReturn:
         sys.exit(int(self._fst_checker.status.value))

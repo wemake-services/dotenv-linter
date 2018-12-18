@@ -32,6 +32,7 @@ classifiers = [
 python = "^3.6 || ^3.7"
 ply = "^3.11"
 click = "^7.0"
+click_default_group = "^1.2"
 dataclasses = { version = "^0.6", python = "<3.7" }
 typing_extensions = "^3.6"
 
@@ -51,7 +52,7 @@ m2r = "^0.2"
 tomlkit = "^0.5"
 
 [tool.poetry.scripts]
-dotenv-linter = "dotenv_linter.cli:main"
+dotenv-linter = "dotenv_linter.cli:cli"
 
 [build-system]
 requires = ["poetry>=0.12"]
