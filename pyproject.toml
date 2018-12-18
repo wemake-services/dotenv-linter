@@ -10,7 +10,7 @@ license = "MIT"
 readme = "README.md"
 
 repository = "https://github.com/wemake-services/dotenv-linter"
-# homepage = "https://dotenv-linter.readthedocs.io"
+homepage = "https://dotenv-linter.readthedocs.io"
 
 keywords = [
   "dotenv",
