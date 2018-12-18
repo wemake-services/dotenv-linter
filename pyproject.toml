@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dotenv-linter"
-version = "0.1.0"
+version = "0.1.1"
 description = "Linting dotenv files like a charm!"
 authors = [
   "sobolevn <mail@sobolevn.me>"
@@ -20,7 +20,7 @@ keywords = [
 ]
 
 classifiers = [
-  "Development Status :: 3 - Alpha",
+  "Development Status :: 4 - Beta",
   "Environment :: Console",
   "Intended Audience :: Developers",
   "Operating System :: OS Independent",

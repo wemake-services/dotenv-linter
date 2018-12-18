@@ -14,7 +14,7 @@ Simple linter for `.env` files.
 While `.env` files are very simple it is required to keep them consistent.
 This tool offers a wide range of consistency rules and best practices.
 
-And it integrates perfectly for any existing workflow.
+And it integrates perfectly to any existing workflow.
 
 
 ## Installation
@@ -22,3 +22,31 @@ And it integrates perfectly for any existing workflow.
 ```bash
 pip install dotenv-linter
 ```
+
+See [Usage](https://dotenv-linter.readthedocs.io/en/latest/#usage)
+section to get started.
+
+
+## Examples
+
+There are many things that can go wrong in your `.env` files:
+
+```env
+# Next line has leading space which will be removed:
+ SPACED=
+
+# Equal signs should not be spaced:
+KEY = VALUE
+
+# Quotes won't be preserved after parsing, do not use them:
+SECRET="my value"
+
+# Beware of duplicates!
+SECRET=Already defined ;(
+
+# Respect the convention, use `UPPER_CASE`:
+kebab-case-name=1
+snake_case_name=2
+```
+
+And much more! You can find the [full list of violations in our docs](https://dotenv-linter.readthedocs.io/en/latest/pages/violations/).
