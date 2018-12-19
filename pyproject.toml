@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dotenv-linter"
-version = "0.1.1"
+version = "0.1.2"
 description = "Linting dotenv files like a charm!"
 authors = [
   "sobolevn <mail@sobolevn.me>"
@@ -41,8 +41,7 @@ pytest = "^4.0"
 pytest-cov = "^2.6"
 pytest-randomly = "^1.2"
 pytest-flake8 = "^1.0"
-wemake-python-styleguide = "^0.5"
-flake8-per-file-ignores = "^0.6"
+wemake-python-styleguide = "^0.6"
 mypy = "^0.641"
 sphinx = "^1.8"
 sphinx-autodoc-typehints = "^1.5"

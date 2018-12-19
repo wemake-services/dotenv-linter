@@ -76,7 +76,7 @@ class DotenvLexer(object):
         token.lexer.push_state('name')
         return token
 
-    @lex.TOKEN(re_whitespaces + r'*\#.+')
+    @lex.TOKEN(re_whitespaces + r'*\#.*')
     def t_COMMENT(self, token: lex.LexToken) -> lex.LexToken:  # noqa: N802
         """Parsing COMMENT tokens."""
         return token
