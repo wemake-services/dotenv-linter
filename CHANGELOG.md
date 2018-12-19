@@ -3,9 +3,11 @@
 We follow Semantic Versions.
 
 
-## WIP
+## Version 0.1.3
 
-...
+### Bugfixes
+
+- Fixes issue with duplicate values across different files
 
 
 ## Version 0.1.2

@@ -59,11 +59,11 @@ class DotenvParser(object):
     def __init__(self, **kwarg) -> None:
         """Creates inner parser instance."""
         self._lexer = DotenvLexer()
-        self._body_items: List[Union[Comment, Statement]] = []
         self._parser = yacc.yacc(module=self, **kwarg)  # should be last
 
     def parse(self, to_parse: str, **kwargs) -> Module:
         """Parses input string to FST."""
+        self._body_items: List[Union[Comment, Statement]] = []
         self._parser.parse(input=to_parse, lexer=self._lexer, **kwargs)
         return Module(lineno=0, raw_text=to_parse, body=self._body_items)
 

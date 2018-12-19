@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dotenv-linter"
-version = "0.1.2"
+version = "0.1.3"
 description = "Linting dotenv files like a charm!"
 authors = [
   "sobolevn <mail@sobolevn.me>"
