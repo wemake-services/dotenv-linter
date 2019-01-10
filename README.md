@@ -50,3 +50,9 @@ snake_case_name=2
 ```
 
 And much more! You can find the [full list of violations in our docs](https://dotenv-linter.readthedocs.io/en/latest/pages/violations/).
+
+
+## Gratis
+
+Special thanks goes to [Ignacio Toledo](https://ign.uy)
+for creating an awesome logo for the project.
