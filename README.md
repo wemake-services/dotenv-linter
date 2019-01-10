@@ -11,6 +11,8 @@
 
 Simple linter for `.env` files.
 
+![dotenv-logo](https://raw.githubusercontent.com/wemake-services/dotenv-linter/master/docs/_static/dotenv-logo.png)
+
 While `.env` files are very simple it is required to keep them consistent.
 This tool offers a wide range of consistency rules and best practices.
 
