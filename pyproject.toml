@@ -37,7 +37,7 @@ dataclasses = { version = "^0.6", python = "<3.7" }
 typing_extensions = "^3.6"
 
 [tool.poetry.dev-dependencies]
-pytest = "^4.1"
+pytest = "^4.2"
 pytest-cov = "^2.6"
 pytest-randomly = "^1.2"
 pytest-flake8 = "^1.0"
