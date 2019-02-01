@@ -3,6 +3,14 @@
 We follow Semantic Versions.
 
 
+## Version 0.1.4
+
+### Misc
+
+- Now allows to work with `click<7`, it resolves compatibility with other tools
+- Updates `wemake-python-styleguide` to `0.7`
+
+
 ## Version 0.1.3
 
 ### Bugfixes

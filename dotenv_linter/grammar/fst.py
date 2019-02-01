@@ -38,7 +38,7 @@ class Node(object):
     Defines base fields that all other nodes have.
     """
 
-    __slots__ = {'lineno', 'raw_text'}
+    __slots__ = ('lineno', 'raw_text')
 
     lineno: int
     raw_text: str
@@ -85,7 +85,7 @@ class Statement(Node):
 class Assign(Statement):
     """Represents key-value pair separated by ``=``."""
 
-    __slots__ = {'lineno', 'col_offset', 'raw_text', 'text', 'left', 'right'}
+    __slots__ = ('lineno', 'col_offset', 'raw_text', 'text', 'left', 'right')
 
     left: Name
     right: Optional[Value]
@@ -118,6 +118,6 @@ class Assign(Statement):
 class Module(Node):
     """Wrapper node that represents a single file with or without contents."""
 
-    __slots__ = {'lineno', 'raw_text', 'text', 'body'}
+    __slots__ = ('lineno', 'raw_text', 'text', 'body')
 
     body: List[Union[Comment, Statement]]
