@@ -39,7 +39,7 @@ typing_extensions = "^3.6"
 [tool.poetry.dev-dependencies]
 pytest = "^4.3"
 pytest-cov = "^2.6"
-pytest-randomly = "^2.0"
+pytest-randomly = "^2.1"
 pytest-flake8 = "^1.0"
 flake8 = "<3.7"
 wemake-python-styleguide = "^0.7"
