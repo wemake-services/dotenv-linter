@@ -50,6 +50,7 @@ sphinx-click = "^2.1"
 doc8 = "^0.8"
 m2r = "^0.2"
 tomlkit = "^0.5"
+safety = "^1.8"
 
 [tool.poetry.scripts]
 dotenv-linter = "dotenv_linter.cli:cli"

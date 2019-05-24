@@ -21,6 +21,9 @@ script:
   - poetry run mypy dotenv_linter
   - poetry run pytest
   - poetry run doc8 -q docs
+  - poetry run safety check --bare --full-report
+  - poetry check
+  - poetry run pip check
 
 after_success:
   - pip install coveralls
