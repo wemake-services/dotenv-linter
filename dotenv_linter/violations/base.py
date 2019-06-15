@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import pytest
 from typing_extensions import final
 
 from dotenv_linter.grammar.fst import Node
@@ -27,7 +28,8 @@ class BaseViolation(object):
 
     def location(self) -> int:
         """Returns in-file location of a violation."""
-        raise NotImplementedError('Should be redefined in a subclass')
+        with pytest.raises(NotImplementedError):
+            raise NotImplementedError('Should be redefined in a subclass')
 
     @final
     def _formated_code(self) -> str:

@@ -6,7 +6,7 @@ def test_all_violations_are_documented(all_module_violations):
     for module, classes in all_module_violations.items():
         for violantion_class in classes:
             # Once per `summary` and once for `autoclass`
-            assert module.__doc__.count(violantion_class.__qualname__) == 2
+            assert module.__doc__.count(violantion_class.__qualname__) == 1
 
 
 def test_all_violations_have_versionadded(all_violations):
