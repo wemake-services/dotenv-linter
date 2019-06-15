@@ -19,9 +19,6 @@ We follow Semantic Versions.
 
 
 ## Version 0.1.2
-
-### Bugfixes
-
 - Fixes issue with empty comments
 
 ### Misc
