@@ -823,11 +823,11 @@ description = "Sphinx extension that automatically documents click applications"
 name = "sphinx-click"
 optional = false
 python-versions = "*"
-version = "2.1.0"
+version = "2.2.0"
 
 [package.dependencies]
 pbr = ">=2.0"
-sphinx = ">=1.5,<2.1"
+sphinx = ">=1.5,<2.2"
 
 [[package]]
 category = "dev"
@@ -990,7 +990,7 @@ python-versions = ">=2.7"
 version = "0.5.1"
 
 [metadata]
-content-hash = "4313753b40f9f68b87bea4502fb3b5704250575f18e746a2c3ac71bc48d7e7d4"
+content-hash = "bbc13d9dfcd49a87d4752ded95fdbeeb9f1c1f95dbff6543cbd1679e5a6edd83"
 python-versions = "^3.6 || ^3.7"
 
 [metadata.hashes]
@@ -1071,7 +1071,7 @@ smmap2 = ["0555a7bf4df71d1ef4218e4807bbf9b201f910174e6e08af2e138d4e517b4dde", "2
 snowballstemmer = ["919f26a68b2c17a7634da993d91339e288964f93c274f1343e3bbbe2096e1128", "9f3bcd3c401c3e862ec0ebe6d2c069ebc012ce142cce209c098ccb5b09136e89"]
 sphinx = ["423280646fb37944dd3c85c58fb92a20d745793a9f6c511f59da82fa97cd404b", "de930f42600a4fef993587633984cc5027dedba2464bcf00ddace26b40f8d9ce"]
 sphinx-autodoc-typehints = ["19fe0b426b7c008181f67f816060da7f046bd8a42723f67a685d26d875bcefd7", "f9c06acfec80766fe8f542a6d6a042e751fcf6ce2e2711a7dc00d8b6daf8aa36"]
-sphinx-click = ["9ceb0ee39e9734f39f593f99499e2a2f8e62929ac0b5f040b1d0411c02efaab7", "c9c45127bbbf720f1d24476cb3e57c806dd270662ae63b53a4b23be6c334491e"]
+sphinx-click = ["2c7847607d07bc0ddf28acff3aa639b2660d06c5d95d1efe89eca6494fc750de", "814b2463b576dfafaf4a6f8ed9585f6d9696073ed5e4cca5b59d2dc9d29d3bc0"]
 sphinxcontrib-applehelp = ["edaa0ab2b2bc74403149cb0209d6775c96de797dfd5b5e2a71981309efab3897", "fb8dee85af95e5c30c91f10e7eb3c8967308518e0f7488a2828ef7bc191d0d5d"]
 sphinxcontrib-devhelp = ["6c64b077937330a9128a4da74586e8c2130262f014689b4b89e2d08ee7294a34", "9512ecb00a2b0821a146736b39f7aeb90759834b07e81e8cc23a9c70bacb9981"]
 sphinxcontrib-htmlhelp = ["4670f99f8951bd78cd4ad2ab962f798f5618b17675c35c5ac3b2132a14ea8422", "d4fd39a65a625c9df86d7fa8a2d9f3cd8299a3a4b15db63b50aac9e161d8eff7"]
