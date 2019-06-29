@@ -30,6 +30,7 @@ class BaseViolation(object):
         """Returns in-file location of a violation."""
         with pytest.raises(NotImplementedError):
             raise NotImplementedError('Should be redefined in a subclass')
+        return 0, 0
 
     @final
     def _formated_code(self) -> str:

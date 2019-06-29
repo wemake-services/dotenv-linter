@@ -40,4 +40,4 @@ class SpacedAssignViolation(BaseFSTViolation):
     """
 
     code = 200
-    error_template = 'Found spaced assign'
+    error_template = 'Found spaced assign: {0}'

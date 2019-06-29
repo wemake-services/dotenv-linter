@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
 import inspect
 from operator import itemgetter
 from pathlib import PurePath
@@ -52,6 +51,7 @@ def all_violations():
     for module_classes in classes.values():
         all_errors_container.extend(module_classes)
     return all_errors_container
+
 
 @pytest.fixture(scope='session')
 def all_module_violations():

@@ -25,7 +25,7 @@ def test_violation_autoclass_order(all_module_violations):
     """Used to force violation order inside `autoclass` directives."""
     for module, classes in all_module_violations.items():
         sorted_by_code, _ = _get_sorted_classes(classes)
-        pattern = re.compile(r'\.\.\sautoclass::\s(w+)')
+        pattern = re.compile(r'\.\.\sautoclass::\s(\w+)')
         sorted_by_autoclass = pattern.findall(module.__doc__)
         sorted_by_code = [cl.__qualname__ for cl in sorted_by_code]
 
