@@ -11,6 +11,6 @@ tomlkit==0.5.5
 # Dependencies of our linter:
 typing-extensions==3.7.4
 click==7.0.0
-click_default_group==1.2.1
+click_default_group==1.2.2
 dataclasses==0.6.0
 ply==3.11
