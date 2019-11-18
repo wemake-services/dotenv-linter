@@ -42,10 +42,10 @@ def _get_token(
     index: int,
 ) -> Optional[lex.LexToken]:  # TODO: lex.LexToken is in fact just `Any`
     """YaccProduction has a broken __getitem__ method definition."""
-    return getattr(parsed, 'slice')[index]
+    return parsed.slice[index]
 
 
-@final  # noqa: Z214
+@final
 class DotenvParser(object):
     """
     Custom parser wrapper, grouping methods and attrs together.

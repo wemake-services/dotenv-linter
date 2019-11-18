@@ -36,15 +36,13 @@ class Report(object):
     def report(self) -> None:
         """Reports violations from all visitors."""
         sorted_violations = sorted(
-            chain.from_iterable(
-                violations for violations in self._collected_from
-            ),
+            chain.from_iterable(self._collected_from),
             key=lambda violation: violation.location(),
         )
 
-        for violation in sorted_violations:
+        for ordered_violation in sorted_violations:
             print(  # noqa: T001
-                '{0}:{1}'.format(self._filename, violation.as_line()),
+                '{0}:{1}'.format(self._filename, ordered_violation.as_line()),
                 file=sys.stderr,
             )
 

@@ -49,14 +49,14 @@ class NameInModuleVisitor(BaseFSTVisitor):
     def _check_raw_name(self, node: Module) -> None:
         for sub_node in node.body:
             if isinstance(sub_node, Name):
-                self._add_violation(
+                self._add_violation(  # type: ignore
                     RawNameViolation(sub_node, text=sub_node.text),
                 )
 
     def _save_names(self, node: Module) -> None:
         for sub_node in node.body:
             if isinstance(sub_node, Name):
-                self._names.append(sub_node)
+                self._names.append(sub_node)  # type: ignore
             elif isinstance(sub_node, Assign):
                 self._names.append(sub_node.left)
 

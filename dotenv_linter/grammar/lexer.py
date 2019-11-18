@@ -15,8 +15,10 @@ from typing_extensions import final
 
 from dotenv_linter.exceptions import ParsingError
 
+_LexerState = Tuple[str, str]
 
-@final  # noqa: Z214
+
+@final
 class DotenvLexer(object):
     """Custom lexer wrapper, grouping methods and attrs together."""
 
@@ -28,7 +30,7 @@ class DotenvLexer(object):
         'VALUE',
     )
 
-    states: ClassVar[Tuple[Tuple[str, str], ...]] = (
+    states: ClassVar[Tuple[_LexerState, ...]] = (
         ('name', 'exclusive'),  # we have found Name definition
         ('value', 'exclusive'),  # we have found Equal definition
     )
@@ -71,30 +73,30 @@ class DotenvLexer(object):
         return self._lexer.token()
 
     @lex.TOKEN(re_whitespaces + r'*[\w-]+')
-    def t_NAME(self, token: lex.LexToken) -> lex.LexToken:  # noqa: N802
+    def t_NAME(self, token: lex.LexToken) -> lex.LexToken:
         """Parsing NAME tokens."""
         token.lexer.push_state('name')
         return token
 
     @lex.TOKEN(re_whitespaces + r'*\#.*')
-    def t_COMMENT(self, token: lex.LexToken) -> lex.LexToken:  # noqa: N802
+    def t_COMMENT(self, token: lex.LexToken) -> lex.LexToken:
         """Parsing COMMENT tokens."""
         return token
 
     @lex.TOKEN(re_whitespaces + r'*=')
-    def t_name_EQUAL(self, token: lex.LexToken) -> lex.LexToken:  # noqa: N802
+    def t_name_EQUAL(self, token: lex.LexToken) -> lex.LexToken:
         """Parsing EQUAL tokens."""
         token.lexer.push_state('value')
         return token
 
     @lex.TOKEN(r'.+')
-    def t_value_VALUE(self, token: lex.LexToken) -> lex.LexToken:  # noqa: N802
+    def t_value_VALUE(self, token: lex.LexToken) -> lex.LexToken:
         """Parsing VALUE tokens."""
         token.lexer.pop_state()
         return token
 
     @lex.TOKEN(r'[\n\r\u2028\u2029]')
-    def t_ANY_newline(self, token: lex.LexToken) -> None:  # noqa: N802
+    def t_ANY_newline(self, token: lex.LexToken) -> None:
         """
         Defines a rule so we can track line numbers.
 
@@ -103,7 +105,7 @@ class DotenvLexer(object):
         token.lexer.lineno += len(token.value)
         token.lexer.begin('INITIAL')
 
-    def t_ANY_error(self, token: lex.LexToken) -> None:  # noqa: N802
+    def t_ANY_error(self, token: lex.LexToken) -> None:
         """
         Error handling rule.
 

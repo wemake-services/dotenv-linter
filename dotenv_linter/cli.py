@@ -42,8 +42,9 @@ def cli(version):
 )
 def lint(files: Tuple[str, ...]):
     """Runs linting process for the given files."""
+    checker = DotenvFileChecker(files)
+
     try:
-        checker = DotenvFileChecker(files)
         checker.run()
     except Exception as ex:
         print(ex, file=sys.stderr)  # noqa: T001

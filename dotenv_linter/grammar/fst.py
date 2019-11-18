@@ -20,7 +20,7 @@ See also:
 """
 
 from dataclasses import dataclass, field
-from typing import List, Optional, Type, TypeVar, Union
+from typing import Optional, Sequence, Type, TypeVar, Union
 
 from ply import lex
 
@@ -46,7 +46,9 @@ class Node(object):
 
     def __post_init__(self) -> None:
         """Used to tweak instance internals after initialization."""
-        object.__setattr__(self, 'text', normalize_text(self.raw_text))
+        object.__setattr__(  # noqa: WPS609
+            self, 'text', normalize_text(self.raw_text),
+        )
 
     @classmethod
     def from_token(cls: Type[TNode], token: lex.LexToken) -> TNode:
@@ -120,4 +122,4 @@ class Module(Node):
 
     __slots__ = ('lineno', 'raw_text', 'text', 'body')
 
-    body: List[Union[Comment, Statement]]
+    body: Sequence[Union[Comment, Statement]]

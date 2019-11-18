@@ -6,8 +6,9 @@ from typing import Iterator, NoReturn, Optional, Tuple
 
 from typing_extensions import final
 
+from dotenv_linter.exceptions import ParsingError
 from dotenv_linter.grammar.fst import Module
-from dotenv_linter.grammar.parser import DotenvParser, ParsingError
+from dotenv_linter.grammar.parser import DotenvParser
 from dotenv_linter.logics.report import Report
 from dotenv_linter.violations.parsing import ParsingViolation
 from dotenv_linter.visitors.fst import assigns, comments, names, values

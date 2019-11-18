@@ -14,8 +14,10 @@ FieldInfo = Tuple[str, Union[List[Any], Any]]  # type: ignore
 
 def iter_fields(node: Node) -> Iterator[FieldInfo]:
     """Iterates over all fields inside a ``fst`` node."""
-    for field in fields(node):
-        yield field.name, getattr(node, field.name)
+    yield from (
+        (field.name, getattr(node, field.name))
+        for field in fields(node)
+    )
 
 
 class BaseVisitor(object):
@@ -59,11 +61,11 @@ class BaseFSTVisitor(BaseVisitor):
         This code is copy-pasted from ``ast`` module, so it should stay
         as it is now. No need to refactor it.
         """
-        method = 'visit_' + node.__class__.__qualname__.lower()
+        method = 'visit_{0}'.format(node.__class__.__qualname__.lower())
         visitor = getattr(self, method, self.generic_visit)
         return visitor(node)
 
-    def generic_visit(self, node: Node) -> None:
+    def generic_visit(self, node: Node) -> None:  # noqa: WPS231
         """
         Called if no explicit visitor function exists for a node.
 
@@ -74,7 +76,7 @@ class BaseFSTVisitor(BaseVisitor):
             if isinstance(node_value, list):
                 for sub_node in node_value:
                     if isinstance(sub_node, Node):
-                        self.visit(sub_node)  # noqa: Z220
+                        self.visit(sub_node)  # noqa: WPS220
             elif isinstance(node_value, Node):
                 self.visit(node_value)
 

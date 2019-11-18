@@ -15,16 +15,37 @@ We use poetry to manage our dependencies.
 
 To install them you would need to run the following command:
 
-`poetry install`
+```bash
+poetry install
+```
 
 ## Step 3
+
 ### Run the Tests
 
 Run all tests beforehand and make a note of the coverage percentage
 
 We use pytest and flake8 for quality control. To run all tests:
 
-`pytest`
+```bash
+pytest
+```
+
+### Run linting
+
+We use `wemake-python-styleguide` to lint our code. To run it use:
+
+```bash
+flake8 .
+```
+
+### Run type checks
+
+We `mypy` to check our code. To run it use:
+
+```bash
+mypy dotenv_linter
+```
 
 ## Step 4
 
@@ -58,4 +79,5 @@ Submit a PR for your changes. Make sure to include in the commit/PR message what
 addressing (if fixing a bug or feature request).
 
 # Other Help
+
 You can contribute by spreading a word about this library. It would also be a huge contribution to write a short article on how you are using this project. What are your best-practices?
