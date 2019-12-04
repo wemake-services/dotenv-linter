@@ -18,11 +18,12 @@ elif [ "$INPUT_REPORTER" == 'github-pr-review' ] ||
   export REVIEWDOG_GITHUB_API_TOKEN="$GITHUB_TOKEN"
 
   output=$(dotenv-linter "$INPUT_OPTIONS")
+  echo "dotenv output: $output"
   echo "$output" | reviewdog -efm='%f:%l %m' -reporter="$INPUT_REPORTER" -level=error
   # `reviewdog` does not fail with any status code, so we have to get dirty:
   status=$(test "$output" = ''; echo $?)
 else
-  output="Invalid reporter specified: $INPUT_REPORTER"
+  output="Invalid action reporter specified: $INPUT_REPORTER"
   status=1
 fi
 
@@ -33,7 +34,8 @@ echo '================================='
 echo
 
 # Fail the build in case status code is not 0:
-if [[ "$status" != 0 ]]; then
+if [ "$status" != 0 ]; then
+  echo 'Failing with output:'
   echo "$output"
   echo "Process failed with the status code: $status"
   exit "$status"
