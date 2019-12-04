@@ -29,7 +29,6 @@ RUN pip install "dotenv-linter==$DOTENV_LINTER_VERSION" \
   && wget -O - -q 'https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh' \
   | sh -s -- -b /usr/local/bin/ "$REVIEWDOG_VERSION"
 
-COPY ./scripts/action-config.cfg /
 COPY ./scripts/entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
