@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Diagnostic output:
-echo "Using reported: $INPUT_REPORTER"
+echo "Using reporter: $INPUT_REPORTER"
 echo "Linting options: $INPUT_OPTIONS"
 echo 'dotenv-linter --version:'
 dotenv-linter --version
@@ -17,7 +17,7 @@ elif [ "$INPUT_REPORTER" == 'github-pr-review' ] ||
   # We will need this token for `reviewdog` to work:
   export REVIEWDOG_GITHUB_API_TOKEN="$GITHUB_TOKEN"
 
-  output=$(dotenv-linter "$INPUT_OPTIONS")
+  output=$(dotenv-linter "$INPUT_OPTIONS" 2>&1)
   echo "dotenv output: $output"
   echo "$output" | reviewdog -efm='%f:%l %m' -reporter="$INPUT_REPORTER" -level=error
   # `reviewdog` does not fail with any status code, so we have to get dirty:
