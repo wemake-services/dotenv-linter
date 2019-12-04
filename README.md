@@ -18,6 +18,8 @@ This tool offers a wide range of consistency rules and best practices.
 
 And it integrates perfectly to any existing workflow.
 
+Read [the announcing post](https://sobolevn.me/2019/01/announcing-dotenv-linter).
+
 
 ## Installation and usage
 
