@@ -3,6 +3,16 @@
 We follow Semantic Versions.
 
 
+## Version 0.1.5
+
+### Misc
+
+- Adds docker support
+- Adds Github Action support
+- Updates `wemake-python-styleguide` to `0.13`
+- Documentation updates
+
+
 ## Version 0.1.4
 
 ### Misc

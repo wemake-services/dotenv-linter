@@ -1,0 +1,31 @@
+# This is a definition file for a Github Action.
+# See: https://help.github.com/en/articles/creating-a-docker-container-action
+
+# We also define metadata here:
+# See: https://help.github.com/en/articles/metadata-syntax-for-github-actions
+
+name: 'dotenv-linter'
+description: 'Runs dotenv-linter as a Github Action'
+branding:
+  icon: 'check'
+  color: 'green'
+
+inputs:
+  options:
+    description: 'Space separated inputs that can be supplied to dotenv-linter'
+    required: false
+    default: '.env.template'
+  reporter:
+    description: 'How would you like the results to be displayed?'
+    required: false
+    default: 'terminal'
+outputs:
+  output:
+    description: 'The output of dotenv-linter run'
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.options }}
+    - ${{ inputs.reporter }}
