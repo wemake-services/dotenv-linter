@@ -18,7 +18,6 @@ elif [ "$INPUT_REPORTER" == 'github-pr-review' ] ||
   export REVIEWDOG_GITHUB_API_TOKEN="$GITHUB_TOKEN"
 
   output=$(dotenv-linter "$INPUT_OPTIONS" 2>&1)
-  echo "dotenv output: $output"
   echo "$output" | reviewdog -efm='%f:%l %m' -reporter="$INPUT_REPORTER" -level=error
   # `reviewdog` does not fail with any status code, so we have to get dirty:
   status=$(test "$output" = ''; echo $?)
