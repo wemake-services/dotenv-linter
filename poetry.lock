@@ -392,7 +392,7 @@ description = "The package provides base classes and utils for flake8 plugin wri
 name = "flake8-plugin-utils"
 optional = false
 python-versions = ">=3.6,<4.0"
-version = "1.0.0"
+version = "1.2.0"
 
 [[package]]
 category = "dev"
@@ -435,10 +435,10 @@ description = "A flake8 plugin checking common style issues or inconsistencies w
 name = "flake8-pytest-style"
 optional = false
 python-versions = ">=3.6,<4.0"
-version = "0.2.0"
+version = "0.3.1"
 
 [package.dependencies]
-flake8-plugin-utils = ">=1.0,<2.0"
+flake8-plugin-utils = ">=1.2.0,<2.0.0"
 
 [[package]]
 category = "dev"
@@ -1189,7 +1189,7 @@ version = "0.6.0"
 more-itertools = "*"
 
 [metadata]
-content-hash = "c772c3aa7062131519ca68681c6350911b70223dc90bf6fbc27d42a8c1020fec"
+content-hash = "14bb7c910a59ed92e89686d3b5a9af722c32b820df26cb98024555db39194fcb"
 python-versions = "^3.6 || ^3.7"
 
 [metadata.hashes]
@@ -1230,11 +1230,11 @@ flake8-executable = ["968618c475a23a538ced9b957a741b818d37610838f99f6abcea249e4d
 flake8-isort = ["1e67b6b90a9b980ac3ff73782087752d406ce0a729ed928b92797f9fa188917e", "81a8495eefed3f2f63f26cd2d766c7b1191e923a15b9106e6233724056572c68"]
 flake8-logging-format = ["ca5f2b7fc31c3474a0aa77d227e022890f641a025f0ba664418797d979a779f8"]
 flake8-pep3101 = ["493821d6bdd083794eb0691ebe5b68e5c520b622b269d60e54308fb97440e21a", "b661ab718df42b87743dde266ef5de4f9e900b56c67dbccd45d24cf527545553"]
-flake8-plugin-utils = ["1ac5eb19773d5c7fdde60b0d901ae86be9c751bf697c61fdb6609b86872f3c6e", "24b4a3b216ad588951d3d7adef4645dcb3b32a33b878e03baa790b5a66bf3a73"]
+flake8-plugin-utils = ["0ec78b72e48b2bdaf0037e97105f0770a2b59b0e7b2519aaec35993f3538073f", "94b04623082dd64e97b93177e53125d5d17657c9864a4d3a29ef31a9a6c39e15"]
 flake8-polyfill = ["12be6a34ee3ab795b19ca73505e7b55826d5f6ad7230d31b18e106400169b9e9", "e44b087597f6da52ec6393a709e7108b2905317d0c0b744cdca6208e670d8eda"]
 flake8-print = ["324f9e59a522518daa2461bacd7f82da3c34eb26a4314c2a54bd493f8b394a68"]
 flake8-pytest = ["61686128a79e1513db575b2bcac351081d5a293811ddce2d5dfc25e8c762d33e", "b4d6703f7d7b646af1e2660809e795886dd349df11843613dbe6515efa82c0f3"]
-flake8-pytest-style = ["79537f9e4bfa2ad4a3b7528a30215c396c6cf179ae68610ffcd2de50763198c5", "f0a0ab6f4ff121ebd402049a93d04fb9ea149476bcd2867879f0f5b391cb7c26"]
+flake8-pytest-style = ["3a84f82dc48fdebe28747db26746e2e9afcc9a6df3948b573273dac1c474bbac", "addb4682375d8a479f5ffe01bb74d78689ea353f1170c3f97ae25f6ba01c4834"]
 flake8-quotes = ["11a15d30c92ca5f04c2791bd7019cf62b6f9d3053eb050d02a135557eb118bfc"]
 flake8-rst-docstrings = ["01d38327801781b26c3dfeb71ae37e5a02c5ca1b774a686f63feab8824ca6f9c"]
 flake8-string-format = ["68ea72a1a5b75e7018cae44d14f32473c798cf73d75cbaed86c6a9a907b770b2", "774d56103d9242ed968897455ef49b7d6de272000cfa83de5814273a868832f1"]
