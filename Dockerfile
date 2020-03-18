@@ -5,7 +5,7 @@
 # It is not intended for local development!
 #
 # You can find docs about how to setup your own Github Action here:
-# https://wemake-python-stylegui.de/en/latest/pages/usage/integrations/github-actions.html
+# https://dotenv-linter.readthedocs.io/en/latest/pages/integrations/github-actions.html
 #
 # It can still be used as a raw image for your own containers.
 # See `action.yml` in case you want to learn more about Github Actions.
