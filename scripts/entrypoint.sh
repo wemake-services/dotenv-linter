@@ -8,7 +8,7 @@ dotenv-linter --version
 echo '================================='
 echo
 
-# Runs flake8, possibly with reviewdog:
+# Runs dotenv-linter, possibly with reviewdog:
 if [ "$INPUT_REPORTER" == 'terminal' ]; then
   output=$(dotenv-linter "$INPUT_OPTIONS")
   status="$?"
