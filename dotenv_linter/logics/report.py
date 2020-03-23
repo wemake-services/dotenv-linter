@@ -41,7 +41,7 @@ class Report(object):
         )
 
         for ordered_violation in sorted_violations:
-            print(  # noqa: T001
+            print(  # noqa: WPS125
                 '{0}:{1}'.format(self._filename, ordered_violation.as_line()),
                 file=sys.stderr,
             )
