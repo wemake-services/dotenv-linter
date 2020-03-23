@@ -30,7 +30,7 @@ def cli(version):
     Runs ``--version`` subcommand if this option is provided.
     """
     if version:
-        print(pkg_version)  # noqa: T001
+        print(pkg_version)  # noqa: WPS421
 
 
 @cli.command()
@@ -47,5 +47,5 @@ def lint(files: Tuple[str, ...]):
     try:
         checker.run()
     except Exception as ex:
-        print(ex, file=sys.stderr)  # noqa: T001
+        print(ex, file=sys.stderr)  # noqa: WPS421
         checker.fail()
