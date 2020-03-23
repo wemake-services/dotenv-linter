@@ -53,7 +53,7 @@ class DotenvLexer(object):
         self._lexer.begin('INITIAL')
         return self
 
-    def input(self, text: str) -> 'DotenvLexer':  # noqa: A003
+    def input(self, text: str) -> 'DotenvLexer':  # noqa: WPS125
         """
         Passes input to the lexer.
 
