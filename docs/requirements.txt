@@ -9,7 +9,7 @@ m2r==0.2.1
 tomlkit==0.5.11
 
 # Dependencies of our linter:
-typing-extensions==3.7.4.1
+typing-extensions==3.7.4.2
 click==7.1.1
 click_default_group==1.2.2
 dataclasses==0.6.0
