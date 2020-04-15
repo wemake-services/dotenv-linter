@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import sys
-from enum import Enum
-from typing import Iterator, NoReturn, Optional, Tuple
+from enum import IntEnum
+from typing import Iterable, Iterator, NoReturn, Optional, Tuple
 
 from typing_extensions import final
 
@@ -15,7 +15,7 @@ from dotenv_linter.visitors.fst import assigns, comments, names, values
 
 
 @final
-class _ExitCodes(Enum):
+class _ExitCodes(IntEnum):
     initial = -1
     success = 0
     linting_error = 1
@@ -34,7 +34,7 @@ class _FSTChecker(object):
         values.ValueVisitor,
     )
 
-    def __init__(self, filenames: Tuple[str, ...]) -> None:
+    def __init__(self, filenames: Iterable[str]) -> None:
         """Creates new instance."""
         self._filenames = filenames
         self._parser = DotenvParser()
@@ -98,11 +98,11 @@ class DotenvFileChecker(object):
     """
 
     # TODO: create options
-    def __init__(self, filenames: Tuple[str, ...], options=None):
+    def __init__(self, filenames: Iterable[str], options=None) -> None:
         """Creates new instance."""
         self._fst_checker = _FSTChecker(filenames)
 
-    def run(self) -> None:
+    def run(self) -> NoReturn:
         """Executes the linting process."""
         self._fst_checker.run()
         if self._fst_checker.status == _ExitCodes.initial:

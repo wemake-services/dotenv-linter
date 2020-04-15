@@ -3,6 +3,19 @@
 We follow Semantic Versions.
 
 
+## Version 0.2.0 WIP
+
+### Features
+
+- Adds `python3.8` support
+
+### Misc
+
+- Updates `wemake-python-styleguide` to `0.14`
+- Updates `poetry` to `1.0`
+- Moves from travis to github actions
+
+
 ## Version 0.1.5
 
 ### Misc
