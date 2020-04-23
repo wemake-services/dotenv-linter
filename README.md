@@ -62,6 +62,22 @@ snake_case_name=2
 And much more! You can find the [full list of violations in our docs](https://dotenv-linter.readthedocs.io/en/latest/pages/violations/).
 
 
+## Pre-commit hooks
+
+Dotenv-linter can also be used as a [pre-commit](https://github.com/pre-commit/pre-commit) hook.
+To do so, add the following to the `.pre-commit-config.yaml` file at the root of your project:
+
+```yaml
+repos:
+  - repo: https://github.com/wemake-services/dotenv-linter
+    rev: master
+    hooks:
+      - id: dotenv-linter
+```
+
+For the more detailed instructions on the pre-commit tool itself,
+please refer to [its website](https://pre-commit.com/).
+
 ## Gratis
 
 Special thanks goes to [Ignacio Toledo](https://ign.uy)
