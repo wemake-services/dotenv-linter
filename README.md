@@ -64,7 +64,7 @@ And much more! You can find the [full list of violations in our docs](https://do
 
 ## Pre-commit hooks
 
-Dotenv-linter can also be used as a [pre-commit](https://github.com/pre-commit/pre-commit) hook.
+`dotenv-linter` can also be used as a [pre-commit](https://github.com/pre-commit/pre-commit) hook.
 To do so, add the following to the `.pre-commit-config.yaml` file at the root of your project:
 
 ```yaml
