@@ -10,14 +10,14 @@ echo
 
 # Runs dotenv-linter, possibly with reviewdog:
 if [ "$INPUT_REPORTER" == 'terminal' ]; then
-  output=$(dotenv-linter "$INPUT_OPTIONS")
+  output=$(dotenv-linter $INPUT_OPTIONS)
   status="$?"
 elif [ "$INPUT_REPORTER" == 'github-pr-review' ] ||
      [ "$INPUT_REPORTER" == 'github-pr-check' ]; then
   # We will need this token for `reviewdog` to work:
   export REVIEWDOG_GITHUB_API_TOKEN="$GITHUB_TOKEN"
 
-  output=$(dotenv-linter "$INPUT_OPTIONS" 2>&1)
+  output=$(dotenv-linter $INPUT_OPTIONS 2>&1)
   echo "$output" | reviewdog -efm='%f:%l %m' -reporter="$INPUT_REPORTER" -level=error
   # `reviewdog` does not fail with any status code, so we have to get dirty:
   status=$(test "$output" = ''; echo $?)
