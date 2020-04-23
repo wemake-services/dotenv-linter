@@ -14,6 +14,7 @@ We follow Semantic Versions.
 - Updates `wemake-python-styleguide` to `0.14`
 - Updates `poetry` to `1.0`
 - Moves from travis to github actions
+- Adds support for [pre-commit](https://github.com/pre-commit/pre-commit)
 
 
 ## Version 0.1.5
