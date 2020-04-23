@@ -4,14 +4,15 @@
 
 ### Fork this repository
 
-Making changes to a fork and submitting from there usually ends up being easier for both you
-and us
+[Fork it!](https://help.github.com/en/github/getting-started-with-github/fork-a-repo)
+
+Making changes to a fork and submitting from there usually ends up being easier for both you and us.
 
 ## Step 2
 
 ### Install Dependencies
 
-We use poetry to manage our dependencies.
+We use [poetry](https://github.com/python-poetry/poetry) to manage our dependencies.
 
 To install them you would need to run the following command:
 
