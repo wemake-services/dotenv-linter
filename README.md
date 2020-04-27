@@ -70,7 +70,7 @@ To do so, add the following to the `.pre-commit-config.yaml` file at the root of
 ```yaml
 repos:
   - repo: https://github.com/wemake-services/dotenv-linter
-    rev: master
+    rev: 0.2.0  # Use the ref you want to point at
     hooks:
       - id: dotenv-linter
 ```
