@@ -9,6 +9,7 @@ Rules that define how names should be defined.
 .. autoclass:: IncorrectNameViolation
 .. autoclass:: DuplicateNameViolation
 .. autoclass:: RawNameViolation
+.. autoclass:: ReservedNameViolation
 
 """
 
@@ -134,3 +135,27 @@ class RawNameViolation(BaseFSTViolation):
 
     code = 103
     error_template = 'Found raw name without assign: {0}'
+
+
+@final
+class ReservedNameViolation(BaseFSTViolation):
+    """
+    Restricts to use of blacklisted names.
+
+    Reasoning:
+        It does not make any sense to use such names.
+
+    Solution:
+        Change such namess.
+        Or, Add _ at the end, to distinguish it from reserved ones.
+
+    Example::
+        # Wrong:
+        DJANGO_ENV=some_value
+
+    .. versionadded:: 0.1.0
+
+    """
+
+    code = 104
+    error_template = 'Found reserved name: {0}'

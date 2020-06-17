@@ -6,11 +6,13 @@ from typing.re import Pattern
 
 from typing_extensions import final
 
+from dotenv_linter.constants import NAMES_BLACKLIST
 from dotenv_linter.grammar.fst import Assign, Module, Name
 from dotenv_linter.violations.names import (
     DuplicateNameViolation,
     IncorrectNameViolation,
     RawNameViolation,
+    ReservedNameViolation,
     SpacedNameViolation,
 )
 from dotenv_linter.visitors.base import BaseFSTVisitor
@@ -78,11 +80,17 @@ class NameVisitor(BaseFSTVisitor):
         """
         self._check_name_correctness(node)
         self._check_name_spaces(node)
+        self._check_reserved_names(node)
+
         self.generic_visit(node)
 
     def _check_name_correctness(self, node: Name) -> None:
         if not self._correct_name.fullmatch(node.text):
             self._add_violation(IncorrectNameViolation(node, text=node.text))
+
+    def _check_reserved_names(self, node: Name) -> None:
+        if node.text.strip() in NAMES_BLACKLIST:
+            self._add_violation(ReservedNameViolation(node, text=node.text))
 
     def _check_name_spaces(self, node: Name) -> None:
         if node.raw_text.startswith(' '):
