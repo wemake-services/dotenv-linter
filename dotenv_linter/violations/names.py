@@ -146,14 +146,15 @@ class ReservedNameViolation(BaseFSTViolation):
         It does not make any sense to use such names.
 
     Solution:
-        Change such namess.
-        Or, Add _ at the end, to distinguish it from reserved ones.
+        Change such names.
+        Or, Add ``_`` at the end, to distinguish it from reserved ones.
 
     Example::
+
         # Wrong:
         DJANGO_ENV=some_value
 
-    .. versionadded:: 0.1.0
+    .. versionadded:: 0.2.0
 
     """
 
