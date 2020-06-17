@@ -8,6 +8,7 @@ We follow Semantic Versions.
 ### Features
 
 - Adds `python3.8` support
+- Adds black-list of variable names
 
 ### Misc
 
