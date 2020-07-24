@@ -957,7 +957,7 @@ description = "Sphinx extension that automatically documents click applications"
 name = "sphinx-click"
 optional = false
 python-versions = "*"
-version = "2.3.2"
+version = "2.5.0"
 
 [package.dependencies]
 pbr = ">=2.0"
@@ -1167,7 +1167,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "9dd59b3a8df6ed91838826484ae29435a81b7fc89a10fac59ba5e4587243032f"
+content-hash = "e4cc9cef3adc6a69a2b45e68834f8d6fb5e93a9331435516e684441f7f69bd2d"
 python-versions = "^3.6"
 
 [metadata.files]
@@ -1528,6 +1528,7 @@ pyyaml = [
     {file = "PyYAML-5.3.1.tar.gz", hash = "sha256:b8eac752c5e14d3eca0e6dd9199cd627518cb5ec06add0de9d32baeee6fe645d"},
 ]
 requests = [
+    {file = "requests-2.23.0-py2.7.egg", hash = "sha256:5d2d0ffbb515f39417009a46c14256291061ac01ba8f875b90cad137de83beb4"},
     {file = "requests-2.23.0-py2.py3-none-any.whl", hash = "sha256:43999036bfa82904b6af1d99e4882b560e5e2c68e5c4b0aa03b655f3d7d73fee"},
     {file = "requests-2.23.0.tar.gz", hash = "sha256:b3f43d496c6daba4493e7c431722aeb7dbc6288f52a6e04e7b6023b0247817e6"},
 ]
@@ -1588,8 +1589,8 @@ sphinx-autodoc-typehints = [
     {file = "sphinx_autodoc_typehints-1.10.3-py3-none-any.whl", hash = "sha256:27c9e6ef4f4451766ab8d08b2d8520933b97beb21c913f3df9ab2e59b56e6c6c"},
 ]
 sphinx-click = [
-    {file = "sphinx-click-2.3.2.tar.gz", hash = "sha256:1b649ebe9f7a85b78ef6545d1dc258da5abca850ac6375be104d484a6334a728"},
-    {file = "sphinx_click-2.3.2-py2.py3-none-any.whl", hash = "sha256:06952d5de6cbe2cb7d6dc656bc471652d2b484cf1e1b2d65edb7f4f2e867c7f6"},
+    {file = "sphinx-click-2.5.0.tar.gz", hash = "sha256:8ba44ca446ba4bb0585069b8aabaa81e833472d6669b36924a398405311d206f"},
+    {file = "sphinx_click-2.5.0-py2.py3-none-any.whl", hash = "sha256:6848ba2d084ef2feebae0ce3603c1c02a2ba5ded54fb6c0cf24fd01204a945f3"},
 ]
 sphinxcontrib-applehelp = [
     {file = "sphinxcontrib-applehelp-1.0.2.tar.gz", hash = "sha256:a072735ec80e7675e3f432fcae8610ecf509c5f1869d17e2eecff44389cdbc58"},
