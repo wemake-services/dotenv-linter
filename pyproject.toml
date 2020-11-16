@@ -34,7 +34,7 @@ python = "^3.6"
 ply = "^3.11"
 click = ">=6,<8"
 click_default_group = "^1.2"
-dataclasses = { version = ">=0.6,<0.8", python = "<3.7" }
+dataclasses = { version = ">=0.6,<0.9", python = "<3.7" }
 typing_extensions = "^3.6"
 
 [tool.poetry.dev-dependencies]
