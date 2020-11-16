@@ -14,7 +14,8 @@ We follow Semantic Versions.
 
 - Updates `wemake-python-styleguide` to `0.14`
 - Updates `poetry` to `1.0`
-- Moves from travis to github actions
+- Updates `reviewdog` to `v0.11.0`
+- Moves from Travis to GitHub actions
 - Adds support for [pre-commit](https://github.com/pre-commit/pre-commit)
 
 
