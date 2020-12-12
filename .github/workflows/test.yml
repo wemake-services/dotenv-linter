@@ -38,12 +38,10 @@ jobs:
       run: |
         poetry run flake8 .
         poetry run mypy dotenv_linter
-        poetry run codespell dotenv_linter tests docs README.md
+        poetry run codespell dotenv_linter tests docs README.md CHANGELOG.md CONTRIBUTING.md
         poetry run pytest
         poetry run doc8 -q docs
-        # Ignoring sphinx@2 security issue for now, see:
-        # https://github.com/miyakogi/m2r/issues/51
-        poetry run safety check --full-report -i 38330
+        poetry run safety check --full-report
         poetry check
         poetry run pip check
 

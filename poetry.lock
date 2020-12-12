@@ -90,6 +90,18 @@ python-versions = "*"
 click = "*"
 
 [[package]]
+name = "codespell"
+version = "2.0.0"
+description = "Codespell"
+category = "dev"
+optional = false
+python-versions = ">=3.5"
+
+[package.extras]
+dev = ["check-manifest", "flake8", "pytest", "pytest-cov", "pytest-dependency"]
+hard-encoding-detection = ["chardet"]
+
+[[package]]
 name = "colorama"
 version = "0.4.4"
 description = "Cross-platform colored terminal text."
@@ -1117,7 +1129,7 @@ testing = ["pytest (>=3.5,!=3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.6"
-content-hash = "e4cf2a15432e160343b0aba0d42633f941bde9f612f8bb1296bc9ea835dee6fb"
+content-hash = "5ab543d1d00344b9a652a4c8bc5c91a35df220a78594dbbb43a6440f329cdf6b"
 
 [metadata.files]
 alabaster = [
@@ -1154,6 +1166,10 @@ click = [
 ]
 click-default-group = [
     {file = "click-default-group-1.2.2.tar.gz", hash = "sha256:d9560e8e8dfa44b3562fbc9425042a0fd6d21956fcc2db0077f63f34253ab904"},
+]
+codespell = [
+    {file = "codespell-2.0.0-py3-none-any.whl", hash = "sha256:a10b8bbb9f678e4edff7877af1f654fdc9e27c205f952c3ddee2981ad02ec5f2"},
+    {file = "codespell-2.0.0.tar.gz", hash = "sha256:dd9983e096b9f7ba89dd2d2466d1fc37231d060f19066331b9571341363c77b8"},
 ]
 colorama = [
     {file = "colorama-0.4.4-py2.py3-none-any.whl", hash = "sha256:9f47eda37229f68eee03b24b9748937c7dc3868f906e8ba69fbcbdd3bc5dc3e2"},
