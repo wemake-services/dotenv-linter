@@ -3,7 +3,7 @@
 We follow Semantic Versions.
 
 
-## Version 0.2.0 WIP
+## Version 0.2.0
 
 ### Features
 

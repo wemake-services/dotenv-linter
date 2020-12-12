@@ -81,7 +81,7 @@ class DuplicateNameViolation(BaseFSTViolation):
     Restricts to use duplicate names variables.
 
     Reasoning:
-        There is no need to crate duplicate variables inside your
+        There is no need to create duplicate variables inside your
         dotenv file. Since it will be implicitly overridden by the parsing
         mechanism.
 

@@ -38,6 +38,7 @@ jobs:
 
         poetry run flake8 .
         poetry run mypy dotenv_linter
+        poetry run codespell dotenv_linter tests docs README.md
         poetry run pytest
         poetry run doc8 -q docs
         # Ignoring sphinx@2 security issue for now, see:
@@ -46,7 +47,7 @@ jobs:
         poetry check
         poetry run pip check
 
-    - name: Upload coverage to Codecov  
+    - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
       with:
         file: ./coverage.xml

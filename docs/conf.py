@@ -30,17 +30,19 @@ def _get_project_meta():
 
 
 pkg_meta = _get_project_meta()
-project = pkg_meta['name']
+project = str(pkg_meta['name'])
 copyright = '2018, wemake.services'  # noqa: WPS125
 author = 'wemake.services'
 
 # The short X.Y version
-version = pkg_meta['version']
+version = str(pkg_meta['version'])
 # The full version, including alpha/beta/rc tags
 release = version
 
 
 # -- General configuration ---------------------------------------------------
+
+needs_sphinx = '3.3'
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
@@ -55,7 +57,7 @@ extensions = [
     'sphinx.ext.napoleon',
 
     # Used to include .md files:
-    'm2r',
+    'm2r2',
 
     # Used to insert typehints into the final docs:
     'sphinx_autodoc_typehints',
@@ -141,63 +143,6 @@ html_sidebars = {
         'searchbox.html',
     ],
 }
-
-
-# -- Options for HTMLHelp output ---------------------------------------------
-
-# Output file base name for HTML help builder.
-htmlhelp_basename = 'dotenv-linterdoc'
-
-
-# -- Options for LaTeX output ------------------------------------------------
-
-latex_elements = {}
-
-# Grouping the document tree into LaTeX files. List of tuples
-# (source start file, target name, title,
-#  author, documentclass [howto, manual, or own class]).
-latex_documents = [
-    (
-        master_doc,
-        'dotenv-linter.tex',
-        'dotenv-linter Documentation',
-        'wemake.services',
-        'manual',
-    ),
-]
-
-
-# -- Options for manual page output ------------------------------------------
-
-# One entry per manual page. List of tuples
-# (source start file, name, description, authors, manual section).
-man_pages = [
-    (
-        master_doc,
-        'dotenv-linter',
-        'dotenv-linter Documentation',
-        [author],
-        1,
-    ),
-]
-
-
-# -- Options for Texinfo output ----------------------------------------------
-
-# Grouping the document tree into Texinfo files. List of tuples
-# (source start file, target name, title, author,
-#  dir menu entry, description, category)
-texinfo_documents = [
-    (
-        master_doc,
-        'dotenv-linter',
-        'dotenv-linter Documentation',
-        author,
-        'dotenv-linter',
-        'One line description of project.',
-        'Miscellaneous',
-    ),
-]
 
 
 # -- Extension configuration -------------------------------------------------
