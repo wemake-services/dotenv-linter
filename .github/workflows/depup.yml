@@ -9,7 +9,7 @@ jobs:
   reviewdog:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
       - uses: haya14busa/action-depup@v1
         id: depup
         with:
@@ -18,7 +18,7 @@ jobs:
           repo: reviewdog/reviewdog
 
       - name: Create Pull Request to update reviewdog
-        uses: peter-evans/create-pull-request@v2
+        uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           title: "chore(deps): update reviewdog to ${{ steps.depup.outputs.latest }}"
