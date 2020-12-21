@@ -53,7 +53,7 @@ sphinx-click = "^2.5"
 doc8 = "^0.8"
 m2r2 = "^0.2"
 tomlkit = "^0.7"
-safety = "^1.9"
+safety = "^1.10"
 codespell = "^2.0.0"
 
 [tool.poetry.scripts]
