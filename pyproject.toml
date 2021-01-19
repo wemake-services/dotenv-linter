@@ -44,7 +44,7 @@ nitpick = "^0.23"
 mypy = "^0.790"
 
 pytest = "^6.2"
-pytest-cov = "^2.10"
+pytest-cov = "^2.11"
 pytest-randomly = "^3.5"
 
 sphinx = "^3.4"
