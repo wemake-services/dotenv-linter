@@ -53,6 +53,12 @@ def all_violations():
     return all_errors_container
 
 
+@pytest.fixture(scope='session')
+def all_module_violations():
+    """Loads all violations from the package."""
+    return _load_all_violation_classes()
+
+
 @pytest.fixture()
 def fixture_path():
     """Returns path to the fixture."""
