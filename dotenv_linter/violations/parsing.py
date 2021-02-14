@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 Different error that might happen during file parsing phase.
 

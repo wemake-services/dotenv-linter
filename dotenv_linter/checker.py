@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import sys
 from enum import IntEnum
 from typing import Iterable, Iterator, NoReturn, Optional, Tuple

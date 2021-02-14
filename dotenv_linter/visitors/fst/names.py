@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import re
 from typing import ClassVar, List
 from typing.re import Pattern
@@ -67,7 +65,7 @@ class NameInModuleVisitor(BaseFSTVisitor):
 class NameVisitor(BaseFSTVisitor):
     """Finds wrong names."""
 
-    _correct_name: ClassVar[Pattern] = re.compile(r'[A-Z_]+[A-Z0-9_]*')
+    _correct_name: ClassVar[Pattern] = re.compile('[A-Z_]+[A-Z0-9_]*')
 
     def visit_name(self, node: Name) -> None:
         """

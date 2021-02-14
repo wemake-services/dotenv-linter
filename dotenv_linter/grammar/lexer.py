@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 Lexer definition.
 
@@ -83,13 +81,13 @@ class DotenvLexer(object):
         """Parsing COMMENT tokens."""
         return token
 
-    @lex.TOKEN(re_whitespaces + r'*=')
+    @lex.TOKEN(re_whitespaces + '*=')
     def t_name_EQUAL(self, token: lex.LexToken) -> lex.LexToken:
         """Parsing EQUAL tokens."""
         token.lexer.push_state('value')
         return token
 
-    @lex.TOKEN(r'.+')
+    @lex.TOKEN('.+')
     def t_value_VALUE(self, token: lex.LexToken) -> lex.LexToken:
         """Parsing VALUE tokens."""
         token.lexer.pop_state()

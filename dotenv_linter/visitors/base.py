@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-
-from dataclasses import fields
 from typing import Any, Iterable, Iterator, List, Tuple, Union
 
+from attr import fields
 from typing_extensions import final
 
 from dotenv_linter.grammar.fst import Module, Node
@@ -16,7 +14,7 @@ def iter_fields(node: Node) -> Iterator[FieldInfo]:
     """Iterates over all fields inside a ``fst`` node."""
     yield from (
         (field.name, getattr(node, field.name))
-        for field in fields(node)
+        for field in fields(node.__class__)
     )
 
 

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 Full BNF grammar for this language can be specified as:
 

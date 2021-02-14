@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 Here we define nodes for our full syntax tree.
 
@@ -19,9 +17,9 @@ See also:
 
 """
 
-from dataclasses import dataclass, field
 from typing import Optional, Sequence, Type, TypeVar, Union
 
+from attr import dataclass, field
 from ply import lex
 
 from dotenv_linter.logics.text import normalize_text
@@ -30,7 +28,7 @@ TNode = TypeVar('TNode', bound='Node')
 TAssign = TypeVar('TAssign', bound='Assign')
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True)
 class Node(object):
     """
     Base class for all other nodes.
@@ -38,13 +36,11 @@ class Node(object):
     Defines base fields that all other nodes have.
     """
 
-    __slots__ = ('lineno', 'raw_text')
-
     lineno: int
     raw_text: str
     text: str = field(init=False)
 
-    def __post_init__(self) -> None:
+    def __attrs_post_init__(self) -> None:
         """Used to tweak instance internals after initialization."""
         object.__setattr__(  # noqa: WPS609
             self, 'text', normalize_text(self.raw_text),
@@ -73,8 +69,8 @@ class Name(Node):
     """Represents an inline name which is used as a key for future values."""
 
 
-@dataclass(frozen=True)
-class Value(Node):
+@dataclass(frozen=True)  # noqa: WPS110
+class Value(Node):  # noqa: WPS110
     """Represents an inline value which is used together with key."""
 
 
@@ -83,11 +79,9 @@ class Statement(Node):
     """Base class for all affecting statements."""
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True)
 class Assign(Statement):
     """Represents key-value pair separated by ``=``."""
-
-    __slots__ = ('lineno', 'col_offset', 'raw_text', 'text', 'left', 'right')
 
     left: Name
     right: Optional[Value]
@@ -116,10 +110,8 @@ class Assign(Statement):
         )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True)
 class Module(Node):
     """Wrapper node that represents a single file with or without contents."""
-
-    __slots__ = ('lineno', 'raw_text', 'text', 'body')
 
     body: Sequence[Union[Comment, Statement]]

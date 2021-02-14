@@ -1,6 +1,3 @@
-
-# -*- coding: utf-8 -*-
-
 # See also:
 # https://click.palletsprojects.com/en/7.x/setuptools/#setuptools-integration
 # https://click.palletsprojects.com/en/7.x/arguments/

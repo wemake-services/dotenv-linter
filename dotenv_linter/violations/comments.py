@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 Rules that define how comments should be written.
 

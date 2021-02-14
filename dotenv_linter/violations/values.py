@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 Rules about writing correct dotenv values.
 

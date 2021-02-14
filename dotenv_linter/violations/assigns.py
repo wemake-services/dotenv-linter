@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 Rules that define how assigns should be made.
 

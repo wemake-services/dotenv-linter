@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import subprocess
 
 from dotenv_linter.version import pkg_version

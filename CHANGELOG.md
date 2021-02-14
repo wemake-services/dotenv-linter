@@ -3,6 +3,18 @@
 We follow Semantic Versions.
 
 
+## Version 0.3.0
+
+### Features
+
+- Now using `attrs` instead of `dataclasses`
+- `python3.9` support
+
+### Misc
+
+- Updates `wemake-python-styleguide` to `0.15`
+
+
 ## Version 0.2.0
 
 ### Features
