@@ -7,7 +7,7 @@ sphinx-click==2.6.0
 recommonmark==0.7.1
 m2r2==0.2.7
 tomlkit==0.7.0
-pygments==2.8.0
+pygments==2.8.1
 
 # Dependencies of our linter:
 typing-extensions==3.7.4.3
