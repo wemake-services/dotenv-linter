@@ -32,7 +32,7 @@ classifiers = [
 python = "^3.6"
 
 ply = "^3.11"
-click = ">=6,<8"
+click = ">=6,<9"
 click_default_group = "^1.2"
 attrs = "*"
 typing_extensions = "^3.6"
