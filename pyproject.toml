@@ -54,7 +54,7 @@ doc8 = "^0.8"
 m2r2 = "^0.2"
 tomlkit = "^0.7"
 safety = "^1.10"
-codespell = "^2.0.0"
+codespell = "^2.1.0"
 
 [tool.poetry.scripts]
 dotenv-linter = "dotenv_linter.cli:cli"
