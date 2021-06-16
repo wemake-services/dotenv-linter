@@ -1071,14 +1071,14 @@ type_comments = ["typed-ast (>=1.4.0)"]
 
 [[package]]
 name = "sphinx-click"
-version = "3.0.0"
+version = "3.0.1"
 description = "Sphinx extension that automatically documents click applications"
 category = "dev"
 optional = false
 python-versions = ">=3.6"
 
 [package.dependencies]
-click = ">=6.0"
+click = ">=7.0"
 docutils = "*"
 sphinx = ">=2.0"
 
@@ -1861,8 +1861,8 @@ sphinx-autodoc-typehints = [
     {file = "sphinx_autodoc_typehints-1.12.0-py3-none-any.whl", hash = "sha256:5e81776ec422dd168d688ab60f034fccfafbcd94329e9537712c93003bddc04a"},
 ]
 sphinx-click = [
-    {file = "sphinx-click-3.0.0.tar.gz", hash = "sha256:5f0d10a992eae1aa869b22720281eb3f2d0d8fa30364e75db31db52539c70f9e"},
-    {file = "sphinx_click-3.0.0-py3-none-any.whl", hash = "sha256:5ae8e558ffe3ee976410f2bbd9213d2c1127bd22df1a47099bf179e775f24591"},
+    {file = "sphinx-click-3.0.1.tar.gz", hash = "sha256:9b24c46f3b8f25fc639f47c97ac0361d9f80d48c2ed6b3917de2865bbdbe1785"},
+    {file = "sphinx_click-3.0.1-py3-none-any.whl", hash = "sha256:e9ee2237e5a6b6620e9996b8214934afdf8f7f9f9fc082482c77be0e4379038e"},
 ]
 sphinxcontrib-applehelp = [
     {file = "sphinxcontrib-applehelp-1.0.2.tar.gz", hash = "sha256:a072735ec80e7675e3f432fcae8610ecf509c5f1869d17e2eecff44389cdbc58"},
