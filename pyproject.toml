@@ -41,7 +41,6 @@ typing_extensions = "^3.6"
 wemake-python-styleguide = "^0.15"
 flake8-pytest-style = "^1.5"
 nitpick = "^0.26"
-mypy = "^0.812"
 
 pytest = "^6.2"
 pytest-cov = "^2.12"
@@ -55,6 +54,9 @@ m2r2 = "^0.2"
 tomlkit = "^0.7"
 safety = "^1.10"
 codespell = "^2.1.0"
+
+mypy = "^0.910"
+types-setuptools = "^57.0"
 
 [tool.poetry.scripts]
 dotenv-linter = "dotenv_linter.cli:cli"
