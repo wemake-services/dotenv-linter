@@ -8,11 +8,13 @@ We follow Semantic Versions.
 ### Features
 
 - Now using `attrs` instead of `dataclasses`
-- `python3.9` support
+- `python3.9` and `python3.10` support
+- Updates `click` version
 
 ### Misc
 
-- Updates `wemake-python-styleguide` to `0.15`
+- Updates `wemake-python-styleguide` to `0.16`
+- Updates `typing_extensions` package
 
 
 ## Version 0.2.0

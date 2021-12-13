@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dotenv-linter"
-version = "0.2.0"
+version = "0.3.0"
 description = "Linting dotenv files like a charm!"
 authors = [
   "sobolevn <mail@sobolevn.me>"
@@ -35,10 +35,10 @@ ply = "^3.11"
 click = ">=6,<9"
 click_default_group = "^1.2"
 attrs = "*"
-typing_extensions = "^3.6"
+typing_extensions = ">=3.6,<5.0"
 
 [tool.poetry.dev-dependencies]
-wemake-python-styleguide = "^0.15"
+wemake-python-styleguide = "^0.16"
 flake8-pytest-style = "^1.5"
 nitpick = "^0.27"
 
