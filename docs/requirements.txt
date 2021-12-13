@@ -10,7 +10,7 @@ tomlkit==0.7.2
 pygments==2.9.0
 
 # Dependencies of our linter:
-typing-extensions==3.10.0.0
+typing-extensions==4.0.1
 click==8.0.1
 click_default_group==1.2.2
 dataclasses==0.6.0
