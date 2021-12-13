@@ -18,23 +18,18 @@ jobs:
 
     - name: Install poetry
       run: |
+        pip install -U pip
+
         curl -sSL \
-          "https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py" | python
+          "https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py" | python -
 
-        # Adding `poetry` to `$PATH`:
-        echo "$HOME/.poetry/bin" >> $GITHUB_PATH
+        echo "${HOME}/.poetry/bin" >> $GITHUB_PATH
 
-    - name: Set up cache
-      uses: actions/cache@v2
-      with:
-        path: .venv
-        key: venv-${{ matrix.python-version }}-${{ hashFiles('poetry.lock') }}
     - name: Install dependencies
       run: |
         poetry config virtualenvs.in-project true
-        poetry install
-
         poetry run pip install -U pip
+        poetry install
 
     - name: Run checks
       run: |
