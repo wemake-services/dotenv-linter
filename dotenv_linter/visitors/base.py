@@ -61,7 +61,7 @@ class BaseFSTVisitor(BaseVisitor):
         """
         method = 'visit_{0}'.format(node.__class__.__qualname__.lower())
         visitor = getattr(self, method, self.generic_visit)
-        return visitor(node)
+        visitor(node)
 
     def generic_visit(self, node: Node) -> None:  # noqa: WPS231
         """
