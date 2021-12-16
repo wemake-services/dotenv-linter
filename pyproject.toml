@@ -55,7 +55,7 @@ tomlkit = "^0.7"
 safety = "^1.10"
 codespell = "^2.1.0"
 
-mypy = "^0.910"
+mypy = "^0.920"
 types-setuptools = "^57.0"
 
 [tool.poetry.scripts]
