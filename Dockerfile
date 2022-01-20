@@ -15,7 +15,7 @@
 # This image is also available on Dockerhub:
 # https://hub.docker.com/r/wemakeservices/dotenv-linter
 
-FROM python:3.9.9-alpine
+FROM python:3.10.2-alpine
 
 LABEL maintainer="sobolevn@wemake.services"
 LABEL vendor="wemake.services"
