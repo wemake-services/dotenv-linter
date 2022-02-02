@@ -51,7 +51,7 @@ sphinx-autodoc-typehints = "^1.12"
 sphinx-click = "^3.0"
 doc8 = "^0.10"
 m2r2 = "^0.3"
-tomlkit = "^0.8"
+tomlkit = "^0.9"
 safety = "^1.10"
 codespell = "^2.1.0"
 
