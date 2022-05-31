@@ -3,7 +3,7 @@
 
 sphinx==5.0.0
 sphinx_autodoc_typehints==1.18.1
-sphinx-click==4.0.3
+sphinx-click==4.1.0
 recommonmark==0.7.1
 m2r2==0.3.2
 tomlkit==0.11.0
