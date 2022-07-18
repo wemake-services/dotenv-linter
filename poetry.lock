@@ -1257,7 +1257,7 @@ python-versions = "*"
 
 [[package]]
 name = "types-setuptools"
-version = "62.6.1"
+version = "63.2.0"
 description = "Typing stubs for setuptools"
 category = "dev"
 optional = false
@@ -1340,7 +1340,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.6"
-content-hash = "8b4646f4f17748bb4a639dda944a23d20287ed0dafa10600a07aefe027f8e24b"
+content-hash = "0af3b42f715a9567e5cb0dd3559846d841d0b59e147d6c7eab876c88d8a69f06"
 
 [metadata.files]
 aiocontextvars = [
@@ -2027,8 +2027,8 @@ typed-ast = [
     {file = "typed_ast-1.4.3.tar.gz", hash = "sha256:fb1bbeac803adea29cedd70781399c99138358c26d05fcbd23c13016b7f5ec65"},
 ]
 types-setuptools = [
-    {file = "types-setuptools-62.6.1.tar.gz", hash = "sha256:affd968a3a7218e1c96f1806eb457f4027eac803b3caaddccf98a4e5776b1724"},
-    {file = "types_setuptools-62.6.1-py3-none-any.whl", hash = "sha256:b0341c29c7f44f7625204532b8829bd92ebb5fd48aa9f3e2052177e743e990b1"},
+    {file = "types-setuptools-63.2.0.tar.gz", hash = "sha256:fc9a6c4776a398d0f57b259ca893748342174c52a35d593d08b56f52aa99c1a4"},
+    {file = "types_setuptools-63.2.0-py3-none-any.whl", hash = "sha256:f9d0d0443dd344cad78da04320a3fb7837d4dd3f3ef4b25d3e0958edea6da812"},
 ]
 typing-extensions = [
     {file = "typing_extensions-4.1.1-py3-none-any.whl", hash = "sha256:21c85e0fe4b9a155d0799430b0ad741cdce7e359660ccbd8b530613e8df88ce2"},
