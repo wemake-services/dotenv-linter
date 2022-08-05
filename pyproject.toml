@@ -56,7 +56,7 @@ safety = "^2.1"
 codespell = "^2.1.0"
 
 mypy = "^0.971"
-types-setuptools = "^63.2"
+types-setuptools = "^63.4"
 
 [tool.poetry.scripts]
 dotenv-linter = "dotenv_linter.cli:cli"
