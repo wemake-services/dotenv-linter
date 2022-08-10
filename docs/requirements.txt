@@ -6,7 +6,7 @@ sphinx_autodoc_typehints==1.19.2
 sphinx-click==4.3.0
 recommonmark==0.7.1
 m2r2==0.3.2
-tomlkit==0.11.2
+tomlkit==0.11.3
 pygments==2.12.0
 
 # Dependencies of our linter:
