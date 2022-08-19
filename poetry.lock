@@ -322,7 +322,7 @@ attrs = ">=19.2.0"
 flake8 = ">=3.0.0"
 
 [package.extras]
-dev = ["coverage", "hypothesis", "hypothesmith (>=0.2)", "pre-commit"]
+dev = ["pre-commit", "hypothesmith (>=0.2)", "hypothesis", "coverage"]
 
 [[package]]
 name = "flake8-commas"
@@ -750,9 +750,9 @@ toml = "*"
 tomlkit = "*"
 
 [package.extras]
-test = ["freezegun", "pytest-cov", "pytest-socket", "pytest-testmon", "pytest-watch", "pytest", "responses", "testfixtures"]
+test = ["testfixtures", "responses", "pytest", "pytest-watch", "pytest-testmon", "pytest-socket", "pytest-cov", "freezegun"]
+doc = ["sphobjinv", "sphinx-rtd-theme", "sphinx"]
 lint = ["pylint"]
-doc = ["sphinx", "sphinx-rtd-theme", "sphobjinv"]
 
 [[package]]
 name = "packaging"
@@ -1214,9 +1214,9 @@ optional = false
 python-versions = "*"
 
 [package.extras]
-build = ["setuptools-git", "wheel", "twine"]
-docs = ["sphinx", "zope.component", "sybil", "twisted", "mock", "django (<2)", "django"]
-test = ["pytest (>=3.6)", "pytest-cov", "pytest-django", "zope.component", "sybil", "twisted", "mock", "django (<2)", "django"]
+test = ["django", "django (<2)", "mock", "twisted", "sybil", "zope.component", "pytest-django", "pytest-cov", "pytest (>=3.6)"]
+docs = ["django", "django (<2)", "mock", "twisted", "sybil", "zope.component", "sphinx"]
+build = ["twine", "wheel", "setuptools-git"]
 
 [[package]]
 name = "text-unidecode"
@@ -1260,7 +1260,7 @@ python-versions = "*"
 
 [[package]]
 name = "types-setuptools"
-version = "64.0.1"
+version = "65.1.0"
 description = "Typing stubs for setuptools"
 category = "dev"
 optional = false
@@ -1343,7 +1343,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.6"
-content-hash = "e7940f50291e0ec65e333c2559ce09dce131b6fa71d7e7dbddd38a8bf8a5187c"
+content-hash = "a6b455fb9b4b6769596b26fe350a05d5fdddfee53c62d6ea9cb62c38d6714bc2"
 
 [metadata.files]
 aiocontextvars = [
@@ -2035,8 +2035,8 @@ typed-ast = [
     {file = "typed_ast-1.4.3.tar.gz", hash = "sha256:fb1bbeac803adea29cedd70781399c99138358c26d05fcbd23c13016b7f5ec65"},
 ]
 types-setuptools = [
-    {file = "types-setuptools-64.0.1.tar.gz", hash = "sha256:8290b6bf1d916e6b007784d5cbcd112a1af9a2d76343231fcce0a55185343702"},
-    {file = "types_setuptools-64.0.1-py3-none-any.whl", hash = "sha256:005ccb8a1a7d0dce61cd63081dad0ddc599af4413bb49ce1333119a78a7bb2e1"},
+    {file = "types-setuptools-65.1.0.tar.gz", hash = "sha256:57f7d89eaa52a40ccb97f2cbe6178c6ad90f843afb67680933f8ef1472da53f8"},
+    {file = "types_setuptools-65.1.0-py3-none-any.whl", hash = "sha256:050ccaff1d0fecc1b1269168fe4da396c2a0743f0d287af391a9312c18a8b095"},
 ]
 typing-extensions = [
     {file = "typing_extensions-4.1.1-py3-none-any.whl", hash = "sha256:21c85e0fe4b9a155d0799430b0ad741cdce7e359660ccbd8b530613e8df88ce2"},
