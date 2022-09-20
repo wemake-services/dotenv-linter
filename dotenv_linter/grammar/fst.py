@@ -19,10 +19,9 @@ See also:
 
 from typing import Optional, Sequence, Type, TypeVar, Union
 
-from typing_extensions import final
-
 from attr import dataclass, field
 from ply import lex
+from typing_extensions import final
 
 from dotenv_linter.logics.text import normalize_text
 
