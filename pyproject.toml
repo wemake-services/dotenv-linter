@@ -38,7 +38,7 @@ attrs = "*"
 typing_extensions = ">=3.6,<5.0"
 importlib-metadata = { version = "*", python = "<3.8" }
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.test.dependencies]
 wemake-python-styleguide = "^0.16"
 flake8-pytest-style = "^1.5"
 nitpick = "^0.29"
@@ -47,17 +47,19 @@ pytest = "^7.0"
 pytest-cov = "^3.0"
 pytest-randomly = "^3.8"
 
+safety = "^2.1"
+codespell = "^2.2.1"
+
+mypy = "^0.971"
+types-setuptools = "^65.3"
+
+[tool.poetry.group.docs.dependencies]
 sphinx = "^5.1"
 sphinx-autodoc-typehints = "^1.12"
 sphinx-click = "^3.1"
 doc8 = "^0.11"
 m2r2 = "^0.3"
 tomlkit = "^0.11"
-safety = "^2.1"
-codespell = "^2.2.1"
-
-mypy = "^0.971"
-types-setuptools = "^65.3"
 
 [tool.poetry.scripts]
 dotenv-linter = "dotenv_linter.cli:cli"
