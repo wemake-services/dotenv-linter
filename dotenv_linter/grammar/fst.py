@@ -19,6 +19,8 @@ See also:
 
 from typing import Optional, Sequence, Type, TypeVar, Union
 
+from typing_extensions import final
+
 from attr import dataclass, field
 from ply import lex
 
@@ -55,6 +57,7 @@ class Node(object):
         )
 
 
+@final
 @dataclass(frozen=True)
 class Comment(Node):
     """
@@ -64,11 +67,13 @@ class Comment(Node):
     """
 
 
+@final
 @dataclass(frozen=True)
 class Name(Node):
     """Represents an inline name which is used as a key for future values."""
 
 
+@final
 @dataclass(frozen=True)  # noqa: WPS110
 class Value(Node):  # noqa: WPS110
     """Represents an inline value which is used together with key."""
@@ -79,6 +84,7 @@ class Statement(Node):
     """Base class for all affecting statements."""
 
 
+@final
 @dataclass(frozen=True, slots=True)
 class Assign(Statement):
     """Represents key-value pair separated by ``=``."""
