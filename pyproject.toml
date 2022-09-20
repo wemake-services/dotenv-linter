@@ -53,6 +53,9 @@ codespell = "^2.2.1"
 mypy = "^0.971"
 types-setuptools = "^65.3"
 
+[tool.poetry.group.docs]
+optional = True
+
 [tool.poetry.group.docs.dependencies]
 sphinx = "^5.1"
 sphinx-autodoc-typehints = "^1.12"
