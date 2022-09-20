@@ -73,5 +73,5 @@ style = "https://raw.githubusercontent.com/wemake-services/wemake-python-stylegu
 
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=1.2.0"]
 build-backend = "poetry.core.masonry.api"
