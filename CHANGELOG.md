@@ -3,6 +3,14 @@
 We follow Semantic Versions.
 
 
+## Version 0.4.0
+
+### Features
+
+- `python3.6` support is dropped
+- `pkg_resources` is removed, now `importlib_metadata` is used
+
+
 ## Version 0.3.0
 
 ### Features

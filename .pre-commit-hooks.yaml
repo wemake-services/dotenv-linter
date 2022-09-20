@@ -1,6 +1,6 @@
--   id: dotenv-linter
-    name: dotenv-linter
-    entry: dotenv-linter
-    language: python
-    types: [text]
-    files: '\.env*'
+- id: dotenv-linter
+  name: dotenv-linter
+  entry: dotenv-linter
+  language: python
+  types: [text]
+  files: '\.env*'

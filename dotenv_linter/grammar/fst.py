@@ -21,6 +21,7 @@ from typing import Optional, Sequence, Type, TypeVar, Union
 
 from attr import dataclass, field
 from ply import lex
+from typing_extensions import final
 
 from dotenv_linter.logics.text import normalize_text
 
@@ -55,6 +56,7 @@ class Node(object):
         )
 
 
+@final
 @dataclass(frozen=True)
 class Comment(Node):
     """
@@ -64,12 +66,14 @@ class Comment(Node):
     """
 
 
+@final
 @dataclass(frozen=True)
 class Name(Node):
     """Represents an inline name which is used as a key for future values."""
 
 
-@dataclass(frozen=True)  # noqa: WPS110
+@final  # noqa: WPS110
+@dataclass(frozen=True)
 class Value(Node):  # noqa: WPS110
     """Represents an inline value which is used together with key."""
 
@@ -79,6 +83,7 @@ class Statement(Node):
     """Base class for all affecting statements."""
 
 
+@final
 @dataclass(frozen=True, slots=True)
 class Assign(Statement):
     """Represents key-value pair separated by ``=``."""
