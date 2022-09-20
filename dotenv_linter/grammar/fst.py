@@ -72,8 +72,8 @@ class Name(Node):
     """Represents an inline name which is used as a key for future values."""
 
 
-@final
-@dataclass(frozen=True)  # noqa: WPS110
+@final  # noqa: WPS110
+@dataclass(frozen=True)
 class Value(Node):  # noqa: WPS110
     """Represents an inline value which is used together with key."""
 
