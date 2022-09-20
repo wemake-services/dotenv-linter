@@ -49,6 +49,7 @@ pytest-randomly = "^3.8"
 
 safety = "^2.1"
 codespell = "^2.2.1"
+doc8 = "^0.11"
 
 mypy = "^0.971"
 types-setuptools = "^65.3"
@@ -60,7 +61,6 @@ optional = true
 sphinx = "^5.1"
 sphinx-autodoc-typehints = "^1.12"
 sphinx-click = "^3.1"
-doc8 = "^0.11"
 m2r2 = "^0.3"
 tomlkit = "^0.11"
 
