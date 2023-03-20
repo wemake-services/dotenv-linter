@@ -52,7 +52,7 @@ codespell = "^2.2.1"
 doc8 = "^0.11"
 
 mypy = "^0.971"
-types-setuptools = "^65.3"
+types-setuptools = ">=65.3,<68.0"
 
 [tool.poetry.group.docs]
 optional = true
