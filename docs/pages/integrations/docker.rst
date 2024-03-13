@@ -5,7 +5,7 @@ Docker
   :alt: Dockerhub
   :target: https://hub.docker.com/r/wemakeservices/dotenv-linter/
 
-.. image:: https://images.microbadger.com/badges/image/wemakeservices/caddy-docker.svg
+.. image:: https://img.shields.io/docker/pulls/wemakeservices/dotenv-linter.svg
   :alt: Image size
   :target: https://microbadger.com/images/wemakeservices/dotenv-linter
 
