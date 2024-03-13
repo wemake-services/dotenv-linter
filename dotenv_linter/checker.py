@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import sys
 from enum import IntEnum
 from typing import Any, Iterable, Iterator, NoReturn, Optional, Tuple, final
