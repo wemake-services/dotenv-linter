@@ -25,10 +25,9 @@ See also:
 
 """
 
-from typing import List, NoReturn, Optional, Union
+from typing import Any, List, NoReturn, Optional, Union, final
 
 from ply import lex, yacc
-from typing_extensions import final
 
 from dotenv_linter.exceptions import ParsingError
 from dotenv_linter.grammar.fst import Assign, Comment, Module, Name, Statement
@@ -54,12 +53,12 @@ class DotenvParser(object):
 
     tokens = DotenvLexer.tokens
 
-    def __init__(self, **kwarg) -> None:
+    def __init__(self, **kwarg: Any) -> None:
         """Creates inner parser instance."""
         self._lexer = DotenvLexer()
         self._parser = yacc.yacc(module=self, **kwarg)  # should be last
 
-    def parse(self, to_parse: str, **kwargs) -> Module:
+    def parse(self, to_parse: str, **kwargs: Any) -> Module:
         """Parses input string to FST."""
         self._body_items: List[Union[Comment, Statement]] = []
         self._parser.parse(input=to_parse, lexer=self._lexer, **kwargs)

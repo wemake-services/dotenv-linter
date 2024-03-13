@@ -1,4 +1,4 @@
-from typing_extensions import final
+from typing import final
 
 
 @final

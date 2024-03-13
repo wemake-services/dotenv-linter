@@ -1,8 +1,6 @@
 import re
-from typing import ClassVar, List
+from typing import ClassVar, List, final
 from typing.re import Pattern
-
-from typing_extensions import final
 
 from dotenv_linter.constants import NAMES_BLACKLIST
 from dotenv_linter.grammar.fst import Assign, Module, Name
@@ -20,9 +18,9 @@ from dotenv_linter.visitors.base import BaseFSTVisitor
 class NameInModuleVisitor(BaseFSTVisitor):
     """Finds wrong names in dotenv modules."""
 
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, fst: Module) -> None:
         """Creates a list of all names in a file."""
-        super().__init__(*args, **kwargs)
+        super().__init__(fst)
         self._names: List[Name] = []
 
     def visit_module(self, node: Module) -> None:

@@ -1,8 +1,8 @@
+from __future__ import annotations
+
 import sys
 from enum import IntEnum
-from typing import Iterable, Iterator, NoReturn, Optional, Tuple
-
-from typing_extensions import final
+from typing import Any, Iterable, Iterator, NoReturn, Optional, Tuple, final
 
 from dotenv_linter.exceptions import ParsingError
 from dotenv_linter.grammar.fst import Module
@@ -96,7 +96,11 @@ class DotenvFileChecker(object):
     """
 
     # TODO: create options
-    def __init__(self, filenames: Iterable[str], options=None) -> None:
+    def __init__(
+        self,
+        filenames: Iterable[str],
+        options: Any | None = None,
+    ) -> None:
         """Creates new instance."""
         self._fst_checker = _FSTChecker(filenames)
 

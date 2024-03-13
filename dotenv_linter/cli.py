@@ -19,7 +19,7 @@ from dotenv_linter.version import pkg_version
     invoke_without_command=True,
 )
 @click.option('--version', is_flag=True, default=False)
-def cli(version):
+def cli(version: bool) -> None:
     """
     Main entrypoint to the app.
 
@@ -30,14 +30,14 @@ def cli(version):
         print(pkg_version)  # noqa: WPS421
 
 
-@cli.command()
+@cli.command()  # type: ignore[misc]
 @click.argument(
     'files',
     nargs=-1,
     required=True,
     type=click.Path(exists=True, dir_okay=False),
 )
-def lint(files: Tuple[str, ...]):
+def lint(files: Tuple[str, ...]) -> None:
     """Runs linting process for the given files."""
     checker = DotenvFileChecker(files)
 

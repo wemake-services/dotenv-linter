@@ -6,14 +6,20 @@ See also:
 
 """
 
-from typing import ClassVar, Tuple
+from typing import Any, Callable, ClassVar, Tuple, TypeVar, final
 
 from ply import lex
-from typing_extensions import final
+from typing_extensions import TypeAlias
 
 from dotenv_linter.exceptions import ParsingError
 
-_LexerState = Tuple[str, str]
+_LexerState: TypeAlias = Tuple[str, str]
+
+_CallableT = TypeVar('_CallableT', bound=Callable[..., Any])
+
+
+def _token(re_string: str) -> Callable[[_CallableT], _CallableT]:
+    return lex.TOKEN(re_string)  # type: ignore[no-any-return]
 
 
 @final
@@ -35,7 +41,7 @@ class DotenvLexer(object):
 
     re_whitespaces: ClassVar[str] = r'[ \t\v\f\u00A0]'
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs: Any) -> None:
         """Creates inner lexer."""
         self._lexer = lex.lex(module=self, **kwargs)
         self.reset()
@@ -70,30 +76,30 @@ class DotenvLexer(object):
         """
         return self._lexer.token()
 
-    @lex.TOKEN(re_whitespaces + r'*[\w-]+')
+    @_token(re_whitespaces + r'*[\w-]+')
     def t_NAME(self, token: lex.LexToken) -> lex.LexToken:
         """Parsing NAME tokens."""
         token.lexer.push_state('name')
         return token
 
-    @lex.TOKEN(re_whitespaces + r'*\#.*')
+    @_token(re_whitespaces + r'*\#.*')
     def t_COMMENT(self, token: lex.LexToken) -> lex.LexToken:
         """Parsing COMMENT tokens."""
         return token
 
-    @lex.TOKEN(re_whitespaces + '*=')
+    @_token(re_whitespaces + '*=')
     def t_name_EQUAL(self, token: lex.LexToken) -> lex.LexToken:
         """Parsing EQUAL tokens."""
         token.lexer.push_state('value')
         return token
 
-    @lex.TOKEN('.+')
+    @_token('.+')
     def t_value_VALUE(self, token: lex.LexToken) -> lex.LexToken:
         """Parsing VALUE tokens."""
         token.lexer.pop_state()
         return token
 
-    @lex.TOKEN(r'[\n\r\u2028\u2029]')
+    @_token(r'[\n\r\u2028\u2029]')
     def t_ANY_newline(self, token: lex.LexToken) -> None:
         """
         Defines a rule so we can track line numbers.

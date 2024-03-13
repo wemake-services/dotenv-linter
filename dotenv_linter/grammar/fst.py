@@ -17,11 +17,10 @@ See also:
 
 """
 
-from typing import Optional, Sequence, Type, TypeVar, Union
+from typing import Optional, Sequence, Type, TypeVar, Union, final
 
 from attr import dataclass, field
 from ply import lex
-from typing_extensions import final
 
 from dotenv_linter.logics.text import normalize_text
 
@@ -119,4 +118,4 @@ class Assign(Statement):
 class Module(Node):
     """Wrapper node that represents a single file with or without contents."""
 
-    body: Sequence[Union[Comment, Statement]]
+    body: Sequence[Union[Comment, Statement, Name]]
