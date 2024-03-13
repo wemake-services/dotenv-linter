@@ -18,7 +18,7 @@ class BaseViolation(object):
 
     @final
     def as_line(self) -> str:
-        """Coverts violation to a single line information."""
+        """Converts violation to a single line information."""
         return '{0} {1} {2}'.format(
             self.location(),
             self._formated_code(),
