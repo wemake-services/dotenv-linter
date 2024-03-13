@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dotenv-linter"
-version = "0.4.0"
+version = "0.5.0"
 description = "Linting dotenv files like a charm!"
 authors = [
   "sobolevn <mail@sobolevn.me>"
@@ -29,40 +29,37 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.9"
 
 ply = "^3.11"
 click = ">=6,<9"
 click_default_group = "^1.2"
 attrs = "*"
 typing_extensions = ">=3.6,<5.0"
-importlib-metadata = { version = "*", python = "<3.8" }
 
-[tool.poetry.group.test.dependencies]
-wemake-python-styleguide = "^0.16"
-flake8-pytest-style = "^1.5"
-nitpick = "^0.29"
+[tool.poetry.group.dev.dependencies]
+wemake-python-styleguide = "^0.18"
+flake8-pytest-style = "^1.6"
+nitpick = "^0.35"
 
-pytest = "^7.0"
-pytest-cov = "^3.0"
-pytest-randomly = "^3.8"
+pytest = "^8.1"
+pytest-cov = "^4.1"
+pytest-randomly = "^3.12"
 
-safety = "^2.1"
-codespell = "^2.2.1"
-doc8 = "^0.11"
+codespell = "^2.2"
+doc8 = "^1.1"
 
-mypy = "^0.971"
-types-setuptools = "^65.3"
+mypy = "^1.9"
 
 [tool.poetry.group.docs]
 optional = true
 
 [tool.poetry.group.docs.dependencies]
-sphinx = "^5.1"
-sphinx-autodoc-typehints = "^1.12"
+sphinx = "^5.2"
+sphinx-autodoc-typehints = "^1.23"
 sphinx-click = "^3.1"
 m2r2 = "^0.3"
-tomlkit = "^0.11"
+tomlkit = "^0.12"
 
 [tool.poetry.scripts]
 dotenv-linter = "dotenv_linter.cli:cli"
@@ -73,5 +70,5 @@ style = "https://raw.githubusercontent.com/wemake-services/wemake-python-stylegu
 
 
 [build-system]
-requires = ["poetry-core>=1.2.0"]
+requires = ["poetry-core>=1.9.0"]
 build-backend = "poetry.core.masonry.api"

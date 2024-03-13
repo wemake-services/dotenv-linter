@@ -3,6 +3,19 @@
 We follow Semantic Versions.
 
 
+## Version 0.5.0
+
+### Features
+
+- Drops `python3.7` and `python3.8` support
+- Adds `python3.11` and `python3.12` support
+- Removes `importlib_metadata` package
+
+### Misc
+
+- Updates multiple dependencies
+
+
 ## Version 0.4.0
 
 ### Features
