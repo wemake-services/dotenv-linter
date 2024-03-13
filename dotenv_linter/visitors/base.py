@@ -1,13 +1,13 @@
-from typing import Any, Iterable, Iterator, List, Tuple, Union
+from typing import Any, Iterable, Iterator, List, Tuple, Union, final
 
 from attr import fields
-from typing_extensions import final
+from typing_extensions import TypeAlias
 
 from dotenv_linter.grammar.fst import Module, Node
 from dotenv_linter.violations.base import BaseViolation
 
 #: Defines field internals of a dataclass, could be `Any`, that's why ignored
-FieldInfo = Tuple[str, Union[List[Any], Any]]  # type: ignore
+FieldInfo: TypeAlias = Tuple[str, Union[List[Any], Any]]
 
 
 def iter_fields(node: Node) -> Iterator[FieldInfo]:

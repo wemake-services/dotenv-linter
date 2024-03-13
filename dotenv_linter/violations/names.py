@@ -11,7 +11,7 @@ Rules that define how names should be defined.
 
 """
 
-from typing_extensions import final
+from typing import final
 
 from dotenv_linter.violations.base import BaseFSTViolation
 

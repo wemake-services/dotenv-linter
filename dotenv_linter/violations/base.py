@@ -1,4 +1,6 @@
-from typing_extensions import final
+from __future__ import annotations
+
+from typing import final
 
 from dotenv_linter.grammar.fst import Node
 
@@ -9,7 +11,7 @@ class BaseViolation(object):
     code: int
     error_template: str
 
-    def __init__(self, node, text: str) -> None:
+    def __init__(self, node: Node | None, text: str | None) -> None:
         """Creates instance of any violation."""
         self._node = node
         self._text = text
@@ -36,6 +38,11 @@ class BaseFSTViolation(BaseViolation):
     """Base class for all ``fst`` violations."""
 
     _node: Node
+    _text: str
+
+    def __init__(self, node: Node, text: str) -> None:  # noqa: WPS612
+        """Creates instance of fst-based violation."""
+        super().__init__(node, text)
 
     @final
     def location(self) -> int:
@@ -46,10 +53,11 @@ class BaseFSTViolation(BaseViolation):
 class BaseFileViolation(BaseViolation):
     """Base class for all violations that operate on whole files."""
 
-    def __init__(self, node=None, text=None) -> None:
+    def __init__(  # noqa: WPS612
+        self, node: None = None, text: None = None,
+    ) -> None:
         """Creates instance of file-based violation."""
-        self._node = node
-        self._text = text
+        super().__init__(node, text)
 
     @final
     def location(self) -> int:

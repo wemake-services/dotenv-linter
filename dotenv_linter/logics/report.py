@@ -1,8 +1,6 @@
 import sys
 from itertools import chain
-from typing import Iterable, List
-
-from typing_extensions import final
+from typing import Iterable, List, final
 
 from dotenv_linter.violations.base import BaseViolation
 from dotenv_linter.visitors.base import BaseVisitor

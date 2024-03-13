@@ -35,7 +35,7 @@ ply = "^3.11"
 click = ">=6,<9"
 click_default_group = "^1.2"
 attrs = "*"
-typing_extensions = ">=3.6,<5.0"
+typing_extensions = ">=4.0,<5.0"
 
 [tool.poetry.group.dev.dependencies]
 wemake-python-styleguide = "^0.18"
