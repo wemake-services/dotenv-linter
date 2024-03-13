@@ -15,6 +15,8 @@
 import os
 import sys
 
+import tomli
+
 sys.path.insert(0, os.path.abspath('..'))
 
 
