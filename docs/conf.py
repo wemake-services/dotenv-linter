@@ -21,12 +21,8 @@ sys.path.insert(0, os.path.abspath('..'))
 # -- Project information -----------------------------------------------------
 
 def _get_project_meta():
-    import tomlkit  # noqa: WPS433
-
-    with open('../pyproject.toml') as pyproject:
-        file_contents = pyproject.read()
-
-    return tomlkit.parse(file_contents)['tool']['poetry']
+    with open('../pyproject.toml', mode='rb') as pyproject:
+        return tomli.load(pyproject)['tool']['poetry']
 
 
 pkg_meta = _get_project_meta()
