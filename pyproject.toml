@@ -55,7 +55,7 @@ mypy = "^1.9"
 optional = true
 
 [tool.poetry.group.docs.dependencies]
-sphinx = "^5.2"
+sphinx = ">=5.2,<8.0"
 sphinx-autodoc-typehints = "^1.23"
 sphinx-click = "^3.1"
 m2r2 = "^0.3"
