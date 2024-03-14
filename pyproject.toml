@@ -57,7 +57,7 @@ optional = true
 [tool.poetry.group.docs.dependencies]
 sphinx = ">=5.2,<8.0"
 sphinx-autodoc-typehints = "^1.23"
-sphinx-click = "^3.1"
+sphinx-click = ">=3.1,<6.0"
 m2r2 = "^0.3"
 tomli = "^2.0"
 
