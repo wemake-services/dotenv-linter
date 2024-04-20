@@ -21,7 +21,7 @@ LABEL maintainer="sobolevn@wemake.services"
 LABEL vendor="wemake.services"
 
 ENV DOTENV_LINTER_VERSION='0.5.0'
-ENV REVIEWDOG_VERSION='v0.17.3'
+ENV REVIEWDOG_VERSION='v0.17.4'
 
 RUN apk add --no-cache bash git wget
 RUN pip install "dotenv-linter==$DOTENV_LINTER_VERSION" \
