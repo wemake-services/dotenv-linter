@@ -1679,19 +1679,19 @@ testing = ["covdefaults (>=2.3)", "coverage (>=7.4.4)", "defusedxml (>=0.7.1)", 
 
 [[package]]
 name = "sphinx-click"
-version = "5.2.2"
+version = "6.0.0"
 description = "Sphinx extension that automatically documents click applications"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "sphinx_click-5.2.2-py3-none-any.whl", hash = "sha256:52be92a53e04de98b7228617a35008a4949910a70a597256c62ea4276c6a066d"},
-    {file = "sphinx_click-5.2.2.tar.gz", hash = "sha256:191a36dd5b61f2036592a0b36a6ba037ae97b3dd7e8ce9a056588c5605ac7833"},
+    {file = "sphinx_click-6.0.0-py3-none-any.whl", hash = "sha256:1e0a3c83bcb7c55497751b19d07ebe56b5d7b85eb76dd399cf9061b497adc317"},
+    {file = "sphinx_click-6.0.0.tar.gz", hash = "sha256:f5d664321dc0c6622ff019f1e1c84e58ce0cecfddeb510e004cf60c2a3ab465b"},
 ]
 
 [package.dependencies]
-click = ">=7.0"
+click = ">=8.0"
 docutils = "*"
-sphinx = ">=2.0"
+sphinx = ">=4.0"
 
 [[package]]
 name = "sphinxcontrib-applehelp"
@@ -1968,4 +1968,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "cff3dd04673a1b625b7006d5be93cc6a383b73a49bc0d61c671fb2ef2a04ee85"
+content-hash = "94f52e07ba4567e1136aa09e9fe6c0f5c51f0b945d3116c0e0053b2e30f0003c"
