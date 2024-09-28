@@ -17,7 +17,7 @@
 
 FROM python:3.12.6-alpine
 
-LABEL maintainer="sobolevn@wemake.services"
+LABEL maintainer="mail@sobolevn.me"
 LABEL vendor="wemake.services"
 
 ENV DOTENV_LINTER_VERSION='0.5.0'
