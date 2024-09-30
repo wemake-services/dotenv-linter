@@ -1,5 +1,4 @@
 import os
-
 import subprocess
 from collections.abc import Callable
 
@@ -88,7 +87,7 @@ def test_lint_wrong_eol(fixture_path: Callable[[str], str]) -> None:
     """Checks that `lint` command works for with with CRLF end-of-line."""
     temp_file_path = fixture_path('.env.temp')
     with open(temp_file_path, mode='w') as temp_file:
-        _ = temp_file.write("VARIABLE_WITH_CRLF_EOL=123\r\n")
+        temp_file.write('VARIABLE_WITH_CRLF_EOL=123\r\n')
 
     process = subprocess.Popen(
         [

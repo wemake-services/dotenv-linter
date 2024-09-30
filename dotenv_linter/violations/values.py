@@ -67,11 +67,12 @@ class QuotedValueViolation(BaseFSTViolation):
 
 @final
 class InvalidEOLViolation(BaseFSTViolation):
-    """
+    r"""
     Restricts to use `\r\n` (CRLF) end-of-line.
 
     Reasoning:
-        Mixing different end-of-line chars can lead to different hard-to-debug problems.
+        Mixing different end-of-line chars can lead to different
+        hard-to-debug problems.
 
     Solution:
         Use `\n` (LF) end-of-line.
