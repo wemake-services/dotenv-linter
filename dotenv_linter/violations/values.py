@@ -68,16 +68,14 @@ class QuotedValueViolation(BaseFSTViolation):
 @final
 class InvalidEOLViolation(BaseFSTViolation):
     """
-    Restricts to use `/r/n` (CRLF) end-of-line.
+    Restricts to use `\r\n` (CRLF) end-of-line.
 
     Reasoning:
-        ???
+        Mixing different end-of-line chars can lead to different hard-to-debug problems.
 
     Solution:
-        Use `/n` (LF) end-of-line.
-
-    Example::
-        ??? What to add? EOL is not visible
+        Use `\n` (LF) end-of-line.
+        Another option is to add line `text eol=lf` to `.gitattributes`.
 
     .. versionadded:: 0.6.0
 
