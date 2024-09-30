@@ -8,6 +8,7 @@ Since they might contain private values.
 
 .. autoclass:: SpacedValueViolation
 .. autoclass:: QuotedValueViolation
+.. autoclass:: InvalidEOLViolation
 
 """
 
@@ -62,3 +63,25 @@ class QuotedValueViolation(BaseFSTViolation):
 
     code = 301
     error_template = 'Found quoted value'
+
+
+@final
+class InvalidEOLViolation(BaseFSTViolation):
+    """
+    Restricts to use `/r/n` (CRLF) end-of-line.
+
+    Reasoning:
+        ???
+
+    Solution:
+        Use `/n` (LF) end-of-line.
+
+    Example::
+        ??? What to add? EOL is not visible
+
+    .. versionadded:: 0.6.0
+
+    """
+
+    code = 302
+    error_template = 'Found CRLF end-of-line'

@@ -48,7 +48,9 @@ class _FSTChecker(object):
     def _prepare_file_contents(self) -> Iterator[Tuple[str, str]]:
         """Returns iterator with each file contents."""
         for filename in self._filenames:  # TODO: move this logic from here
-            with open(filename, encoding='utf8') as file_object:
+            # From `open` docs on `newline` - If it is '', universal newline mode is enabled
+            # but line endings are returned to the caller untranslated
+            with open(filename, encoding='utf8', newline='') as file_object:
                 yield filename, file_object.read()
 
     def _prepare_fst(

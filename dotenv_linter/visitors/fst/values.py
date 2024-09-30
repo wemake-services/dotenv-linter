@@ -2,6 +2,7 @@ from typing import final
 
 from dotenv_linter.grammar.fst import Value
 from dotenv_linter.violations.values import (
+    InvalidEOLViolation,
     QuotedValueViolation,
     SpacedValueViolation,
 )
@@ -19,10 +20,13 @@ class ValueVisitor(BaseFSTVisitor):
         Raises:
             QuotedValueViolation
             SpacedValueViolation
+            InvalidEOLViolation
 
         """
         self._check_value_quotes(node)
         self._check_value_spaces(node)
+        self._is_crlf_eol_used(node)
+
         self.generic_visit(node)
 
     def _check_value_spaces(self, node: Value) -> None:
@@ -35,3 +39,9 @@ class ValueVisitor(BaseFSTVisitor):
             self._add_violation(QuotedValueViolation(node, text=node.raw_text))
         elif text.startswith("'") and text.endswith("'"):
             self._add_violation(QuotedValueViolation(node, text=node.raw_text))
+
+    def _is_crlf_eol_used(self, node: Value) -> None:
+        crlf_eol = '\r'
+
+        if node.raw_text.endswith(crlf_eol):
+            self._add_violation(InvalidEOLViolation(node, text=node.text))
