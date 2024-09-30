@@ -1,4 +1,4 @@
-from typing import final
+from typing import Final, final
 
 from dotenv_linter.grammar.fst import Value
 from dotenv_linter.violations.values import (
@@ -7,6 +7,8 @@ from dotenv_linter.violations.values import (
     SpacedValueViolation,
 )
 from dotenv_linter.visitors.base import BaseFSTVisitor
+
+CRLF_EOL: Final[str] = '\r'
 
 
 @final
@@ -41,7 +43,5 @@ class ValueVisitor(BaseFSTVisitor):
             self._add_violation(QuotedValueViolation(node, text=node.raw_text))
 
     def _is_crlf_eol_used(self, node: Value) -> None:
-        crlf_eol = '\r'
-
-        if node.raw_text.endswith(crlf_eol):
+        if node.raw_text.endswith(CRLF_EOL):
             self._add_violation(InvalidEOLViolation(node, text=node.text))
