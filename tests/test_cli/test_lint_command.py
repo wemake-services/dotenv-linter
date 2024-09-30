@@ -1,4 +1,7 @@
 import subprocess
+from collections.abc import Callable
+
+from dotenv_linter.violations.values import InvalidEOLViolation
 
 
 def test_lint_correct_fixture(fixture_path):
@@ -74,5 +77,25 @@ def test_lint_wrong_fixture(fixture_path, all_violations):
 
     assert process.returncode == 1
 
-    for violation_class in all_violations:
+    violations_without_eol = set(all_violations) - {InvalidEOLViolation}
+    for violation_class in violations_without_eol:
         assert str(violation_class.code) in stderr
+
+
+def test_lint_wrong_eol(fixture_path: Callable) -> None:
+    """Checks that `lint` command works for with with CRLF end-of-line."""
+    process = subprocess.Popen(
+        [
+            'dotenv-linter',
+            fixture_path('.env.eol'),
+        ],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        universal_newlines=False,
+        encoding='utf8',
+    )
+    _, stderr = process.communicate()
+
+    assert process.returncode == 1
+
+    assert str(InvalidEOLViolation.code) in stderr
