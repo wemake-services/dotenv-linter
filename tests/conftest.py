@@ -1,6 +1,9 @@
 import inspect
+from collections.abc import Callable
 from operator import itemgetter
 from pathlib import PurePath
+from types import ModuleType
+from typing import Dict, List
 
 import pytest
 
@@ -10,6 +13,8 @@ from dotenv_linter.violations.base import (
     BaseFSTViolation,
     BaseViolation,
 )
+
+ALL_VIOLATIONS_TYPE = Dict[ModuleType, List[BaseViolation]]
 
 
 def _is_violation_class(cls) -> bool:
@@ -24,7 +29,7 @@ def _is_violation_class(cls) -> bool:
     return issubclass(cls, BaseViolation) and cls not in base_classes
 
 
-def _load_all_violation_classes():
+def _load_all_violation_classes() -> ALL_VIOLATIONS_TYPE:
     modules = [
         violations.assigns,
         violations.comments,
@@ -42,7 +47,7 @@ def _load_all_violation_classes():
 
 
 @pytest.fixture(scope='session')
-def all_violations():
+def all_violations() -> List[BaseViolation]:
     """Loads all violations from the package."""
     classes = _load_all_violation_classes()
     all_errors_container = []
@@ -51,9 +56,29 @@ def all_violations():
     return all_errors_container
 
 
+@pytest.fixture(scope='session')
+def all_module_violations() -> ALL_VIOLATIONS_TYPE:
+    """Loads all violations from the package."""
+    return _load_all_violation_classes()
+
+
 @pytest.fixture()
-def fixture_path():
+def fixture_path() -> Callable[[str], str]:
     """Returns path to the fixture."""
     def factory(path: str) -> str:
         return str(PurePath(__file__).parent.joinpath('fixtures', path))
     return factory
+
+
+@pytest.fixture(scope='session')
+def all_violation_codes(
+    all_module_violations: ALL_VIOLATIONS_TYPE,  # noqa: WPS442
+) -> Dict[ModuleType, Dict[int, BaseViolation]]:
+    """Loads all codes and their violation classes from the package."""
+    return {
+        module: {
+            violation.code: violation
+            for violation in all_module_violations[module]
+        }
+        for module in all_module_violations.keys()
+    }
