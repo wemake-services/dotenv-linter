@@ -2,6 +2,12 @@
 
 We follow Semantic Versions.
 
+## Version 0.6.0
+
+### Misc
+
+- Add tests for violation codes and docstrings
+
 
 ## Version 0.6.0
 
