@@ -1,7 +1,6 @@
 from collections import Counter
 from typing import Dict, List
 
-
 from dotenv_linter.violations.base import BaseViolation
 
 
