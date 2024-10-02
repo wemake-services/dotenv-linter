@@ -6,6 +6,7 @@ from types import ModuleType
 from typing import Dict, List
 
 import pytest
+from typing_extensions import TypeAlias
 
 from dotenv_linter import violations
 from dotenv_linter.violations.base import (
@@ -14,7 +15,7 @@ from dotenv_linter.violations.base import (
     BaseViolation,
 )
 
-ALL_VIOLATIONS_TYPE = Dict[ModuleType, List[BaseViolation]]
+ALL_VIOLATIONS_TYPE: TypeAlias = Dict[ModuleType, List[BaseViolation]]
 
 
 def _is_violation_class(cls) -> bool:
