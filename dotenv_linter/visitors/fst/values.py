@@ -8,7 +8,7 @@ from dotenv_linter.violations.values import (
 )
 from dotenv_linter.visitors.base import BaseFSTVisitor
 
-CRLF_EOL: Final[str] = '\r'
+CRLF_EOL: Final = '\r'
 
 
 @final
