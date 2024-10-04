@@ -3,6 +3,13 @@
 We follow Semantic Versions.
 
 
+## Version 0.6.0
+
+### Features
+
+- Forbid to use `\r\n` (CRLF) end-of-line
+
+
 ## Version 0.5.0
 
 ### Features

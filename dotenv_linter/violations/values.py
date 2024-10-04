@@ -8,6 +8,7 @@ Since they might contain private values.
 
 .. autoclass:: SpacedValueViolation
 .. autoclass:: QuotedValueViolation
+.. autoclass:: InvalidEOLViolation
 
 """
 
@@ -62,3 +63,24 @@ class QuotedValueViolation(BaseFSTViolation):
 
     code = 301
     error_template = 'Found quoted value'
+
+
+@final
+class InvalidEOLViolation(BaseFSTViolation):
+    r"""
+    Restricts to use `\r\n` (CRLF) end-of-line.
+
+    Reasoning:
+        Mixing different end-of-line chars can lead to different
+        hard-to-debug problems.
+
+    Solution:
+        Use `\n` (LF) end-of-line.
+        Another option is to add line `text eol=lf` to `.gitattributes`.
+
+    .. versionadded:: 0.6.0
+
+    """
+
+    code = 302
+    error_template = 'Found CRLF end-of-line'
