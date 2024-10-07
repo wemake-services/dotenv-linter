@@ -1,3 +1,5 @@
+from typing import Final
+
 from typing_extensions import final
 
 from dotenv_linter.grammar.fst import Value
