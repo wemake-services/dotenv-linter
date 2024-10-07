@@ -15,7 +15,7 @@ from dotenv_linter.violations.base import (
     BaseViolation,
 )
 
-ALL_VIOLATIONS_TYPE: TypeAlias = Dict[ModuleType, List[BaseViolation]]
+AllViolationsType: TypeAlias = Dict[ModuleType, List[BaseViolation]]
 
 
 def _is_violation_class(cls) -> bool:
@@ -30,7 +30,7 @@ def _is_violation_class(cls) -> bool:
     return issubclass(cls, BaseViolation) and cls not in base_classes
 
 
-def _load_all_violation_classes() -> ALL_VIOLATIONS_TYPE:
+def _load_all_violation_classes() -> AllViolationsType:
     modules = [
         violations.assigns,
         violations.comments,
@@ -58,7 +58,7 @@ def all_violations() -> List[BaseViolation]:
 
 
 @pytest.fixture(scope='session')
-def all_module_violations() -> ALL_VIOLATIONS_TYPE:
+def all_module_violations() -> AllViolationsType:
     """Loads all violations from the package."""
     return _load_all_violation_classes()
 
@@ -73,7 +73,7 @@ def fixture_path() -> Callable[[str], str]:
 
 @pytest.fixture(scope='session')
 def all_violation_codes(
-    all_module_violations: ALL_VIOLATIONS_TYPE,  # noqa: WPS442
+    all_module_violations: AllViolationsType,  # noqa: WPS442
 ) -> Dict[ModuleType, Dict[int, BaseViolation]]:
     """Loads all codes and their violation classes from the package."""
     return {
