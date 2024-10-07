@@ -7,7 +7,7 @@ Different error that might happen during file parsing phase.
 
 """
 
-from typing import final
+from typing_extensions import final
 
 from dotenv_linter.violations.base import BaseFileViolation
 

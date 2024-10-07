@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import final
+from typing_extensions import final
 
 from dotenv_linter.grammar.fst import Node
 
