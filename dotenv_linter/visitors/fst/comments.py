@@ -1,4 +1,4 @@
-from typing import final
+from typing_extensions import final
 
 from dotenv_linter.grammar.fst import Comment
 from dotenv_linter.violations.comments import SpacedCommentViolation

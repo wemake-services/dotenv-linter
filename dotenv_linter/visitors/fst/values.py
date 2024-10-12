@@ -1,4 +1,6 @@
-from typing import Final, final
+from typing import Final
+
+from typing_extensions import final
 
 from dotenv_linter.grammar.fst import Value
 from dotenv_linter.violations.values import (

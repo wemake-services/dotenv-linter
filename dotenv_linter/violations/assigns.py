@@ -7,7 +7,7 @@ Rules that define how assigns should be made.
 
 """
 
-from typing import final
+from typing_extensions import final
 
 from dotenv_linter.violations.base import BaseFSTViolation
 

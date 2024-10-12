@@ -12,7 +12,7 @@ Since they might contain private values.
 
 """
 
-from typing import final
+from typing_extensions import final
 
 from dotenv_linter.violations.base import BaseFSTViolation
 
