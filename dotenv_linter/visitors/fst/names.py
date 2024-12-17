@@ -1,6 +1,5 @@
 import re
 from typing import ClassVar, List, final
-from typing.re import Pattern
 
 from dotenv_linter.constants import NAMES_BLACKLIST
 from dotenv_linter.grammar.fst import Assign, Module, Name
@@ -63,7 +62,7 @@ class NameInModuleVisitor(BaseFSTVisitor):
 class NameVisitor(BaseFSTVisitor):
     """Finds wrong names."""
 
-    _correct_name: ClassVar[Pattern] = re.compile('[A-Z_]+[A-Z0-9_]*')
+    _correct_name: ClassVar[re.Pattern[str]] = re.compile('[A-Z_]+[A-Z0-9_]*')
 
     def visit_name(self, node: Name) -> None:
         """
