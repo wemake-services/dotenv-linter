@@ -17,7 +17,8 @@ See also:
 
 """
 
-from typing import Optional, Sequence, Type, TypeVar, Union, final
+from collections.abc import Sequence
+from typing import TypeVar, final
 
 from attr import dataclass, field
 from ply import lex
@@ -29,7 +30,7 @@ TAssign = TypeVar('TAssign', bound='Assign')
 
 
 @dataclass(frozen=True, slots=True)
-class Node(object):
+class Node:
     """
     Base class for all other nodes.
 
@@ -43,11 +44,13 @@ class Node(object):
     def __attrs_post_init__(self) -> None:
         """Used to tweak instance internals after initialization."""
         object.__setattr__(  # noqa: WPS609
-            self, 'text', normalize_text(self.raw_text),
+            self,
+            'text',
+            normalize_text(self.raw_text),
         )
 
     @classmethod
-    def from_token(cls: Type[TNode], token: lex.LexToken) -> TNode:
+    def from_token(cls: type[TNode], token: lex.LexToken) -> TNode:
         """Creates instance from parser's token."""
         return cls(
             lineno=token.lineno,
@@ -88,11 +91,11 @@ class Assign(Statement):
     """Represents key-value pair separated by ``=``."""
 
     left: Name
-    right: Optional[Value]
+    right: Value | None
 
     @classmethod
     def from_token(
-        cls: Type[TAssign],
+        cls: type[TAssign],
         name_token: lex.LexToken,
         equal_token: lex.LexToken = None,
         value_token: lex.LexToken = None,
@@ -118,4 +121,4 @@ class Assign(Statement):
 class Module(Node):
     """Wrapper node that represents a single file with or without contents."""
 
-    body: Sequence[Union[Comment, Statement, Name]]
+    body: Sequence[Comment | Statement | Name]

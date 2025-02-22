@@ -1,11 +1,10 @@
 from types import ModuleType
-from typing import Dict, List
 
 from dotenv_linter.violations.base import BaseViolation
 
 
 def test_all_violations_are_documented(
-    all_module_violations: Dict[ModuleType, List[BaseViolation]],
+    all_module_violations: dict[ModuleType, list[BaseViolation]],
 ) -> None:
     """Ensures that all violations are documented."""
     for module, classes in all_module_violations.items():
@@ -15,28 +14,28 @@ def test_all_violations_are_documented(
 
 
 def test_all_violations_have_versionadded(
-    all_violations: List[BaseViolation],
+    all_violations: list[BaseViolation],
 ) -> None:
     """Ensures that all violations have `versionadded` tag."""
     for violation in all_violations:
         assert '.. versionadded:: ' in violation.__doc__
 
 
-def test_violation_name(all_violations: List[BaseViolation]) -> None:
+def test_violation_name(all_violations: list[BaseViolation]) -> None:
     """Ensures that all violations have `Violation` suffix."""
     for violation in all_violations:
         class_name = violation.__qualname__
         assert class_name.endswith('Violation'), class_name
 
 
-def test_violation_template_ending(all_violations: List[BaseViolation]) -> None:
+def test_violation_template_ending(all_violations: list[BaseViolation]) -> None:
     """Ensures that all violation templates do not end with a dot."""
     for violation in all_violations:
         assert not violation.error_template.endswith('.'), violation
 
 
 def test_previous_codes_versionchanged(
-    all_violations: List[BaseViolation],
+    all_violations: list[BaseViolation],
 ) -> None:
     """Tests that we put both in case violation changes."""
     for violation in all_violations:

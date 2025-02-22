@@ -5,7 +5,7 @@ from typing_extensions import final
 from dotenv_linter.grammar.fst import Node
 
 
-class BaseViolation(object):
+class BaseViolation:
     """Base class for all violations."""
 
     code: int
@@ -19,11 +19,8 @@ class BaseViolation(object):
     @final
     def as_line(self) -> str:
         """Converts violation to a single line information."""
-        return '{0} {1} {2}'.format(
-            self.location(),
-            self._formated_code(),
-            self.error_template.format(self._text),
-        )
+        violation = self.error_template.format(self._text)
+        return f'{self.location()} {self._formated_code()} {violation}'
 
     def location(self) -> int:
         """Returns in-file location of a violation."""
@@ -54,7 +51,9 @@ class BaseFileViolation(BaseViolation):
     """Base class for all violations that operate on whole files."""
 
     def __init__(  # noqa: WPS612
-        self, node: None = None, text: None = None,
+        self,
+        node: None = None,
+        text: None = None,
     ) -> None:
         """Creates instance of file-based violation."""
         super().__init__(node, text)

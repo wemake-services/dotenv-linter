@@ -6,14 +6,14 @@ See also:
 
 """
 
-from typing import Any, Callable, ClassVar, Tuple, TypeVar, final
+from collections.abc import Callable
+from typing import Any, ClassVar, TypeAlias, TypeVar, final
 
 from ply import lex
-from typing_extensions import TypeAlias
 
 from dotenv_linter.exceptions import ParsingError
 
-_LexerState: TypeAlias = Tuple[str, str]
+_LexerState: TypeAlias = tuple[str, str]
 
 _CallableT = TypeVar('_CallableT', bound=Callable[..., Any])
 
@@ -23,10 +23,10 @@ def _token(re_string: str) -> Callable[[_CallableT], _CallableT]:
 
 
 @final
-class DotenvLexer(object):
+class DotenvLexer:  # noqa: WPS214
     """Custom lexer wrapper, grouping methods and attrs together."""
 
-    tokens: ClassVar[Tuple[str, ...]] = (
+    tokens: ClassVar[tuple[str, ...]] = (
         'WHITESPACE',
         'COMMENT',
         'NAME',
@@ -34,7 +34,7 @@ class DotenvLexer(object):
         'VALUE',
     )
 
-    states: ClassVar[Tuple[_LexerState, ...]] = (
+    states: ClassVar[tuple[_LexerState, ...]] = (
         ('name', 'exclusive'),  # we have found Name definition
         ('value', 'exclusive'),  # we have found Equal definition
     )
@@ -57,7 +57,7 @@ class DotenvLexer(object):
         self._lexer.begin('INITIAL')
         return self
 
-    def input(self, text: str) -> 'DotenvLexer':  # noqa: WPS125
+    def input(self, text: str) -> 'DotenvLexer':
         """
         Passes input to the lexer.
 

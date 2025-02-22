@@ -3,10 +3,9 @@ from collections.abc import Callable
 from operator import itemgetter
 from pathlib import PurePath
 from types import ModuleType
-from typing import Dict, List
+from typing import TypeAlias
 
 import pytest
-from typing_extensions import TypeAlias
 
 from dotenv_linter import violations
 from dotenv_linter.violations.base import (
@@ -15,7 +14,7 @@ from dotenv_linter.violations.base import (
     BaseViolation,
 )
 
-AllViolationsType: TypeAlias = Dict[ModuleType, List[BaseViolation]]
+AllViolationsType: TypeAlias = dict[ModuleType, list[BaseViolation]]
 
 
 def _is_violation_class(cls) -> bool:
@@ -48,7 +47,7 @@ def _load_all_violation_classes() -> AllViolationsType:
 
 
 @pytest.fixture(scope='session')
-def all_violations() -> List[BaseViolation]:
+def all_violations() -> list[BaseViolation]:
     """Loads all violations from the package."""
     classes = _load_all_violation_classes()
     all_errors_container = []
@@ -63,23 +62,25 @@ def all_module_violations() -> AllViolationsType:
     return _load_all_violation_classes()
 
 
-@pytest.fixture()
+@pytest.fixture
 def fixture_path() -> Callable[[str], str]:
     """Returns path to the fixture."""
+
     def factory(path: str) -> str:
         return str(PurePath(__file__).parent.joinpath('fixtures', path))
+
     return factory
 
 
 @pytest.fixture(scope='session')
 def all_violation_codes(
     all_module_violations: AllViolationsType,  # noqa: WPS442
-) -> Dict[ModuleType, Dict[int, BaseViolation]]:
+) -> dict[ModuleType, dict[int, BaseViolation]]:
     """Loads all codes and their violation classes from the package."""
     return {
         module: {
             violation.code: violation
             for violation in all_module_violations[module]
         }
-        for module in all_module_violations.keys()
+        for module in all_module_violations
     }

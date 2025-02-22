@@ -3,7 +3,6 @@
 # https://click.palletsprojects.com/en/7.x/arguments/
 
 import sys
-from typing import Tuple
 
 import click
 from click_default_group import DefaultGroup
@@ -19,7 +18,7 @@ from dotenv_linter.version import pkg_version
     invoke_without_command=True,
 )
 @click.option('--version', is_flag=True, default=False)
-def cli(version: bool) -> None:
+def cli(version: bool) -> None:  # noqa: FBT001
     """
     Main entrypoint to the app.
 
@@ -37,7 +36,7 @@ def cli(version: bool) -> None:
     required=True,
     type=click.Path(exists=True, dir_okay=False),
 )
-def lint(files: Tuple[str, ...]) -> None:
+def lint(files: tuple[str, ...]) -> None:
     """Runs linting process for the given files."""
     checker = DotenvFileChecker(files)
 

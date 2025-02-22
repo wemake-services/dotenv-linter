@@ -1,14 +1,13 @@
 import inspect
 import re
 from types import ModuleType
-from typing import Dict, List, Tuple
 
 from dotenv_linter.violations.base import BaseViolation
 
 
 def _get_sorted_classes(
-    classes: List[BaseViolation],
-) -> Tuple[List[BaseViolation], List[BaseViolation]]:
+    classes: list[BaseViolation],
+) -> tuple[list[BaseViolation], list[BaseViolation]]:
     sorted_by_code = sorted(classes, key=lambda cl: cl.code)
     sorted_by_source = sorted(
         classes,
@@ -19,17 +18,17 @@ def _get_sorted_classes(
 
 
 def test_violation_source_order(
-    all_module_violations: Dict[ModuleType, List[BaseViolation]],
+    all_module_violations: dict[ModuleType, list[BaseViolation]],
 ) -> None:
     """Used to force violations order inside the source code."""
-    for _, classes in all_module_violations.items():
+    for classes in all_module_violations.values():
         sorted_by_code, sorted_by_source = _get_sorted_classes(classes)
 
         assert sorted_by_code == sorted_by_source
 
 
 def test_violation_autoclass_order(
-    all_module_violations: Dict[ModuleType, List[BaseViolation]],
+    all_module_violations: dict[ModuleType, list[BaseViolation]],
 ) -> None:
     """Used to force violations order inside the `autoclass` directives."""
     for module, classes in all_module_violations.items():

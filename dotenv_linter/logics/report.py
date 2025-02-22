@@ -1,12 +1,13 @@
 import sys
+from collections.abc import Iterable
 from itertools import chain
-from typing import Iterable, List, final
+from typing import final
 
 from dotenv_linter.violations.base import BaseViolation
 from dotenv_linter.visitors.base import BaseVisitor
 
 
-class Report(object):
+class Report:
     """
     Reports are used to show multiple violations to the user.
 
@@ -16,7 +17,7 @@ class Report(object):
     def __init__(self, filename: str) -> None:
         """Creates new report instance."""
         self._filename = filename
-        self._collected_from: List[Iterable[BaseViolation]] = []
+        self._collected_from: list[Iterable[BaseViolation]] = []
         self.has_violations = False
 
     @final
@@ -38,7 +39,7 @@ class Report(object):
 
         for ordered_violation in sorted_violations:
             print(  # noqa: WPS421
-                '{0}:{1}'.format(self._filename, ordered_violation.as_line()),
+                f'{self._filename}:{ordered_violation.as_line()}',
                 file=sys.stderr,
             )
 

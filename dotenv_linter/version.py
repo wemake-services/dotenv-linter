@@ -1,8 +1,8 @@
-import os
 from importlib import metadata
+from pathlib import Path
 
 #: Package name:
-pkg_name = os.path.basename(os.path.dirname(__file__))
+pkg_name = str(Path(__file__).parent.name)
 
 #: We store the version number inside the `pyproject.toml`:
 try:

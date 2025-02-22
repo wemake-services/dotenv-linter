@@ -39,9 +39,9 @@ class ValueVisitor(BaseFSTVisitor):
 
     def _check_value_quotes(self, node: Value) -> None:
         text = node.raw_text.strip()
-        if text.startswith('"') and text.endswith('"'):
-            self._add_violation(QuotedValueViolation(node, text=node.raw_text))
-        elif text.startswith("'") and text.endswith("'"):
+        if (text.startswith('"') and text.endswith('"')) or (
+            text.startswith("'") and text.endswith("'")
+        ):
             self._add_violation(QuotedValueViolation(node, text=node.raw_text))
 
     def _is_crlf_eol_used(self, node: Value) -> None:

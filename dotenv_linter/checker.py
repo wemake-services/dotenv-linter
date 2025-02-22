@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import sys
+from collections.abc import Iterable, Iterator
 from enum import IntEnum
-from typing import Any, Iterable, Iterator, NoReturn, Optional, Tuple, final
+from pathlib import Path
+from typing import Any, NoReturn, final
 
 from dotenv_linter.exceptions import ParsingError
 from dotenv_linter.grammar.fst import Module
@@ -21,7 +23,7 @@ class _ExitCodes(IntEnum):
 
 
 @final
-class _FSTChecker(object):
+class _FSTChecker:
     """Internal checker instance to actually run all the checks."""
 
     _visitors_pipeline = (
@@ -45,26 +47,29 @@ class _FSTChecker(object):
             self._lint_file(filename, fst)
         self._check_global_status()
 
-    def _prepare_file_contents(self) -> Iterator[Tuple[str, str]]:
+    def _prepare_file_contents(self) -> Iterator[tuple[str, str]]:
         """Returns iterator with each file contents."""
         for filename in self._filenames:  # TODO: move this logic from here
             # From `open` docs on `newline` - If it is '', universal
             # newline mode is enabled but line endings are returned
             # to the caller untranslated
-            with open(filename, encoding='utf8', newline='') as file_object:
+            with Path(filename).open(
+                encoding='utf8',
+                newline='',
+            ) as file_object:
                 yield filename, file_object.read()
 
     def _prepare_fst(
         self,
         filename: str,
         file_contents: str,
-    ) -> Optional[Module]:
+    ) -> Module | None:
         try:
             return self._parser.parse(file_contents)
         except ParsingError:
             return None
 
-    def _lint_file(self, filename: str, fst: Optional[Module]) -> None:
+    def _lint_file(self, filename: str, fst: Module | None) -> None:
         report = Report(filename)
 
         # TODO: this looks not that pretty. A refactor maybe?
@@ -91,7 +96,7 @@ class _FSTChecker(object):
 
 
 @final
-class DotenvFileChecker(object):
+class DotenvFileChecker:
     """
     Main class of the application.
 
