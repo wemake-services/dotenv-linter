@@ -47,6 +47,8 @@ repos:
     hooks:
       - id: check-useless-excludes
 
+exclude: ^(dotenv_linter/grammar/parsetab.py)
+
 ci:
   autofix_commit_msg: "[pre-commit.ci] auto fixes from pre-commit.com hooks"
   autofix_prs: true
