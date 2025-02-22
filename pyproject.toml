@@ -50,7 +50,6 @@ pytest-cov = "^6.0"
 pytest-randomly = "^3.12"
 
 codespell = "^2.2"
-doc8 = "^1.1"
 
 mypy = "^1.15"
 
