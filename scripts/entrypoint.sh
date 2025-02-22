@@ -19,6 +19,8 @@ echo
 
 # Runs dotenv-linter, possibly with reviewdog:
 if [ "$INPUT_REPORTER" == 'terminal' ]; then
+  # We want word splitting here:
+  # shellcheck disable=SC2086
   output=$(dotenv-linter $INPUT_OPTIONS)
   status="$?"
 elif [ "$INPUT_REPORTER" == 'github-pr-review' ] ||
@@ -27,9 +29,12 @@ elif [ "$INPUT_REPORTER" == 'github-pr-review' ] ||
   # We will need this token for `reviewdog` to work:
   export REVIEWDOG_GITHUB_API_TOKEN="$GITHUB_TOKEN"
 
+  # We want word splitting here:
+  # shellcheck disable=SC2086
   output=$(dotenv-linter $INPUT_OPTIONS 2>&1)
   echo "$output" | reviewdog -efm='%f:%l %m' -reporter="$INPUT_REPORTER" -level=error
   # `reviewdog` does not fail with any status code, so we have to get dirty:
+  # shellcheck disable=SC2319
   status=$(test "$output" = ''; echo $?)
 else
   output="Invalid action reporter specified: $INPUT_REPORTER"

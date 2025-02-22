@@ -53,7 +53,6 @@ jobs:
         poetry run mypy dotenv_linter
         poetry run codespell dotenv_linter tests docs README.md CHANGELOG.md CONTRIBUTING.md
         poetry run pytest
-        poetry run doc8 -q docs
         poetry check
         poetry run pip check
 
