@@ -1,13 +1,13 @@
-from typing import Any, Iterable, Iterator, List, Tuple, Union, final
+from collections.abc import Iterable, Iterator
+from typing import Any, TypeAlias, final
 
 from attr import fields
-from typing_extensions import TypeAlias
 
 from dotenv_linter.grammar.fst import Module, Node
 from dotenv_linter.violations.base import BaseViolation
 
 #: Defines field internals of a dataclass, could be `Any`, that's why ignored
-FieldInfo: TypeAlias = Tuple[str, Union[List[Any], Any]]
+FieldInfo: TypeAlias = tuple[str, list[Any] | Any]
 
 
 def iter_fields(node: Node) -> Iterator[FieldInfo]:
@@ -18,13 +18,13 @@ def iter_fields(node: Node) -> Iterator[FieldInfo]:
     )
 
 
-class BaseVisitor(object):
+class BaseVisitor:
     """Base visitor class for all possible cases."""
 
     def __init__(self, fst: Module) -> None:
         """Creates default visitor instance."""
         self._fst = fst
-        self._violations: List[BaseViolation] = []
+        self._violations: list[BaseViolation] = []
 
     @property
     def violations(self) -> Iterable[BaseViolation]:
@@ -59,8 +59,8 @@ class BaseFSTVisitor(BaseVisitor):
         This code is copy-pasted from ``ast`` module, so it should stay
         as it is now. No need to refactor it.
         """
-        method = 'visit_{0}'.format(node.__class__.__qualname__.lower())
-        visitor = getattr(self, method, self.generic_visit)
+        node_name = node.__class__.__qualname__.lower()
+        visitor = getattr(self, f'visit_{node_name}', self.generic_visit)
         visitor(node)
 
     def generic_visit(self, node: Node) -> None:  # noqa: WPS231

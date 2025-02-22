@@ -10,10 +10,11 @@ def test_empty_arguments():
         universal_newlines=True,
         encoding='utf8',
     )
-    _, stderr = process.communicate()
+    stdout, stderr = process.communicate()
 
     assert process.returncode == 2
-    assert stderr != ''
+    assert not stdout
+    assert stderr
 
 
 def test_lint_empty_arguments():
@@ -25,10 +26,11 @@ def test_lint_empty_arguments():
         universal_newlines=True,
         encoding='utf8',
     )
-    _, stderr = process.communicate()
+    stdout, stderr = process.communicate()
 
     assert process.returncode == 2
-    assert stderr != ''
+    assert not stdout
+    assert stderr
 
 
 def test_lint_missing_files():
@@ -40,10 +42,11 @@ def test_lint_missing_files():
         universal_newlines=True,
         encoding='utf8',
     )
-    _, stderr = process.communicate()
+    stdout, stderr = process.communicate()
 
     assert process.returncode == 2
-    assert stderr != ''
+    assert not stdout
+    assert stderr
 
 
 def test_lint_parsing_violation(fixture_path):
@@ -55,7 +58,8 @@ def test_lint_parsing_violation(fixture_path):
         universal_newlines=True,
         encoding='utf8',
     )
-    _, stderr = process.communicate()
+    stdout, stderr = process.communicate()
 
     assert process.returncode == 1
+    assert not stdout
     assert '001' in stderr

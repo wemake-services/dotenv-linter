@@ -25,7 +25,7 @@ See also:
 
 """
 
-from typing import Any, List, NoReturn, Optional, Union, final
+from typing import Any, NoReturn, final
 
 from ply import lex, yacc
 
@@ -37,13 +37,13 @@ from dotenv_linter.grammar.lexer import DotenvLexer
 def _get_token(
     parsed: yacc.YaccProduction,
     index: int,
-) -> Optional[lex.LexToken]:  # TODO: lex.LexToken is in fact just `Any`
+) -> lex.LexToken | None:  # TODO: lex.LexToken is in fact just `Any`
     """YaccProduction has a broken __getitem__ method definition."""
     return parsed.slice[index]
 
 
 @final
-class DotenvParser(object):
+class DotenvParser:  # noqa: WPS214
     """
     Custom parser wrapper, grouping methods and attrs together.
 
@@ -60,7 +60,7 @@ class DotenvParser(object):
 
     def parse(self, to_parse: str, **kwargs: Any) -> Module:
         """Parses input string to FST."""
-        self._body_items: List[Union[Comment, Statement]] = []
+        self._body_items: list[Comment | Statement] = []
         self._parser.parse(input=to_parse, lexer=self._lexer, **kwargs)
         return Module(lineno=0, raw_text=to_parse, body=self._body_items)
 

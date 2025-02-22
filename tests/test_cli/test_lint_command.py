@@ -13,10 +13,11 @@ def test_lint_correct_fixture(fixture_path):
         universal_newlines=True,
         encoding='utf8',
     )
-    _, stderr = process.communicate()
+    stdout, stderr = process.communicate()
 
     assert process.returncode == 0
-    assert stderr == ''
+    assert not stdout
+    assert not stderr
 
 
 def test_lint_multiple_fixture(fixture_path):
@@ -32,10 +33,11 @@ def test_lint_multiple_fixture(fixture_path):
         universal_newlines=True,
         encoding='utf8',
     )
-    _, stderr = process.communicate()
+    stdout, stderr = process.communicate()
 
     assert process.returncode == 0
-    assert stderr == ''
+    assert not stdout
+    assert not stderr
 
 
 def test_lint_multiple_fixture_with_duplicates(fixture_path):
@@ -55,10 +57,11 @@ def test_lint_multiple_fixture_with_duplicates(fixture_path):
         universal_newlines=True,
         encoding='utf8',
     )
-    _, stderr = process.communicate()
+    stdout, stderr = process.communicate()
 
     assert process.returncode == 0
-    assert stderr == ''
+    assert not stdout
+    assert not stderr
 
 
 def test_lint_wrong_fixture(fixture_path, all_violations):

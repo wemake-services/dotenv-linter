@@ -7,7 +7,10 @@ We follow Semantic Versions.
 
 ### Features
 
+- Drops `python3.9` support
+- Adds `python3.13` support
 - Forbid to use `\r\n` (CRLF) end-of-line
+- Support `github-check` reported in GitHub Action
 
 
 ## Version 0.5.0
