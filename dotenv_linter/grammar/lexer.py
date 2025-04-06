@@ -27,7 +27,6 @@ class DotenvLexer:  # noqa: WPS214
     """Custom lexer wrapper, grouping methods and attrs together."""
 
     tokens: ClassVar[tuple[str, ...]] = (
-        'WHITESPACE',
         'COMMENT',
         'NAME',
         'EQUAL',
