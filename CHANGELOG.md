@@ -3,6 +3,13 @@
 We follow Semantic Versions.
 
 
+## Version 0.6.1
+
+### Bugfixes
+
+- Fixes output of debug build
+
+
 ## Version 0.6.0
 
 ### Features
