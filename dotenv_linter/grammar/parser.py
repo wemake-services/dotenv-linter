@@ -56,7 +56,11 @@ class DotenvParser:  # noqa: WPS214
     def __init__(self, **kwarg: Any) -> None:
         """Creates inner parser instance."""
         self._lexer = DotenvLexer()
-        self._parser = yacc.yacc(module=self, **kwarg)  # should be last
+        self._parser = yacc.yacc(
+            module=self,
+            debug=False,
+            **kwarg,
+        )  # should be last
 
     def parse(self, to_parse: str, **kwargs: Any) -> Module:
         """Parses input string to FST."""
