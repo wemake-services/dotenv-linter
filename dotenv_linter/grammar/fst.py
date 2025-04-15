@@ -53,7 +53,7 @@ class Node:
     def from_token(cls: type[TNode], token: Token) -> TNode:
         """Creates instance from parser's token."""
         return cls(
-            lineno=token.line,
+            lineno=token.line if token.line else 0,
             raw_text=token.value,
         )
 
@@ -97,8 +97,8 @@ class Assign(Statement):
     def from_token(
         cls: type[TAssign],
         name_token: Token,
-        equal_token: Token = None,
-        value_token: Token = None,
+        equal_token: Token | None = None,
+        value_token: Token | None = None,
     ) -> TAssign:
         """Creates instance from parser's token."""
         if equal_token is None:
@@ -111,7 +111,7 @@ class Assign(Statement):
         return cls(
             left=Name.from_token(name_token),
             right=value_item,
-            lineno=name_token.line,
+            lineno=name_token.line if name_token.line else 0,
             raw_text=equal_token.value,
         )
 

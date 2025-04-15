@@ -1,6 +1,6 @@
 from pathlib import Path
-from typing import List
-from lark import Lark, Transformer, Token
+from typing import final, Iterable, cast
+from lark import Lark, Transformer, Tree, Token
 
 from dotenv_linter.exceptions import ParsingError
 from dotenv_linter.grammar.fst import Assign, Comment, Module, Name, Statement
@@ -8,39 +8,50 @@ from dotenv_linter.grammar.fst import Assign, Comment, Module, Name, Statement
 BASE_DIR = Path(__file__).parent
 
 
-class DotenvTransformer(Transformer):
-    def __init__(self):
+@final
+class DotenvTransformer(Transformer[Token, Module]):
+    def __init__(self) -> None:
         super().__init__()
-        self._body_items: List[Comment | Statement] = []
+        self._body_items: list[Comment | Statement] = []
 
-    def body(self, items):
-        self._body_items = [item for item in items if item is not None]
+    def body(self, parsed: list[Comment | Statement | None]) -> list[Comment | Statement]:
+        """body: (line _NEWLINE)* line?"""
+        self._body_items = [parsed_item for parsed_item in parsed if parsed_item is not None]
         return self._body_items
 
-    def line(self, items):
-        if not items:
+    def line(self, parsed: list[Comment | Statement]) -> Comment | Statement:
+        """
+        line: assign
+            | name
+            | comment
+        """
+        if not parsed:
             raise ParsingError('No items found')
-        return items[0]
+        return parsed[0]
 
-    def assign(self, items):
-        name_token = items[0]
-        equal_token = items[1]
-        value_token = items[2] if len(items) == 3 else None
+    def assign(self, parsed: list[Token]) -> Assign:
+        """assign: NAME EQUAL VALUE?"""
+        name_token = parsed[0]
+        equal_token = parsed[1]
+        value_token = parsed[2] if len(parsed) == 3 else None
         return Assign.from_token(
             name_token=name_token,
             equal_token=equal_token,
             value_token=value_token,
         )
 
-    def name(self, items):
-        return Name.from_token(items[0])
+    def name(self, parsed: list[Token]) -> Name:
+        """name: NAME"""
+        return Name.from_token(parsed[0])
 
-    def comment(self, items):
-        return Comment.from_token(items[0])
+    def comment(self, parsed: list[Token]) -> Comment:
+        """comment: COMMENT"""
+        return Comment.from_token(parsed[0])
 
 
 class DotenvParser:
-    def __init__(self):
+    """Custom lark parser wrapper."""
+    def __init__(self) -> None:
         self._parser = Lark(
             Path(BASE_DIR).joinpath('grammar.lark').open(),
             start="body",
@@ -50,9 +61,9 @@ class DotenvParser:
         self._transformer = DotenvTransformer()
 
     def parse(self, to_parse: str) -> Module:
-        try:
+        try:  # noqa: WPS229
             tree = self._parser.parse(to_parse)
             self._transformer.transform(tree)
             return Module(lineno=0, raw_text=to_parse, body=self._transformer._body_items)
-        except Exception as e:
-            raise ParsingError(str(e))
+        except Exception as exc:
+            raise ParsingError(str(exc))
