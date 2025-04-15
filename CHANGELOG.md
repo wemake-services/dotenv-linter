@@ -3,6 +3,14 @@
 We follow Semantic Versions.
 
 
+## Version 0.7.0
+
+### Features
+
+- Drops `ply` support
+- Adds `lark` support
+
+
 ## Version 0.6.1
 
 ### Bugfixes

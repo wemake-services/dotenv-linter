@@ -53,7 +53,7 @@ class Node:
     def from_token(cls: type[TNode], token: Token) -> TNode:
         """Creates instance from parser's token."""
         return cls(
-            lineno=token.line if token.line else 0,
+            lineno=token.line or 0,
             raw_text=token.value,
         )
 
@@ -111,7 +111,7 @@ class Assign(Statement):
         return cls(
             left=Name.from_token(name_token),
             right=value_item,
-            lineno=name_token.line if name_token.line else 0,
+            lineno=name_token.line or 0,
             raw_text=equal_token.value,
         )
 

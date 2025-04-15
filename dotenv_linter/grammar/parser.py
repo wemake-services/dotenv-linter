@@ -1,6 +1,7 @@
 from pathlib import Path
-from typing import final, Iterable, cast
-from lark import Lark, Transformer, Tree, Token
+from typing import final
+
+from lark import Lark, Token, Transformer
 
 from dotenv_linter.exceptions import ParsingError
 from dotenv_linter.grammar.fst import Assign, Comment, Module, Name, Statement
@@ -10,13 +11,20 @@ BASE_DIR = Path(__file__).parent
 
 @final
 class DotenvTransformer(Transformer[Token, Module]):
+    """Custom lark transformer. Transform Token to Module."""
+
     def __init__(self) -> None:
+        """Creates transformer instance."""
         super().__init__()
         self._body_items: list[Comment | Statement] = []
 
-    def body(self, parsed: list[Comment | Statement | None]) -> list[Comment | Statement]:
+    def body(
+        self, parsed: list[Comment | Statement | None]
+    ) -> list[Comment | Statement]:
         """body: (line _NEWLINE)* line?"""
-        self._body_items = [parsed_item for parsed_item in parsed if parsed_item is not None]
+        self._body_items = [
+            parsed_item for parsed_item in parsed if parsed_item is not None
+        ]
         return self._body_items
 
     def line(self, parsed: list[Comment | Statement]) -> Comment | Statement:
@@ -51,19 +59,26 @@ class DotenvTransformer(Transformer[Token, Module]):
 
 class DotenvParser:
     """Custom lark parser wrapper."""
+
     def __init__(self) -> None:
+        """Creates inner parser instance."""
         self._parser = Lark(
             Path(BASE_DIR).joinpath('grammar.lark').open(),
-            start="body",
-            parser="lalr",
+            start='body',
+            parser='lalr',
             propagate_positions=True,
         )
         self._transformer = DotenvTransformer()
 
     def parse(self, to_parse: str) -> Module:
+        """Parse input string to FST."""
         try:  # noqa: WPS229
             tree = self._parser.parse(to_parse)
             self._transformer.transform(tree)
-            return Module(lineno=0, raw_text=to_parse, body=self._transformer._body_items)
+            return Module(
+                lineno=0,
+                raw_text=to_parse,
+                body=self._transformer._body_items,  # noqa: SLF001
+            )
         except Exception as exc:
-            raise ParsingError(str(exc))
+            raise ParsingError(str(exc))  # noqa: B904
