@@ -18,27 +18,20 @@ class DotenvTransformer(Transformer[Token, Module]):
         super().__init__()
         self._body_items: list[Comment | Statement] = []
 
-    def body(
+    def body(  # noqa: D102
         self, parsed: list[Comment | Statement | None]
     ) -> list[Comment | Statement]:
-        """body: (line _NEWLINE)* line?"""
         self._body_items = [
             parsed_item for parsed_item in parsed if parsed_item is not None
         ]
         return self._body_items
 
-    def line(self, parsed: list[Comment | Statement]) -> Comment | Statement:
-        """
-        line: assign
-            | name
-            | comment
-        """
+    def line(self, parsed: list[Comment | Statement]) -> Comment | Statement:  # noqa: D102
         if not parsed:
             raise ParsingError('No items found')
         return parsed[0]
 
-    def assign(self, parsed: list[Token]) -> Assign:
-        """assign: NAME EQUAL VALUE?"""
+    def assign(self, parsed: list[Token]) -> Assign:  # noqa: D102
         name_token = parsed[0]
         equal_token = parsed[1]
         value_token = parsed[2] if len(parsed) == 3 else None
@@ -48,15 +41,14 @@ class DotenvTransformer(Transformer[Token, Module]):
             value_token=value_token,
         )
 
-    def name(self, parsed: list[Token]) -> Name:
-        """name: NAME"""
+    def name(self, parsed: list[Token]) -> Name:  # noqa: D102
         return Name.from_token(parsed[0])
 
-    def comment(self, parsed: list[Token]) -> Comment:
-        """comment: COMMENT"""
+    def comment(self, parsed: list[Token]) -> Comment:  # noqa: D102
         return Comment.from_token(parsed[0])
 
 
+@final
 class DotenvParser:
     """Custom lark parser wrapper."""
 

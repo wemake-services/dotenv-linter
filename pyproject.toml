@@ -4,7 +4,7 @@ requires = ["poetry-core>=2.0"]
 
 [tool.poetry]
 name = "dotenv-linter"
-version = "0.6.1"
+version = "0.7.0"
 description = "Linting dotenv files like a charm!"
 authors = [
   "sobolevn <mail@sobolevn.me>"
@@ -39,7 +39,7 @@ click = ">=6,<9"
 click_default_group = "^1.2"
 attrs = "*"
 typing_extensions = ">=4.0,<5.0"
-lark = "^1.2.2"
+lark = "^1.2"
 
 [tool.poetry.group.dev.dependencies]
 wemake-python-styleguide = "^1.0"

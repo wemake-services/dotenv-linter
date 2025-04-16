@@ -3,7 +3,7 @@ Here we define nodes for our full syntax tree.
 
 What is full syntax tree?
 It is a code representation which always obeys this law:
-`to_string(fst(code)) == code`
+``to_string(fst(code)) == code``
 
 It is different from abstract syntax tree only in one thing:
 it does not loose any relevant details such as:
