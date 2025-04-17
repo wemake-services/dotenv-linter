@@ -1,0 +1,16 @@
+body: (line _NEWLINE)* line?
+
+line: assign
+    | name
+    | comment
+
+assign: NAME EQUAL VALUE?
+name: NAME
+comment: COMMENT
+
+NAME: /[ \t\v\f\u00A0]*[\w-]+/
+COMMENT: /[ \t\v\f\u00A0]*\#.*/
+EQUAL: /[ \t\v\f\u00A0]*=/
+VALUE: /.+/
+
+_NEWLINE: /[\n\r\u2028\u2029]+/

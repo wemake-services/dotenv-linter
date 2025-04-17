@@ -21,7 +21,7 @@ from collections.abc import Sequence
 from typing import TypeVar, final
 
 from attr import dataclass, field
-from ply import lex
+from lark import Token
 
 from dotenv_linter.logics.text import normalize_text
 
@@ -50,10 +50,10 @@ class Node:
         )
 
     @classmethod
-    def from_token(cls: type[TNode], token: lex.LexToken) -> TNode:
+    def from_token(cls: type[TNode], token: Token) -> TNode:
         """Creates instance from parser's token."""
         return cls(
-            lineno=token.lineno,
+            lineno=token.line or 0,
             raw_text=token.value,
         )
 
@@ -88,7 +88,7 @@ class Statement(Node):
 @final
 @dataclass(frozen=True, slots=True)
 class Assign(Statement):
-    """Represents key-value pair separated by ``=``."""
+    """Represents key-value pair separated by `=`."""
 
     left: Name
     right: Value | None
@@ -96,9 +96,9 @@ class Assign(Statement):
     @classmethod
     def from_token(
         cls: type[TAssign],
-        name_token: lex.LexToken,
-        equal_token: lex.LexToken = None,
-        value_token: lex.LexToken = None,
+        name_token: Token,
+        equal_token: Token | None = None,
+        value_token: Token | None = None,
     ) -> TAssign:
         """Creates instance from parser's token."""
         if equal_token is None:
@@ -108,11 +108,10 @@ class Assign(Statement):
             value_item = None
         else:
             value_item = Value.from_token(value_token)
-
         return cls(
             left=Name.from_token(name_token),
             right=value_item,
-            lineno=name_token.lineno,
+            lineno=name_token.line or 0,
             raw_text=equal_token.value,
         )
 

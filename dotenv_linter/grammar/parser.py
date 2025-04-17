@@ -1,110 +1,76 @@
-"""
-Full BNF grammar for this language can be specified as:
+from pathlib import Path
+from typing import final
 
-.. code:: text
-
-    body :
-         | body line
-
-    line : assign
-         | name
-         | comment
-
-    assign : NAME EQUAL
-           | NAME EQUAL VALUE
-
-    name : NAME
-    comment : COMMENT
-
-This module generates ``parser.out`` and ``parsetab.py`` when first invoked.
-Do not touch these files, unless you know what you are doing.
-
-See also:
-    https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form
-    https://www.dabeaz.com/ply/ply.html#ply_nn11
-
-"""
-
-from typing import Any, NoReturn, final
-
-from ply import lex, yacc
+from lark import Lark, Token, Transformer
 
 from dotenv_linter.exceptions import ParsingError
 from dotenv_linter.grammar.fst import Assign, Comment, Module, Name, Statement
-from dotenv_linter.grammar.lexer import DotenvLexer
 
-
-def _get_token(
-    parsed: yacc.YaccProduction,
-    index: int,
-) -> lex.LexToken | None:  # TODO: lex.LexToken is in fact just `Any`
-    """YaccProduction has a broken __getitem__ method definition."""
-    return parsed.slice[index]
+BASE_DIR = Path(__file__).parent
 
 
 @final
-class DotenvParser:  # noqa: WPS214
-    """
-    Custom parser wrapper, grouping methods and attrs together.
+class DotenvTransformer(Transformer[Token, Module]):
+    """Custom lark transformer. Transform Token to Module."""
 
-    Methods starting with ``p_`` uses BNF grammar to be correctly
-    collected by ``ply.yacc`` module. Do not change them.
-    """
-
-    tokens = DotenvLexer.tokens
-
-    def __init__(self, **kwarg: Any) -> None:
-        """Creates inner parser instance."""
-        self._lexer = DotenvLexer()
-        self._parser = yacc.yacc(
-            module=self,
-            debug=False,
-            **kwarg,
-        )  # should be last
-
-    def parse(self, to_parse: str, **kwargs: Any) -> Module:
-        """Parses input string to FST."""
+    def __init__(self) -> None:
+        """Creates transformer instance."""
+        super().__init__()
         self._body_items: list[Comment | Statement] = []
-        self._parser.parse(input=to_parse, lexer=self._lexer, **kwargs)
-        return Module(lineno=0, raw_text=to_parse, body=self._body_items)
 
-    def p_body(self, parsed: yacc.YaccProduction) -> None:
-        """
-        body :
-             | body line
-        """
-        if len(parsed) == 3 and parsed[2] is not None:
-            self._body_items.append(parsed[2])
-            parsed[0] = parsed[2]
+    def body(  # noqa: D102
+        self, parsed: list[Comment | Statement | None]
+    ) -> list[Comment | Statement]:
+        self._body_items = [
+            parsed_item for parsed_item in parsed if parsed_item is not None
+        ]
+        return self._body_items
 
-    def p_line(self, parsed: yacc.YaccProduction) -> None:
-        """
-        line : assign
-             | name
-             | comment
-        """
-        parsed[0] = parsed[1]
+    def line(self, parsed: list[Comment | Statement]) -> Comment | Statement:  # noqa: D102
+        if not parsed:
+            raise ParsingError('No items found')
+        return parsed[0]
 
-    def p_assign(self, parsed: yacc.YaccProduction) -> None:
-        """
-        assign : NAME EQUAL
-               | NAME EQUAL VALUE
-        """
-        value_token = _get_token(parsed, 3) if len(parsed) == 4 else None
-        parsed[0] = Assign.from_token(
-            name_token=_get_token(parsed, 1),
-            equal_token=_get_token(parsed, 2),
+    def assign(self, parsed: list[Token]) -> Assign:  # noqa: D102
+        name_token = parsed[0]
+        equal_token = parsed[1]
+        value_token = parsed[2] if len(parsed) == 3 else None
+        return Assign.from_token(
+            name_token=name_token,
+            equal_token=equal_token,
             value_token=value_token,
         )
 
-    def p_name(self, parsed: yacc.YaccProduction) -> None:
-        """name : NAME"""
-        parsed[0] = Name.from_token(_get_token(parsed, 1))
+    def name(self, parsed: list[Token]) -> Name:  # noqa: D102
+        return Name.from_token(parsed[0])
 
-    def p_comment(self, parsed: yacc.YaccProduction) -> None:
-        """comment : COMMENT"""
-        parsed[0] = Comment.from_token(_get_token(parsed, 1))
+    def comment(self, parsed: list[Token]) -> Comment:  # noqa: D102
+        return Comment.from_token(parsed[0])
 
-    def p_error(self, parsed: yacc.YaccProduction) -> NoReturn:
-        """Raising exceptions on syntax errors."""
-        raise ParsingError(parsed)
+
+@final
+class DotenvParser:
+    """Custom lark parser wrapper."""
+
+    def __init__(self) -> None:
+        """Creates inner parser instance."""
+        self._parser = Lark(
+            Path(BASE_DIR).joinpath('grammar.lark').open(),
+            start='body',
+            parser='lalr',
+            propagate_positions=True,
+        )
+        self._transformer = DotenvTransformer()
+
+    def parse(self, to_parse: str) -> Module:
+        """Parse input string to FST."""
+        try:  # noqa: WPS229
+            tree = self._parser.parse(to_parse)
+            self._transformer.transform(tree)
+            return Module(
+                lineno=0,
+                raw_text=to_parse,
+                body=self._transformer._body_items,  # noqa: SLF001
+            )
+        except Exception as exc:
+            raise ParsingError(str(exc))  # noqa: B904
