@@ -3,6 +3,12 @@
 We follow Semantic Versions.
 
 
+## Version 0.7.1
+
+### Bugfixes
+
+- Fixes SpacedNameViolation docstring
+
 ## Version 0.7.0
 
 ### Features

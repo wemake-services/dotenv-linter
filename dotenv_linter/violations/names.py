@@ -19,7 +19,7 @@ from dotenv_linter.violations.base import BaseFSTViolation
 @final
 class SpacedNameViolation(BaseFSTViolation):
     """
-    Restricts to use duplicate names variables.
+    Restricts to use leading spaces in names variables.
 
     Reasoning:
         This spaces will be removed by the parsing mechanism, but they

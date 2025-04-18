@@ -4,7 +4,7 @@ requires = ["poetry-core>=2.0"]
 
 [tool.poetry]
 name = "dotenv-linter"
-version = "0.7.0"
+version = "0.7.1"
 description = "Linting dotenv files like a charm!"
 authors = [
   "sobolevn <mail@sobolevn.me>"
