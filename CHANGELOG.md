@@ -3,18 +3,11 @@
 We follow Semantic Versions.
 
 
-## WIP
-
-### Bugfixes
-
-- Fixes SpacedNameViolation docstring
-
 ## Version 0.7.0
 
 ### Features
 
-- Drops `ply` support
-- Adds `lark` support
+- Switches main grammar parser from `ply` to `lark`
 
 
 ## Version 0.6.1
