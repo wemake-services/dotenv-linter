@@ -46,7 +46,7 @@ wemake-python-styleguide = "^1.1"
 ruff = ">=0.11,<0.13"
 
 pytest = "^8.1"
-pytest-cov = "^6.0"
+pytest-cov = ">=6,<8"
 pytest-randomly = "^3.12"
 
 codespell = "^2.2"
