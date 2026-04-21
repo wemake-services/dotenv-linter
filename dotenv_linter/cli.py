@@ -29,7 +29,7 @@ def cli(version: bool) -> None:  # noqa: FBT001
         print(pkg_version)  # noqa: WPS421
 
 
-@cli.command()  # type: ignore[misc]
+@cli.command()  # type: ignore[untyped-decorator]
 @click.argument(
     'files',
     nargs=-1,
