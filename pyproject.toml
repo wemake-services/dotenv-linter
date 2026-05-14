@@ -51,7 +51,7 @@ pytest-randomly = ">=3.12,<5.0"
 
 codespell = "^2.2"
 
-mypy = "^1.15"
+mypy = ">=1.15,<3.0"
 
 [tool.poetry.group.docs]
 optional = true
