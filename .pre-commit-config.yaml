@@ -20,6 +20,12 @@ repos:
           - "--config=.github/zizmor.yml"
           - "--no-progress"
           - "--fix"
+  - repo: https://github.com/EbodShojaei/bake
+    rev: v1.4.4
+    hooks:
+      - id: mbake-format
+        args: ["--config=.github/bake.toml"]
+      - id: mbake-validate
   - repo: https://github.com/shellcheck-py/shellcheck-py
     rev: v0.11.0.1
     hooks:
