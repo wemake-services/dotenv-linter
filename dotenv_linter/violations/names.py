@@ -8,6 +8,7 @@ Rules that define how names should be defined.
 .. autoclass:: DuplicateNameViolation
 .. autoclass:: RawNameViolation
 .. autoclass:: ReservedNameViolation
+.. autoclass:: UnreadableNameViolation
 
 """
 
@@ -158,3 +159,29 @@ class ReservedNameViolation(BaseFSTViolation):
 
     code = 104
     error_template = 'Found reserved name: {0}'
+
+
+@final
+class UnreadableNameViolation(BaseFSTViolation):
+    """
+    Restricts the use of unreadable character combinations.
+
+    Reasoning:
+        Using visually similar characters within the same
+        identifier significantly reduces code readability.
+
+    Solution:
+        Change such names to completely avoid ambiguous pairs.
+        Or add ``_`` between the symbols.
+
+    Example::
+
+        # Wrong:
+        MY_1I_VAR=some_value
+
+    .. versionadded:: 0.7.0
+
+    """
+
+    code = 105
+    error_template = 'Found unreadable combination characters, name: {0}'

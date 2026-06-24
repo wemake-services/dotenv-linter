@@ -1,7 +1,10 @@
 import re
 from typing import ClassVar, final
 
-from dotenv_linter.constants import NAMES_BLACKLIST
+from dotenv_linter.constants import (
+    NAMES_BLACKLIST,
+    UNREADABLE_CHARACTER_COMBINATIONS,
+)
 from dotenv_linter.grammar.fst import Assign, Module, Name
 from dotenv_linter.violations.names import (
     DuplicateNameViolation,
@@ -9,6 +12,7 @@ from dotenv_linter.violations.names import (
     RawNameViolation,
     ReservedNameViolation,
     SpacedNameViolation,
+    UnreadableNameViolation,
 )
 from dotenv_linter.visitors.base import BaseFSTVisitor
 
@@ -76,12 +80,17 @@ class NameVisitor(BaseFSTVisitor):
         self._check_name_correctness(node)
         self._check_name_spaces(node)
         self._check_reserved_names(node)
+        self._check_unreadable_name(node)
 
         self.generic_visit(node)
 
     def _check_name_correctness(self, node: Name) -> None:
         if not self._correct_name.fullmatch(node.text):
             self._add_violation(IncorrectNameViolation(node, text=node.text))
+
+    def _check_unreadable_name(self, node: Name) -> None:
+        if any(comb in node.text for comb in UNREADABLE_CHARACTER_COMBINATIONS):
+            self._add_violation(UnreadableNameViolation(node, text=node.text))
 
     def _check_reserved_names(self, node: Name) -> None:
         if node.text.strip() in NAMES_BLACKLIST:
