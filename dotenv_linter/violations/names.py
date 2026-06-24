@@ -50,8 +50,8 @@ class IncorrectNameViolation(BaseFSTViolation):
     Restricts to use restricted symbols to define names.
 
     Reasoning:
-        By convention we can only use letters, numbers, and underscores to
-        define dotenv variables.
+        By convention we can only use uppercase letters, numbers, and
+        underscores to define dotenv variables.
         Moreover, variables can not start with numbers.
 
     Solution:
