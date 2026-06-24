@@ -14,6 +14,14 @@ from dotenv_linter.violations.parsing import ParsingViolation
 from dotenv_linter.visitors.fst import assigns, comments, names, values
 
 
+def _read_file_content(filename: str) -> str:
+    # From `open` docs on `newline` - If it is '', universal
+    # newline mode is enabled but line endings are returned
+    # to the caller untranslated
+    with Path(filename).open(encoding='utf8', newline='') as file_object:
+        return file_object.read()
+
+
 @final
 class _ExitCodes(IntEnum):
     initial = -1
@@ -49,15 +57,8 @@ class _FSTChecker:
 
     def _prepare_file_contents(self) -> Iterator[tuple[str, str]]:
         """Returns iterator with each file contents."""
-        for filename in self._filenames:  # TODO: move this logic from here
-            # From `open` docs on `newline` - If it is '', universal
-            # newline mode is enabled but line endings are returned
-            # to the caller untranslated
-            with Path(filename).open(
-                encoding='utf8',
-                newline='',
-            ) as file_object:
-                yield filename, file_object.read()
+        for filename in self._filenames:
+            yield filename, _read_file_content(filename)
 
     def _prepare_fst(
         self,
