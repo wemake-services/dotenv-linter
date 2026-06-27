@@ -1,10 +1,11 @@
+from collections.abc import Callable
 from pathlib import Path
 
 import pytest
 
 from dotenv_linter.checker import DotenvFileChecker
 from dotenv_linter.violations.base import BaseViolation
-from collections.abc import Callable
+
 
 @pytest.fixture
 def make_violations(tmp_path: Path) -> Callable[[str], list[BaseViolation]]:
