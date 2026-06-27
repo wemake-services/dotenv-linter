@@ -44,3 +44,7 @@ class Report:
             )
 
         self.has_violations = bool(sorted_violations)
+
+    def get_violations(self) -> list[BaseViolation]:
+        """Returns all collected violations."""
+        return list(chain.from_iterable(self._collected_from))
