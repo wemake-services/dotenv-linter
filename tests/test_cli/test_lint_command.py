@@ -1,6 +1,11 @@
 import subprocess
 from pathlib import Path
 
+import pytest
+from click.testing import CliRunner
+
+from dotenv_linter.cli import cli
+from dotenv_linter.constants import ExitCodes
 from dotenv_linter.violations.values import InvalidEOLViolation
 
 
@@ -103,3 +108,16 @@ def test_lint_wrong_eol(tmp_path: Path) -> None:
     assert process.returncode == 1
 
     assert str(InvalidEOLViolation.code) in stderr
+
+
+@pytest.mark.filterwarnings('ignore::pytest.PytestUnraisableExceptionWarning')
+def test_lint_exception(tmp_path):
+    """Checks that cli linting process raises exception."""
+    env_file = tmp_path / '.env'
+    env_file.write_bytes(b'KEY=VALUE\xff\n')
+    runner = CliRunner()
+
+    command_result = runner.invoke(cli, [str(env_file)])
+
+    assert "utf-8' codec can't decode byte" in command_result.stderr
+    assert command_result.exit_code == ExitCodes.system_error

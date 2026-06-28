@@ -52,6 +52,7 @@ pytest-randomly = ">=3.12,<5.0"
 codespell = "^2.2"
 
 mypy = ">=1.15,<3.0"
+covdefaults = "^2.3.0"
 
 [tool.poetry.group.docs]
 optional = true
@@ -66,7 +67,6 @@ furo = ">=2024.8,<2026.0"
 
 [tool.poetry.scripts]
 dotenv-linter = "dotenv_linter.cli:cli"
-
 
 [tool.ruff]
 # Ruff config: https://docs.astral.sh/ruff/settings

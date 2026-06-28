@@ -72,7 +72,7 @@ class BaseFSTVisitor(BaseVisitor):
         """
         for _field, node_value in iter_fields(node):
             if isinstance(node_value, list):
-                for sub_node in node_value:
+                for sub_node in node_value:  # pragma: no cover
                     if isinstance(sub_node, Node):
                         self.visit(sub_node)  # noqa: WPS220
             elif isinstance(node_value, Node):
