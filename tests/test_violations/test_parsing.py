@@ -5,10 +5,10 @@ from dotenv_linter.violations.parsing import ParsingViolation
 
 @pytest.mark.filterwarnings('ignore::pytest.PytestUnraisableExceptionWarning')
 @pytest.mark.parametrize(
-    'code',
-    ['=VALUE', '='],
+    ('code', 'expected_count'),
+    [('=VALUE', 1), ('=', 1), ('SOME_KEY=VALUE', 0)],
 )
-def test_parsing_violation(make_violations, code):
+def test_parsing_violation(make_violations, code, expected_count):
     """
     Checks that this unparsable file.
 
@@ -16,5 +16,8 @@ def test_parsing_violation(make_violations, code):
     """
     violations = make_violations(code)
 
-    assert len(violations) == 1
-    assert isinstance(violations[0], ParsingViolation)
+    assert len(violations) == expected_count
+
+    assert all(
+        isinstance(violation, ParsingViolation) for violation in violations
+    )

@@ -9,7 +9,7 @@ Since they might contain private values.
 .. autoclass:: SpacedValueViolation
 .. autoclass:: QuotedValueViolation
 .. autoclass:: InvalidEOLViolation
-
+.. autoclass:: CommentInValueViolation
 """
 
 from typing_extensions import final
@@ -84,3 +84,33 @@ class InvalidEOLViolation(BaseFSTViolation):
 
     code = 302
     error_template = 'Found CRLF end-of-line'
+
+
+@final
+class CommentInValueViolation(BaseFSTViolation):
+    """
+    Restricts to use comment in value.
+
+    Reasoning:
+        A `#` character in a value does not start a comment,
+        but becomes part of the value. This often misleads developers
+        and leads to errors.
+
+    Solution:
+        Remove comment from the value.
+
+    Example::
+
+        # Correct:
+        # This is a comment
+        KEY=VALUE
+
+        # Wrong:
+        KEY=VALUE # This is a comment
+
+    .. versionadded:: 0.8.0
+
+    """
+
+    code = 303
+    error_template = 'Found comment in value'

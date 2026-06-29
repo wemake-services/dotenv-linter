@@ -5,13 +5,14 @@ from dotenv_linter.violations.comments import SpacedCommentViolation
 
 @pytest.mark.filterwarnings('ignore::pytest.PytestUnraisableExceptionWarning')
 @pytest.mark.parametrize(
-    'code',
+    ('code', 'expected_count'),
     [
-        ' # COMMENT',
-        '      #COMMENT',
+        (' # COMMENT', 1),
+        ('      #COMMENT', 1),
+        ('# CORRECT COMMENT#CORRECT COMMENT', 0),
     ],
 )
-def test_spaced_comments_violation(make_violations, code):
+def test_spaced_comments_violation(make_violations, code, expected_count):
     """
     Checks leading spaces in comments.
 
@@ -19,5 +20,9 @@ def test_spaced_comments_violation(make_violations, code):
     """
     violations = make_violations(code)
 
-    assert len(violations) == 1
-    assert isinstance(violations[0], SpacedCommentViolation)
+    assert len(violations) == expected_count
+
+    assert all(
+        isinstance(violation, SpacedCommentViolation)
+        for violation in violations
+    )
