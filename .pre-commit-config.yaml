@@ -21,7 +21,7 @@ repos:
           - "--no-progress"
           - "--fix"
   - repo: https://github.com/EbodShojaei/bake
-    rev: v1.4.4
+    rev: v1.4.6
     hooks:
       - id: mbake-format
         args: ["--config=.github/bake.toml"]
@@ -32,7 +32,7 @@ repos:
       - id: shellcheck
         args: ["--severity=style"]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.15.18
+    rev: v0.15.20
     hooks:
       - id: ruff
         args: ["--exit-non-zero-on-fix"]
