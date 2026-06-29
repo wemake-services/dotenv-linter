@@ -179,7 +179,7 @@ class UnreadableNameViolation(BaseFSTViolation):
         # Wrong:
         MY_1I_VAR=some_value
 
-    .. versionadded:: 0.7.0
+    .. versionadded:: 0.8.0
 
     """
 
