@@ -3,6 +3,15 @@
 We follow Semantic Versions.
 
 
+## Version 0.8.0
+
+### Features
+
+- Adds `python3.14` support
+- Forbids to use comments in values, #979
+- Forbids to use unreadable combinations of letters in keys, #969
+
+
 ## Version 0.7.0
 
 ### Features
