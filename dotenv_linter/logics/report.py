@@ -4,7 +4,6 @@ from itertools import chain
 from typing import final
 
 from dotenv_linter.violations.base import BaseViolation
-from dotenv_linter.visitors.base import BaseVisitor
 
 
 class Report:
@@ -21,9 +20,9 @@ class Report:
         self.has_violations = False
 
     @final
-    def collect_from(self, visitor: BaseVisitor) -> None:
+    def collect_from(self, violations: Iterable[BaseViolation]) -> None:
         """Collects violations from different visitors."""
-        self._collected_from.append(visitor.violations)
+        self._collected_from.append(violations)
 
     @final
     def collect_one(self, violation: BaseViolation) -> None:
