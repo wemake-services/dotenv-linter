@@ -7,6 +7,7 @@
 
   pages/cli.rst
   pages/violations/index.rst
+  pages/ignoring-violations.rst
   pages/integrations/index.rst
 
 

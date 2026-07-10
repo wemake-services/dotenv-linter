@@ -3,6 +3,12 @@
 We follow Semantic Versions.
 
 
+## Version 0.9.0
+
+### Features
+
+- Adds `# dotenv:ignore[...]` comments to suppress violations per line, #992
+
 ## Version 0.8.0
 
 ### Features

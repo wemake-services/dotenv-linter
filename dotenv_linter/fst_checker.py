@@ -2,18 +2,14 @@ from __future__ import annotations
 
 from collections.abc import Iterable, Iterator
 from pathlib import Path
-from typing import ClassVar, TypeAlias, final
+from typing import final
 
 from dotenv_linter.constants import ExitCodes
 from dotenv_linter.exceptions import ParsingError
 from dotenv_linter.grammar.fst import Module
 from dotenv_linter.grammar.parser import DotenvParser
+from dotenv_linter.logics.collector import ReportCollector
 from dotenv_linter.logics.report import Report
-from dotenv_linter.violations.parsing import ParsingViolation
-from dotenv_linter.visitors.base import BaseFSTVisitor
-from dotenv_linter.visitors.fst import assigns, comments, names, values
-
-_VisitorTypes: TypeAlias = tuple[type[BaseFSTVisitor], ...]
 
 
 def _read_file_content(filename: str) -> str:
@@ -25,28 +21,6 @@ def _read_file_content(filename: str) -> str:
 
 
 @final
-class _ReportCollector:
-    _visitors_pipeline: ClassVar[_VisitorTypes] = (
-        assigns.AssignVisitor,
-        comments.CommentVisitor,
-        names.NameVisitor,
-        names.NameInModuleVisitor,
-        values.ValueVisitor,
-    )
-
-    def collect(self, filename: str, fst: Module | None) -> Report:
-        report = Report(filename)
-        if fst is None:
-            report.collect_one(ParsingViolation())
-        else:
-            for visitor_class in self._visitors_pipeline:
-                visitor = visitor_class(fst)
-                visitor.run()
-                report.collect_from(visitor)
-        return report
-
-
-@final
 class FSTChecker:
     """Internal checker instance to actually run all the checks."""
 
@@ -54,7 +28,7 @@ class FSTChecker:
         """Creates new instance."""
         self._filenames = filenames
         self._parser = DotenvParser()
-        self._report_collector = _ReportCollector()
+        self._report_collector = ReportCollector()
         self.status = ExitCodes.initial
         self.reports: list[Report] = []
 
