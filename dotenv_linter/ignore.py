@@ -2,16 +2,13 @@ import re
 from typing import Final
 
 from dotenv_linter.grammar.fst import Assign, Comment, Module, Name, Statement
+from dotenv_linter.logics.text import clean_names
 from dotenv_linter.violations.base import BaseViolation
 from dotenv_linter.visitors.base import BaseFSTVisitor
 
 _IGNORE_PATTERN: Final = re.compile(
     r'^[ \t]*#\s*dotenv:ignore\[([^\]]+)\]\s*$',
 )
-
-
-def _clean_names(names: list[str]) -> list[str]:
-    return [name.strip() for name in names]
 
 
 def _is_ignore_comment(
@@ -36,7 +33,7 @@ def parse_ignore_comments(module: Module) -> dict[int, set[str]]:
     for node in module.body:
         match = _is_ignore_comment(node)
         if match:
-            accumulated_ignores.update(_clean_names(match.group(1).split(',')))
+            accumulated_ignores.update(clean_names(match.group(1).split(',')))
 
         elif isinstance(node, Assign):
             ignore_map[node.lineno] = accumulated_ignores.copy()
