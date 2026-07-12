@@ -13,3 +13,13 @@ def normalize_text(text: str) -> str:
 
     """
     return text.strip().strip('\'"')
+
+
+def clean_names(names: list[str]) -> list[str]:
+    """
+    Cleans names from trailing and leading spaces.
+
+    >>> clean_names(['abc', ' def '])
+    ['abc', 'def']
+    """
+    return [name.strip() for name in names]
