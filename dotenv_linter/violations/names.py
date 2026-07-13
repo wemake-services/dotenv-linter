@@ -148,6 +148,10 @@ class ReservedNameViolation(BaseFSTViolation):
         Change such names.
         Or, Add ``_`` at the end, to distinguish it from reserved ones.
 
+    All blacklisted names:
+    :literal-all-items:`dotenv_linter.constants.NAMES_BLACKLIST`.
+
+
     Example::
 
         # Wrong:
@@ -173,6 +177,9 @@ class UnreadableNameViolation(BaseFSTViolation):
     Solution:
         Change such names to completely avoid ambiguous pairs.
         Or add ``_`` between the symbols.
+
+    All unreadable character combinations:
+    :literal-all-items:`dotenv_linter.constants.UNREADABLE_CHARACTER_COMBINATIONS`.
 
     Example::
 
