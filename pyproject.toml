@@ -64,6 +64,7 @@ sphinx-click = "^6.0"
 tomli = "^2.0"
 myst-parser = "^4.0"
 furo = ">=2024.8,<2026.0"
+added-value = "^0.24"
 
 [tool.poetry.scripts]
 dotenv-linter = "dotenv_linter.cli:cli"
