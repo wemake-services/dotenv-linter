@@ -20,14 +20,14 @@ class BaseViolation:
     def as_line(self) -> str:
         """Converts violation to a single line information."""
         violation = self.error_template.format(self._text)
-        return f'{self.location()} {self._formated_code()} {violation}'
+        return f'{self.location()} {self._formatted_code()} {violation}'
 
     def location(self) -> int:
         """Returns in-file location of a violation."""
         raise NotImplementedError('Should be redefined in a subclass')
 
     @final
-    def _formated_code(self) -> str:
+    def _formatted_code(self) -> str:
         return str(self.code).zfill(3)
 
 
