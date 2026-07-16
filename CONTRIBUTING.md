@@ -72,6 +72,22 @@ If you have added new functionality or features, make sure you have added a test
 for that functionality or feature
 
 
+## Spellcheckers
+
+This project is developed by a diverse and multilingual group of people.
+Many of us are not English native speakers and we also know that people can make mistakes and typos even in the simplest of words.
+
+So, that's why we use a bunch of tools to find and fix spelling and grammar. We use `codespell` to find and fix spelling and grammar.
+You can use it:
+
+```bash
+codespell dotenv_linter tests docs README.md CHANGELOG.md CONTRIBUTING.md
+```
+
+## One magic command
+
+Run `make test` to run everything we have!
+
 ## Step 7
 
 ### Pull Request

@@ -46,15 +46,7 @@ jobs:
         poetry install
 
     - name: Run checks
-      run: |
-        poetry run ruff check --exit-non-zero-on-fix --diff
-        poetry run ruff format --check --diff
-        poetry run flake8 .
-        poetry run mypy dotenv_linter
-        poetry run codespell dotenv_linter tests docs README.md CHANGELOG.md CONTRIBUTING.md
-        poetry run pytest
-        poetry check
-        poetry run pip check
+      run: make test
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v7.0.0
