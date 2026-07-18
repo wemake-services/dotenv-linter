@@ -8,6 +8,7 @@ We follow Semantic Versions.
 ### Features
 
 - Adds `# dotenv:ignore[...]` comments to suppress violations per line, #992
+- Adds `# dotenv:disable[...]` and `# dotenv:enable[...]` for block suppression of violations across multiple lines, #996
 
 ## Version 0.8.0
 
