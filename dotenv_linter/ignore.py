@@ -35,16 +35,15 @@ class ViolationToggle:
         self.current_violations: set[str] = set()
         self.accumulated_ignores: set[str] = set()
         self.ignore_map: IgnoreMap = {}
-
-    def process_comment(self, node: Comment) -> None:
-        """Process a comment node: apply disable, enable, or ignore logic."""
-        comments_handlers = (
+        self._comments_handlers = (
             (_DISABLE_PATTERN, self._apply_disable),
             (_ENABLE_PATTERN, self._apply_enable),
             (_IGNORE_PATTERN, self._apply_ignore_line),
         )
 
-        for comment_pattern, comment_handler in comments_handlers:
+    def process_comment(self, node: Comment) -> None:
+        """Process a comment node: apply disable, enable, or ignore logic."""
+        for comment_pattern, comment_handler in self._comments_handlers:
             match = comment_pattern.match(node.raw_text)
             if match:
                 comment_handler(match)

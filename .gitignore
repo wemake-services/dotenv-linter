@@ -171,7 +171,7 @@ $RECYCLE.BIN/
 
 # User-specific stuff:
 .idea/
-.vscode
+.vscode/
 
 ## File-based project format:
 *.iws

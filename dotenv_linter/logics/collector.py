@@ -41,15 +41,16 @@ class ReportCollector:
             report.collect_one(ParsingViolation())
         else:
             report.fst = fst
+            self._collect_metadata(fst, report)
             for visitor_class in self._visitors_pipeline:
                 visitor = visitor_class(fst)
                 visitor.run()
                 report.collect_from(visitor.violations)
 
-            # Metadata collect IgnoreMap, not violations
-            # therefore it's processed separately from the main pipeline
-            metadata_visitor = metadata.MetadataVisitor(fst)
-            metadata_visitor.run()
-            report.ignore_map = metadata_visitor.ignore_map
-
         return report
+
+    def _collect_metadata(self, fst: Module, report: Report) -> None:
+        """Collect metadata from the FST."""
+        metadata_visitor = metadata.MetadataVisitor(fst)
+        metadata_visitor.run()
+        report.ignore_map = metadata_visitor.ignore_map
