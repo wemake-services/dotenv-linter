@@ -3,11 +3,16 @@ from __future__ import annotations
 from typing import ClassVar, TypeAlias, final
 
 from dotenv_linter.grammar.fst import Module
-from dotenv_linter.ignore import filter_violations, parse_ignore_comments
 from dotenv_linter.logics.report import Report
 from dotenv_linter.violations.parsing import ParsingViolation
 from dotenv_linter.visitors.base import BaseFSTVisitor
-from dotenv_linter.visitors.fst import assigns, comments, names, values
+from dotenv_linter.visitors.fst import (
+    assigns,
+    comments,
+    metadata,
+    names,
+    values,
+)
 
 _VisitorTypes: TypeAlias = tuple[type[BaseFSTVisitor], ...]
 
@@ -35,10 +40,16 @@ class ReportCollector:
         if fst is None:
             report.collect_one(ParsingViolation())
         else:
-            ignore_map = parse_ignore_comments(fst)
+            report.fst = fst
             for visitor_class in self._visitors_pipeline:
                 visitor = visitor_class(fst)
                 visitor.run()
-                filtered = filter_violations(visitor, ignore_map)
-                report.collect_from(filtered)
+                report.collect_from(visitor.violations)
+
+            # Metadata collect IgnoreMap, not violations
+            # therefore it's processed separately from the main pipeline
+            metadata_visitor = metadata.MetadataVisitor(fst)
+            metadata_visitor.run()
+            report.ignore_map = metadata_visitor.ignore_map
+
         return report
