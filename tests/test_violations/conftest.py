@@ -20,7 +20,7 @@ def make_violations(tmp_path: Path) -> Callable[[str], list[BaseViolation]]:
             checker.run()
 
         violations = []
-        for report in checker._fst_checker.reports:  # noqa: SLF001
+        for report in checker._fst_checker.reports:  # ruff:ignore[private-member-access]
             violations.extend(report.get_violations())
         return violations
 

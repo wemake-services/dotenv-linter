@@ -18,7 +18,7 @@ from dotenv_linter.version import pkg_version
     invoke_without_command=True,
 )
 @click.option('--version', is_flag=True, default=False)
-def cli(version: bool) -> None:  # noqa: FBT001
+def cli(version: bool) -> None:  # ruff:ignore[boolean-type-hint-positional-argument]
     """
     Main entrypoint to the app.
 
