@@ -23,7 +23,7 @@ def test_run_with_initial_status():
     checker = DotenvFileChecker(filenames=())
     mock_fst = MagicMock()
     mock_fst.status = ExitCodes.initial
-    checker._fst_checker = mock_fst  # noqa: SLF001
+    checker._fst_checker = mock_fst  # ruff:ignore[private-member-access]
 
     with pytest.raises(SystemExit) as exc_info:
         checker.run()

@@ -18,7 +18,7 @@ class DotenvTransformer(Transformer[Token, Module]):
         super().__init__()
         self._body_items: list[Comment | Statement] = []
 
-    def body(  # noqa: D102
+    def body(  # ruff:ignore[undocumented-public-method]
         self, parsed: list[Comment | Statement | None]
     ) -> list[Comment | Statement]:
         self._body_items = [
@@ -26,12 +26,12 @@ class DotenvTransformer(Transformer[Token, Module]):
         ]
         return self._body_items
 
-    def line(self, parsed: list[Comment | Statement]) -> Comment | Statement:  # noqa: D102
+    def line(self, parsed: list[Comment | Statement]) -> Comment | Statement:  # ruff:ignore[undocumented-public-method]
         if not parsed:
             raise ParsingError('No items found')
         return parsed[0]
 
-    def assign(self, parsed: list[Token]) -> Assign:  # noqa: D102
+    def assign(self, parsed: list[Token]) -> Assign:  # ruff:ignore[undocumented-public-method]
         name_token = parsed[0]
         equal_token = parsed[1]
         value_token = parsed[2] if len(parsed) == 3 else None
@@ -41,10 +41,10 @@ class DotenvTransformer(Transformer[Token, Module]):
             value_token=value_token,
         )
 
-    def name(self, parsed: list[Token]) -> Name:  # noqa: D102
+    def name(self, parsed: list[Token]) -> Name:  # ruff:ignore[undocumented-public-method]
         return Name.from_token(parsed[0])
 
-    def comment(self, parsed: list[Token]) -> Comment:  # noqa: D102
+    def comment(self, parsed: list[Token]) -> Comment:  # ruff:ignore[undocumented-public-method]
         return Comment.from_token(parsed[0])
 
 
@@ -70,7 +70,7 @@ class DotenvParser:
             return Module(
                 lineno=0,
                 raw_text=to_parse,
-                body=self._transformer._body_items,  # noqa: SLF001
+                body=self._transformer._body_items,  # ruff:ignore[private-member-access]
             )
         except Exception as exc:
-            raise ParsingError(str(exc))  # noqa: B904
+            raise ParsingError(str(exc))  # ruff:ignore[raise-without-from-inside-except]
