@@ -110,6 +110,22 @@ def test_lint_wrong_eol(tmp_path: Path) -> None:
     assert str(InvalidEOLViolation.code) in stderr
 
 
+def test_lint_suppress_all(fixture_path):
+    """Checks that `lint` suppresses all violations with `dotenv:disable`."""
+    process = subprocess.Popen(
+        ['dotenv-linter', 'lint', fixture_path('.env.disable')],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        universal_newlines=True,
+        encoding='utf8',
+    )
+    stdout, stderr = process.communicate()
+
+    assert process.returncode == 0
+    assert not stdout
+    assert not stderr
+
+
 @pytest.mark.filterwarnings('ignore::pytest.PytestUnraisableExceptionWarning')
 def test_lint_exception(tmp_path):
     """Checks that cli linting process raises exception."""
