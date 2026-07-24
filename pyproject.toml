@@ -43,7 +43,7 @@ lark = "^1.2"
 
 [tool.poetry.group.dev.dependencies]
 wemake-python-styleguide = "^1.6"
-ruff = "0.15,<0.16"
+ruff = "^0.16"
 
 pytest = ">=8.1,<10.0"
 pytest-cov = ">=6,<8"
@@ -143,6 +143,8 @@ ignore = [
   "PLR2004", # do not report magic numbers
   "PLR6301", # do not require classmethod / staticmethod when self not used
   "TRY003",  # long exception messages from `tryceratops`
+  "RUF105",  # keep old `noqa` comments style
+  "RUF201",  # keep old rule codes instead of verbose names
 ]
 external = [ "WPS" ]
 
