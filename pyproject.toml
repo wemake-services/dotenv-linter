@@ -4,7 +4,7 @@ requires = ["poetry-core>=2.0"]
 
 [tool.poetry]
 name = "dotenv-linter"
-version = "0.8.0"
+version = "0.9.0"
 description = "Linting dotenv files like a charm!"
 authors = [
   "sobolevn <mail@sobolevn.me>"
@@ -42,17 +42,17 @@ typing_extensions = ">=4.0,<5.0"
 lark = "^1.2"
 
 [tool.poetry.group.dev.dependencies]
-wemake-python-styleguide = "^1.6"
+wemake-python-styleguide = "^1.7"
 ruff = "^0.16"
 
-pytest = ">=8.1,<10.0"
-pytest-cov = ">=6,<8"
-pytest-randomly = ">=3.12,<5.0"
+pytest = "^9.1"
+pytest-cov = "^7.1"
+pytest-randomly = "^4.1"
 covdefaults = "^2.3"
 
 codespell = "^2.2"
 
-mypy = "^2.2"
+mypy = "^2.3"
 
 [tool.poetry.group.docs]
 optional = true
@@ -63,7 +63,7 @@ sphinx-autodoc-typehints = "^3.0"
 sphinx-click = "^6.0"
 tomli = "^2.0"
 myst-parser = "^4.0"
-furo = ">=2024.8,<2026.0"
+furo = "^2025.12"
 added-value = "^0.24"
 
 [tool.poetry.scripts]
@@ -142,9 +142,10 @@ ignore = [
   "PLR09",   # we have our own complexity rules
   "PLR2004", # do not report magic numbers
   "PLR6301", # do not require classmethod / staticmethod when self not used
-  "TRY003",  # long exception messages from `tryceratops`
-  "RUF105",  # keep old `noqa` comments style
+  "RUF105",  # keep old `# noqa` comments style, not `# ruff` comments
+  "RUF106",  # we prefer old error codes
   "RUF201",  # keep old rule codes instead of verbose names
+  "TRY003",  # long exception messages from `tryceratops`
 ]
 external = [ "WPS" ]
 
