@@ -27,12 +27,12 @@ repos:
         args: ["--config=.github/bake.toml"]
       - id: mbake-validate
   - repo: https://github.com/shellcheck-py/shellcheck-py
-    rev: v0.11.0.1
+    rev: v0.11.0.1-1
     hooks:
       - id: shellcheck
         args: ["--severity=style"]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.16.3
+    rev: v0.16.4
     hooks:
       - id: ruff
         args: ["--exit-non-zero-on-fix"]
