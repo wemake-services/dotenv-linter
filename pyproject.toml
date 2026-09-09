@@ -47,7 +47,7 @@ ruff = "^0.16"
 
 pytest = "^9.1"
 pytest-cov = "^7.1"
-pytest-randomly = "^4.1"
+pytest-randomly = ">=4.1,<6.0"
 covdefaults = "^2.3"
 
 codespell = "^2.2"
