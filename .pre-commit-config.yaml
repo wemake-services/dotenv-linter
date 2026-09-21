@@ -32,7 +32,7 @@ repos:
       - id: shellcheck
         args: ["--severity=style"]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.16.7
+    rev: v0.16.8
     hooks:
       - id: ruff
         args: ["--exit-non-zero-on-fix"]
@@ -59,7 +59,7 @@ repos:
       - id: check-useless-excludes
 
   - repo: https://github.com/crate-ci/typos
-    rev: v1
+    rev: v1.50.2
     hooks:
       - id: typos
 
