@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.38.0
+    rev: 0.38.2
     hooks:
       - id: check-dependabot
       - id: check-github-workflows
@@ -32,7 +32,7 @@ repos:
       - id: shellcheck
         args: ["--severity=style"]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.16.8
+    rev: v0.16.9
     hooks:
       - id: ruff
         args: ["--exit-non-zero-on-fix"]
@@ -59,7 +59,7 @@ repos:
       - id: check-useless-excludes
 
   - repo: https://github.com/crate-ci/typos
-    rev: v1.50.2
+    rev: v1.50.3
     hooks:
       - id: typos
 
