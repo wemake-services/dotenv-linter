@@ -42,6 +42,10 @@ class ValueVisitor(BaseFSTVisitor):
 
     def _check_value_quotes(self, node: Value) -> None:
         text = node.raw_text.strip()
+        if '\n' in text:
+            # Quotes are the only way to write a multiline value.
+            return
+
         if (text.startswith('"') and text.endswith('"')) or (
             text.startswith("'") and text.endswith("'")
         ):

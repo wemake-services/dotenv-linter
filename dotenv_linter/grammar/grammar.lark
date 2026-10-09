@@ -11,6 +11,8 @@ comment: COMMENT
 NAME: /[ \t\v\f\u00A0]*[\w-]+/
 COMMENT: /[ \t\v\f\u00A0]*\#.*/
 EQUAL: /[ \t\v\f\u00A0]*=/
-VALUE: /.+/
+// A quoted value may span several lines (e.g. a PEM key), the fallback
+// (any text until the end of the line) handles everything else:
+VALUE: /[ \t\v\f\u00A0]*(?:"(?:[^"\\]|\\[\s\S])*"|'[^']*').*|.+/
 
 _NEWLINE: /[\n\r\u2028\u2029]+/
