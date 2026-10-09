@@ -4,6 +4,11 @@ from dotenv_linter.exceptions import ParsingError
 from dotenv_linter.grammar.parser import DotenvParser, DotenvTransformer
 
 
+def _text(*lines: str) -> str:
+    """Join lines, so raw strings with backslashes can span several lines."""
+    return '\n'.join(lines)
+
+
 def test_parsing_error():
     """Calling ``line`` with an empty list raises ``ParsingError``."""
     transformer = DotenvTransformer()
@@ -32,18 +37,57 @@ def test_multiline_quoted_value(code, expected_values):
 
 
 @pytest.mark.filterwarnings('ignore::pytest.PytestUnraisableExceptionWarning')
-def test_multiline_value_with_escaped_quote():
-    """An escaped double quote does not end a multiline value."""
-    code = r"""KEY="a \" b
-c"
-OTHER=1"""
+@pytest.mark.parametrize(
+    ('code', 'expected_values'),
+    [
+        # Escaped double quotes do not end the value:
+        (
+            _text(r'KEY="a \" b', 'c"', 'OTHER=1'),
+            [_text(r'"a \" b', 'c"'), '1'],
+        ),
+        (
+            _text('KEY="a', r'b \"c\" d', 'e"', 'OTHER=1'),
+            [_text('"a', r'b \"c\" d', 'e"'), '1'],
+        ),
+        # Escapes written as text, without a real line break:
+        (
+            _text(r'QUOTE="He said:\n\"Ok\""', 'OTHER=1'),
+            [r'"He said:\n\"Ok\""', '1'],
+        ),
+        (r'QUOTE="He said:\n\"Ok\""', [r'"He said:\n\"Ok\""']),
+        # The same escapes spread over several real lines:
+        (
+            _text('QUOTE="He said:', r'\"Ok\"', 'and left"', 'OTHER=1'),
+            [_text('"He said:', r'\"Ok\"', 'and left"'), '1'],
+        ),
+        # An escaped backslash does not escape the closing quote:
+        (_text(r'KEY="a\\"', 'OTHER=1'), [r'"a\\"', '1']),
+        (
+            _text('KEY="a', r'b\\"', 'OTHER=1'),
+            [_text('"a', r'b\\"'), '1'],
+        ),
+        # An escaped backslash followed by an escaped quote:
+        (
+            _text(r'KEY="a\\\"b', 'c"', 'OTHER=1'),
+            [_text(r'"a\\\"b', 'c"'), '1'],
+        ),
+        # Quotes of the other kind are plain text:
+        ('KEY="it\'s\nok"\nOTHER=1', ['"it\'s\nok"', '1']),
+        ('KEY=\'say "hi"\nbye\'\nOTHER=1', ['\'say "hi"\nbye\'', '1']),
+        ("KEY=\"'a'\n'b'\"\nOTHER=1", ["\"'a'\n'b'\"", '1']),
+        ('KEY=\'"a"\n"b"\'\nOTHER=1', ['\'"a"\n"b"\'', '1']),
+        # Both kinds of quotes in one file:
+        (
+            'A="x\ny"\nB=\'x\ny\'\nC="x\ny"',
+            ['"x\ny"', "'x\ny'", '"x\ny"'],
+        ),
+    ],
+)
+def test_multiline_nested_quotes(code, expected_values):
+    """Quotes of both kinds and escapes stay inside quoted values."""
+    module = DotenvParser().parse(code)
 
-    first, second = DotenvParser().parse(code).body
-
-    assert first.right.raw_text == code.removeprefix('KEY=').removesuffix(
-        '\nOTHER=1',
-    )
-    assert second.right.raw_text == '1'
+    assert [assign.right.raw_text for assign in module.body] == expected_values
 
 
 @pytest.mark.filterwarnings('ignore::pytest.PytestUnraisableExceptionWarning')
