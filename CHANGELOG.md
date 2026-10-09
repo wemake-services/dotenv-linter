@@ -3,6 +3,14 @@
 We follow Semantic Versions.
 
 
+## Version 1.0.0
+
+### Features
+
+- Adds support multiline quoted values, #1055
+- Adds `python3.15` support
+
+
 ## Version 0.9.0
 
 ### Features
