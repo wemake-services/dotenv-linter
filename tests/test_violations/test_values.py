@@ -15,6 +15,9 @@ from dotenv_linter.violations.values import (
         ("SOME_KEY='1'", 1),
         ('SOME_KEY="VALUE"', 1),
         ('KEY=VALUE', 0),
+        ('KEY="line1\nline2"', 0),
+        ("KEY='line1\nline2'", 0),
+        ('KEY="line1\nline2"\nOTHER="1"', 1),
     ],
 )
 def test_quoted_value_violation(make_violations, code, expected_count):

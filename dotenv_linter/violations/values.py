@@ -48,6 +48,8 @@ class QuotedValueViolation(BaseFSTViolation):
 
     Solution:
         Remove any quotes from the value.
+        Values that span several lines can only be written with quotes,
+        so they are not reported.
 
     Example::
 
