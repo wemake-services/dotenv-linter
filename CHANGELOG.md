@@ -8,7 +8,7 @@ We follow Semantic Versions.
 ### Features
 
 - Adds support multiline quoted values, #1055
-- Adds `python3.15` support
+- Adds `python3.15` support, #1057
 
 
 ## Version 0.9.0
