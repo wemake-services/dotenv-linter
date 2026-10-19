@@ -43,7 +43,7 @@ lark = "^1.2"
 
 [tool.poetry.group.dev.dependencies]
 wemake-python-styleguide = "^1.7"
-ruff = "^0.16"
+ruff = ">=0.16,<0.18"
 
 pytest = "^9.1"
 pytest-cov = "^7.1"
