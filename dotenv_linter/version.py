@@ -1,13 +1,12 @@
 from importlib import metadata
 from pathlib import Path
 
-#: Package name:
 pkg_name = str(Path(__file__).parent.name)
+"""Package name."""
 
-#: We store the version number inside the `pyproject.toml`:
 try:
     pkg_version = metadata.version(pkg_name)
 except metadata.PackageNotFoundError:  # pragma: no cover
-    # This mainly happens in RTD env, where we set the metadata
-    # from `pyproject.toml` file:
+    # Package is not installed as a distribution
     pkg_version = ''
+"""We store the version number inside the `pyproject.toml`."""

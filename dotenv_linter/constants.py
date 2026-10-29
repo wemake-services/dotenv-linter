@@ -3,11 +3,11 @@
 from enum import IntEnum, unique
 from typing import Final, final
 
-#: List of variable we forbid to use.
 NAMES_BLACKLIST: Final = frozenset((
     # Code generation:
     'DJANGO_ENV',
 ))
+"""List of variable we forbid to use."""
 
 UNREADABLE_CHARACTER_COMBINATIONS: Final = frozenset(
     ('1I', '0O', 'O0', 'Il', 'lI', '1l', 'l1'),

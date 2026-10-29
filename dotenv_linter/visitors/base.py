@@ -6,8 +6,10 @@ from attr import fields
 from dotenv_linter.grammar.fst import Module, Node
 from dotenv_linter.violations.base import BaseViolation
 
-#: Defines field internals of a dataclass, could be `Any`, that's why ignored
 FieldInfo: TypeAlias = tuple[str, list[Any] | Any]
+"""Defines field internals of a dataclass.
+
+Could be `Any`, that's why ignored."""
 
 
 def iter_fields(node: Node) -> Iterator[FieldInfo]:
