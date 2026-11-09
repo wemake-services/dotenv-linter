@@ -13,7 +13,7 @@ repos:
         additional_dependencies:
           - "github.com/wasilibs/go-shellcheck/cmd/shellcheck@latest"
   - repo: https://github.com/woodruffw/zizmor-pre-commit
-    rev: v1.31.1
+    rev: v1.32.0
     hooks:
       - id: zizmor
         args:
@@ -21,7 +21,7 @@ repos:
           - "--no-progress"
           - "--fix"
   - repo: https://github.com/EbodShojaei/bake
-    rev: v1.4.6
+    rev: v1.5.0
     hooks:
       - id: mbake-format
         args: ["--config=.github/bake.toml"]
@@ -32,7 +32,7 @@ repos:
       - id: shellcheck
         args: ["--severity=style"]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.17.3
+    rev: v0.17.4
     hooks:
       - id: ruff
         args: ["--exit-non-zero-on-fix"]
@@ -59,7 +59,7 @@ repos:
       - id: check-useless-excludes
 
   - repo: https://github.com/crate-ci/typos
-    rev: v1.51.1
+    rev: v1.52.0
     hooks:
       - id: typos
 
