@@ -127,6 +127,19 @@ def test_lint_suppress_all(fixture_path):
 
 
 @pytest.mark.filterwarnings('ignore::pytest.PytestUnraisableExceptionWarning')
+def test_lint_bom(tmp_path):
+    """Checks that `lint` accepts a UTF-8 file with a BOM."""
+    env_file = tmp_path / '.env'
+    env_file.write_bytes(b'\xef\xbb\xbfKEY=VALUE\n')
+    runner = CliRunner()
+
+    command_result = runner.invoke(cli, [str(env_file)])
+
+    assert command_result.exit_code == ExitCodes.success
+    assert not command_result.output
+
+
+@pytest.mark.filterwarnings('ignore::pytest.PytestUnraisableExceptionWarning')
 def test_lint_exception(tmp_path):
     """Checks that cli linting process raises exception."""
     env_file = tmp_path / '.env'

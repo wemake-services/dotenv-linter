@@ -16,7 +16,7 @@ def _read_file_content(filename: str) -> str:
     # From `open` docs on `newline` - If it is '', universal
     # newline mode is enabled but line endings are returned
     # to the caller untranslated
-    with Path(filename).open(encoding='utf8', newline='') as file_object:
+    with Path(filename).open(encoding='utf-8-sig', newline='') as file_object:
         return file_object.read()
 
 
